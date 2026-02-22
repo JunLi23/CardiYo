@@ -1,6 +1,7 @@
 import styles from "./Dashboard.module.css";
 import BioMarker from "./components/dashboardComponents/BioMarker";
 import AchievementDisplay from "./components/dashboardComponents/AchievementDisplay";
+import ProgressDisplay from "./components/dashboardComponents/ProgressDisplay";
 
 const Dashboard = ()=> {
     return (
@@ -13,6 +14,9 @@ const Dashboard = ()=> {
             </div>
             <div className={styles.achievementContainer}>
                 <AchievementDisplay />
+            </div>
+            <div className={styles.progressContainer}>
+                <ProgressDisplay />
             </div>
         </div>
     );

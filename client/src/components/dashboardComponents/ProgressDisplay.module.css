@@ -11,13 +11,17 @@
     align-items: center;
 }
 
-.achievementWrapper{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+.progressBar{
+    background-color: white;
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid rgb(99, 128, 103);
+    height: 24px;
 }
 
-.medal{
-    display: flex;
-    flex-direction: column;
+.progressBarFill{
+    background-color: rgb(88, 22, 22);
+    width: 42%; /* Hard coded for now */
+    border-radius: 9px;
+    height: 100%;
 }
