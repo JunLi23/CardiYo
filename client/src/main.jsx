@@ -8,6 +8,7 @@ import App from "./App";
 import Record from "./components/Record";
 import RecordList from "./components/RecordList";
 import "./index.css";
+import Dashboard from "./dashBoard";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
         element: <Record />,
       },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />, 
   },
 ]);
 

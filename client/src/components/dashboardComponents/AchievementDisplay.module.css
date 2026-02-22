@@ -1,0 +1,13 @@
+
+.display{
+    background-color: #4a6741; /* Setting the background colour as green */
+    border-radius: 20px; /* Rounding the corners */
+    padding: 20px 20px; /* Adding padding to internal components */
+    width: 340 px; 
+    border: 3px solid #3a5432;  /* slightly darker green border */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

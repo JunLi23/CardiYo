@@ -1,0 +1,20 @@
+import styles from "./Dashboard.module.css";
+import BioMarker from "./components/dashboardComponents/BioMarker";
+import AchievementDisplay from "./components/dashboardComponents/AchievementDisplay";
+
+const Dashboard = ()=> {
+    return (
+        <div className={styles.dashboard}>
+            dashboard
+            <div className={styles.bioMarkerContainer}>
+                <BioMarker label="Heart Rate" value={57} unit="BPM"/>
+                <BioMarker label="Steps" value={8432} unit="steps" />
+                <BioMarker label="Calories" value={1640} unit="kcal" />
+            </div>
+            <div className={styles.achievementContainer}>
+                <AchievementDisplay />
+            </div>
+        </div>
+    );
+}
+export default Dashboard;
