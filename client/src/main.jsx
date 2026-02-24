@@ -10,6 +10,10 @@ import App from "./pages/App";
 import Record from "./components/Record";
 import RecordList from "./components/RecordList";
 import Dashboard from "./pages/Dashboard";
+import Workouts from "./pages/Workouts";
+import HealthHub from "./pages/HealthHub";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import "./styles/index.css";
 
 const router = createBrowserRouter([
@@ -46,6 +50,22 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "/Workouts",
+    element: <Workouts />,
+  },
+  {
+    path: "/HealthHub",
+    element: <HealthHub />,
+  },
+  {
+    path: "/Profile",
+    element: <Profile />,
+  },
+  {
+    path: "/Settings",
+    element: <Settings />,
   },
 ]);
 

@@ -1,15 +1,14 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-const App = () => {
+const Settings = () => {
   return (
     <>
       <Navbar />
-      <div className="w-full p-6">
-        <Outlet />
+      <div style={{ padding: "2rem" }}>
+        <h1>Settings Page</h1>
       </div>
     </>
   );
 };
-export default App
-
+export default Settings

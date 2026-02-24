@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Navbar,
   MobileNav,
@@ -22,16 +23,19 @@ const NavbarComponent = () => {
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#">Pages</a>
+        <Link to="/Dashboard">Dashboard</Link>
       </Typography>
       <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#">Account</a>
+        <Link to="/Workouts">Workouts</Link>
       </Typography>
       <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#">Blocks</a>
+        <Link to="/HealthHub">Health Hub</Link>
       </Typography>
       <Typography as="li" variant="small" className="p-1 font-normal">
-        <a href="#">Docs</a>
+        <Link to="/Profile">Profile</Link>
+      </Typography>
+      <Typography as="li" variant="small" className="p-1 font-normal">
+        <Link to="/Settings">Settings</Link>
       </Typography>
     </ul>
   );
@@ -45,15 +49,6 @@ const NavbarComponent = () => {
 
         <div className="flex items-center gap-4">
           <div className="mr-4 hidden lg:block">{navList}</div>
-
-          <div className="flex items-center gap-x-1">
-            <Button variant="text" size="sm" className="hidden lg:inline-block">
-              Log In
-            </Button>
-            <Button variant="gradient" size="sm" className="hidden lg:inline-block">
-              Sign In
-            </Button>
-          </div>
 
           <IconButton
             variant="text"
