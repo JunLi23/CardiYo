@@ -4,11 +4,13 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import App from "./App";
+import { ThemeProvider } from "@material-tailwind/react";
+
+import App from "./pages/App";
 import Record from "./components/Record";
 import RecordList from "./components/RecordList";
-import "./index.css";
-import Dashboard from "./dashBoard";
+import Dashboard from "./pages/Dashboard";
+import "./styles/index.css";
 
 const router = createBrowserRouter([
   {
@@ -43,12 +45,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />, 
+    element: <Dashboard />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );

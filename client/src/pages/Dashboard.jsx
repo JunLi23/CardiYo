@@ -1,7 +1,7 @@
-import styles from "./Dashboard.module.css";
-import BioMarker from "./components/dashboardComponents/BioMarker";
-import AchievementDisplay from "./components/dashboardComponents/AchievementDisplay";
-import ProgressDisplay from "./components/dashboardComponents/ProgressDisplay";
+import styles from "../styles/Dashboard.module.css";
+import BioMarker from "../components/dashboardComponents/BioMarker";
+import AchievementDisplay from "../components/dashboardComponents/AchievementDisplay";
+import ProgressDisplay from "../components/dashboardComponents/ProgressDisplay";
 
 const Dashboard = ()=> {
     return (
