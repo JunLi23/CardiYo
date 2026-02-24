@@ -14,35 +14,35 @@ const NavbarComponent = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const navList = (
-    <ul className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-6">
-      <li>
-        <Link to="/Dashboard" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-          Dashboard
-        </Link>
-      </li>
-      <li>
-        <Link to="/Workouts" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-          Workouts
-        </Link>
-      </li>
-      <li>
-        <Link to="/HealthHub" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-          Health Hub
-        </Link>
-      </li>
-      <li>
-        <Link to="/Profile" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-          Profile
-        </Link>
-      </li>
-      <li>
-        <Link to="/Settings" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-          Settings
-        </Link>
-      </li>
-    </ul>
-  );
+const navList = (
+  <ul className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-6">
+    <li>
+      <Link to="/Dashboard" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        Dashboard
+      </Link>
+    </li>
+    <li>
+      <Link to="/Workouts" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        Workouts
+      </Link>
+    </li>
+    <li>
+      <Link to="/HealthHub" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        Health Hub
+      </Link>
+    </li>
+    <li>
+      <Link to="/Profile" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        Profile
+      </Link>
+    </li>
+    <li>
+      <Link to="/Settings" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        Settings
+      </Link>
+    </li>
+  </ul>
+);
 
   return (
     <Navbar
@@ -66,33 +66,33 @@ const NavbarComponent = () => {
 
         {/* Mobile hamburger */}
         <IconButton
-          variant="text"
-          className="ml-auto h-6 w-6 lg:hidden text-white"
-          ripple={false}
-          onClick={() => setOpenNav(!openNav)}
+        variant="text"
+        className="lg:hidden flex items-center justify-center h-10 w-10 p-2 text-white"
+        ripple={false}
+        onClick={() => setOpenNav(!openNav)}
         >
-          {openNav ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              className="h-6 w-6"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              className="h-6 w-6"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
+            {openNav ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                className="h-6 w-6"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                className="h-6 w-6"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
         </IconButton>
       </div>
 
