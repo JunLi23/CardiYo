@@ -15,6 +15,7 @@ import HealthHub from "./pages/HealthHub";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import "./styles/index.css";
+import LoginSignUp from "./pages/LoginSignUp";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
     path: "/Settings",
     element: <Settings />,
   },
+  {
+    path: "/LoginSignUp",
+    element: <LoginSignUp />,  
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
