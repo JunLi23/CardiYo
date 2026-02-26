@@ -61,17 +61,6 @@
     font-size: 19px;
 }
 
-.forgot_password{
-    padding-left: 62px;
-    margin-top: 27px;
-    color: #676767;
-    font-size: 18px;
-}
-
-.forgot_password span{
-    color: #4a6741;
-    cursor: pointer;
-}
 
 .submit_container{
     display: flex;
