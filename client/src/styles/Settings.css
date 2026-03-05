@@ -1,0 +1,58 @@
+.settingsLayout {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-top: 2.5%;
+    margin-bottom: 5%;
+}
+
+.settingButtons button, .settingForms button{
+    background-color: #3C5246;
+    color: white;
+    font-size: medium;
+}
+
+.settingButtons {
+    margin-left: 10%;
+}
+
+.settingButtons button {
+    margin-bottom: 5.5%;
+}
+
+.settingForms form {
+    width: 75%;
+    height: clamp(500px, 20vh, 500px);
+    padding: 5%;
+
+    background-color: #5E806D;
+    color: white;
+    border-width: 8px;
+    border-color: #3C5246;
+}
+
+.settingForms button {
+     float: right;
+     margin-top: 13%;
+}
+
+.settingForms h2 {
+    font-size: x-large;
+    text-align: center;
+    margin-bottom: 3%;
+}
+
+.settingForms input {
+    margin-bottom: 3%;
+    background-color: #F0ECD1;
+    color: black;
+    
+    border-width: 6px;
+    border-color: #F0ECD1;
+    border-radius: 5%;
+    font-size: medium;
+}
+
+.settingForms h3 {
+    text-align: center;
+    margin-bottom: 5%;
+}
