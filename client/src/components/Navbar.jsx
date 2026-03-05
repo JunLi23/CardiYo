@@ -14,35 +14,35 @@ const NavbarComponent = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-const navList = (
-  <ul className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-6">
-    <li>
-      <Link to="/Dashboard" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-        Dashboard
-      </Link>
-    </li>
-    <li>
-      <Link to="/Workouts" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-        Workouts
-      </Link>
-    </li>
-    <li>
-      <Link to="/HealthHub" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-        Health Hub
-      </Link>
-    </li>
-    <li>
-      <Link to="/Profile" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-        Profile
-      </Link>
-    </li>
-    <li>
-      <Link to="/Settings" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
-        Settings
-      </Link>
-    </li>
-  </ul>
-);
+  const navList = (
+    <ul className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-6">
+      <li>
+        <Link to="/Dashboard" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+          Dashboard
+        </Link>
+      </li>
+      <li>
+        <Link to="/Workouts" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+          Workouts
+        </Link>
+      </li>
+      <li>
+        <Link to="/HealthHub" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+          Health Hub
+        </Link>
+      </li>
+      <li>
+        <Link to="/Profile" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+          Profile
+        </Link>
+      </li>
+      <li>
+        <Link to="/Settings" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+          Settings
+        </Link>
+      </li>
+    </ul>
+  );
 
   return (
     <Navbar
@@ -50,6 +50,7 @@ const navList = (
       style={{ backgroundColor: "#AEB9A1" }}
     >
       <div className="flex items-center justify-between w-full text-white">
+        {/* Logo */}
         <Link to="/" className="flex items-center">
           <img
             src={Logo}
@@ -64,12 +65,13 @@ const navList = (
         </div>
 
         {/* Mobile hamburger */}
-        <IconButton
-          variant="text"
-          className="lg:hidden items-center justify-center h-10 w-10 p-2 text-white"
-          ripple={false}
-          onClick={() => setOpenNav(!openNav)}
-        >
+        <div className="lg:hidden">
+          <IconButton
+            variant="text"
+            className="flex items-center justify-center h-10 w-10 p-2 text-white"
+            ripple={false}
+            onClick={() => setOpenNav(!openNav)}
+          >
             {openNav ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +94,8 @@ const navList = (
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
-        </IconButton>
+          </IconButton>
+        </div>
       </div>
 
       {/* Mobile nav */}
