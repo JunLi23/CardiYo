@@ -50,7 +50,6 @@ const navList = (
       style={{ backgroundColor: "#AEB9A1" }}
     >
       <div className="flex items-center justify-between w-full text-white">
-        {/* Logo */}
         <Link to="/" className="flex items-center">
           <img
             src={Logo}
@@ -66,10 +65,10 @@ const navList = (
 
         {/* Mobile hamburger */}
         <IconButton
-        variant="text"
-        className="lg:hidden flex items-center justify-center h-10 w-10 p-2 text-white"
-        ripple={false}
-        onClick={() => setOpenNav(!openNav)}
+          variant="text"
+          className="lg:hidden items-center justify-center h-10 w-10 p-2 text-white"
+          ripple={false}
+          onClick={() => setOpenNav(!openNav)}
         >
             {openNav ? (
               <svg
@@ -97,7 +96,9 @@ const navList = (
       </div>
 
       {/* Mobile nav */}
-      <MobileNav open={openNav}>{navList}</MobileNav>
+      <div className="lg:hidden">
+        <MobileNav open={openNav}>{navList}</MobileNav>
+      </div>
     </Navbar>
   );
 };
