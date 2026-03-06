@@ -23,8 +23,7 @@
     position: absolute;
     left: 25%;
     transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
+
 }
 
 .profilePic img {
@@ -40,18 +39,6 @@
 }
 
 .textDescription {
-    color:black;
-    width: 65%;
-
-    float:right;
-    padding-top: 1.5%;
-}
-
-.name {
-    padding-bottom: 2.5%;
-}
-
-.description {
     width: 100%;
     height: clamp(250px, 20vh, 500px);
     color:black;
@@ -63,9 +50,21 @@
     border-left:0px;;
     border-width: 8px;
 
-    padding-top: 10%;
-    padding-left: 23%;
+    padding-left: 20%;
+}
 
+.name, .username {
+    padding-left: 20%;
+    font-size: medium;
+}
+
+.name {
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+}
+
+.description {
+    padding-top: 5%;
     font-size: x-large;
 }
 
@@ -119,6 +118,7 @@
     border-color: #3C5246;
 
     padding-top: 2%;
+    margin-bottom: 8%;
 }
 
 .achievements {
@@ -135,20 +135,4 @@ button {
     margin-left: 8%;
     margin-top: 2%;
 
-}
-
-.settings, .faq, .contactUs, .accountInfo, .editBio, .security, .notify, .accessibility {
-
-    background-color: #3C5246;
-    color: white;
-    font-size: medium;
-
-}
-
-.settings, .accountInfo {
-    margin-top: 2.5%;
-}
-
-.contactUs, .accessibility {
-    margin-bottom: 5%;
 }

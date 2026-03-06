@@ -21,7 +21,6 @@ const Settings = () => {
       </div>
         
       <div className="contain">
-
         <div className="profileContain">
 
           <div className="profilePic">
@@ -38,12 +37,11 @@ const Settings = () => {
           <div className="username">
             janejoe123
           </div>
+          <div className="description">
+            "The impossible journey is the one you never begin" - Dan Millman
+          </div>
 
         </div> 
-
-        <div className="description">
-          "The impossible journey is the one you never begin" - Dan Millman
-        </div>
 
       </div>
 
@@ -63,7 +61,12 @@ const Settings = () => {
 
         <button onClick={() => setActiveForm("accessibility")}> Accessibility </button>
 
+        <button className="faq"> FAQ </button>
+
+        <button className="contactUs"> Contact Us </button>
+
       </div>
+
 
       <div className="settingForms">
         {activeForm === "editProfile" && <EditProfileForm />}
@@ -116,21 +119,25 @@ const BiomarkerForm = () => {
       <h2> Edit Biomarkers </h2>
       <h3> Change biomarkers displayed in the dashboard </h3>
 
-      <p> Calories </p>
+      <div className="row1">
+      <label> Calories: <input type="checkbox" name="calories"/> </label>
 
-      <p> Heart Rate </p>
+      <label> Heart Rate: <input type="checkbox" name="calories"/> </label>
 
-      <p> Steps </p>
+      <label> Steps: <input type="checkbox" name="calories"/> </label>
 
-      <p> Blood Pressure </p>
+      <label> Blood Pressure: <input type="checkbox" name="calories"/> </label>
+      </div>
 
-      <p> Distance </p>
+      <div className="row2">
+      <label> Distance: <input type="checkbox" name="calories"/> </label>
 
-      <p> Cholesterol </p>
+      <label> Cholestrol: <input type="checkbox" name="calories"/> </label>
 
-      <p> Blood Sugar </p>
+      <label> Blood Sugar: <input type="checkbox" name="calories"/> </label>
 
-      <p> 02 Levels </p>
+      <label> 02 Levels: <input type="checkbox" name="calories"/> </label>
+      </div>
 
       <button> Enter </button>
     </form>

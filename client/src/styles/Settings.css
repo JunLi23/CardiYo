@@ -56,3 +56,25 @@
     text-align: center;
     margin-bottom: 5%;
 }
+
+.settings, .faq, .contactUs, .accountInfo, .editBio, .security, .notify, .accessibility {
+
+    background-color: #3C5246;
+    color: white;
+    font-size: medium;
+
+}
+
+.settings, .accountInfo {
+    margin-top: 2.5%;
+}
+
+.contactUs, .accessibility {
+    margin-bottom: 5%;
+}
+
+.row1, .row2 {
+    display: grid;
+    grid-template-rows: 25% 25%;
+    width: 50%;
+}

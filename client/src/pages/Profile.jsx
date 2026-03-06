@@ -32,12 +32,12 @@ const Profile = () => {
           <div className="username">
             janejoe123
           </div>
+          <div className="description">
+            "The impossible journey is the one you never begin" - Dan Millman
+          </div>
 
         </div> 
 
-         <div className="description">
-            "The impossible journey is the one you never begin" - Dan Millman
-        </div>
       </div>
 
       <div className="achievements">
@@ -57,12 +57,6 @@ const Profile = () => {
           Mountains Completed
         </div>
       </div>
-
-        <button className="settings"> Settings </button>
-
-        <button className="faq"> FAQ </button>
-
-        <button className="contactUs"> Contact Us </button>
 
     </>
   );
