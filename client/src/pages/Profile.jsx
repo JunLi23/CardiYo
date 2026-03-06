@@ -30,7 +30,7 @@ const Profile = () => {
             Jane Joe
           </div>
           <div className="username">
-            janejoe123
+            janedoe123
           </div>
           <div className="description">
             "The impossible journey is the one you never begin" - Dan Millman
