@@ -8,17 +8,13 @@ const progressData = [
 export default function ProgressDisplay(){
     return (
         <div className={styles.display}>
-            <h2>
-                {progressData[0].label}
-            </h2>
-            <p>
-                {progressData[0].distance}m
-            </p>
-            <p>
-                {progressData[0].progress}%
-            </p>
-            <div className={styles.progressBar}>
-                <div className={styles.progressBarFill}>
+            <p className={styles.heading}> {progressData[0].label} </p>
+            <p className={styles.ProgressDisplayP}> {progressData[0].distance}m </p>
+            <div className={styles.progressSection}>
+                <p>{progressData[0].progress}%</p>
+                <div className={styles.progressBar}>
+                    <div className={styles.progressBarFill}>
+                </div>
                 </div>
             </div>
         </div>

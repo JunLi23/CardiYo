@@ -1,0 +1,41 @@
+
+.display{
+    background-color: #4a6741; /* Setting the background colour as green */
+    border-radius: 20px; /* Rounding the corners */
+    padding: 20px; /* Adding padding to internal components */
+    width:  100%; 
+    border: 15px solid #3a5432;  /* slightly darker green border */
+
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.notificationHeader{
+    display: flex;
+    justify-content: space-between;
+
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.notification{
+    border-radius: 15px;
+    padding: 5px;
+    border-bottom: 8px solid #4a6741;
+    color: black;
+    font-size: 20px;
+}
+
+.read {
+    background-color: rgba(199, 200, 181, 0.533);
+}
+
+.unread{
+    background-color: #C7C8B5;
+}
+
+.header{
+    font-size: 30px;
+    font-weight: 800;
+}

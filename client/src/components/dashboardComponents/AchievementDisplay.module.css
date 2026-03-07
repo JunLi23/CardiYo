@@ -3,21 +3,32 @@
     background-color: #4a6741; /* Setting the background colour as green */
     border-radius: 20px; /* Rounding the corners */
     padding: 20px; /* Adding padding to internal components */
-    width: 340px; 
-    border: 3px solid #3a5432;  /* slightly darker green border */
+    width: 100%; 
+    border: 15px solid #3a5432;  /* slightly darker green border */
 
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .achievementWrapper{
     display: flex;
     flex-direction: row;
     gap: 20px;
+    width: 100%;
 }
 
-.medal{
-    display: flex;
-    flex-direction: column;
+.medal {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.badge{
+    width: 90%;
 }

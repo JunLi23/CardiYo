@@ -6,8 +6,8 @@ export default function BioMarker({ label, value, unit }) {
       <img src="/cloud.svg" alt="cloud" className={styles.cloudImg} />
       <div className={styles.content}>
         <p className={styles.label}>{label}</p>
-        <p classname={styles.value}>{value}</p>
-        <p classname={styles.unit}>{unit}</p>
+        <p className={styles.value}>{value}</p>
+        <p className={styles.unit}>{unit}</p>
       </div>
     </div>
   );

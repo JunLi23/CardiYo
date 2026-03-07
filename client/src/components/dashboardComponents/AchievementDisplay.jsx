@@ -1,4 +1,7 @@
 import styles from "./AchievementDisplay.module.css";
+import goldBadge from "../../assets/gBadge.png";
+import greyBadge from "../../assets/greyBadge.png";
+import trophy from "../../assets/trophy.svg";
 
 /*Temperary to just find spacing and things*/
 const achievements = [
@@ -13,7 +16,7 @@ const achievements = [
 function MedalIcon({ earned, label}) {
   return (
     <div>
-      {earned ? "🥇" : "🥈"}
+      {earned ? <img src={goldBadge} alt="gBadge" className={styles.badge} /> : <img src={greyBadge} alt="greyBadge" className={styles.badge}/>}
       {label}
     </div>
   )
@@ -22,13 +25,11 @@ function MedalIcon({ earned, label}) {
 export default function AchievementDisplay () {
     return (
         <div className={styles.display}>
-            🏆
+            <img src={trophy} alt="trophy" style={{width: "60px"}}/>
             <div className={styles.achievementWrapper}>
             {achievements.map((achievement) => (
-                <div key={achievement.id}>
-                    <div className={styles.medal}>
-                        <MedalIcon earned={achievement.earned} label = {achievement.label} />
-                    </div>
+                <div key={achievement.id} className={styles.medal}>
+                    <MedalIcon earned={achievement.earned} label = {achievement.label} />
                 </div>
             ))}
             </div>
