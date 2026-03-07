@@ -25,14 +25,19 @@
     border-bottom: 8px solid #4a6741;
     color: black;
     font-size: 20px;
+
+    cursor: pointer;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
 }
 
 .read {
     background-color: rgba(199, 200, 181, 0.533);
+    opacity: 0.5;
 }
 
 .unread{
     background-color: #C7C8B5;
+    opacity: 1;
 }
 
 .header{
