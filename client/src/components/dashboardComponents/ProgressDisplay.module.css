@@ -1,0 +1,43 @@
+
+.display{
+    background-color: #4a6741; /* Setting the background colour as green */
+    border-radius: 20px; /* Rounding the corners */
+    padding: 20px; /* Adding padding to internal components */
+    width: 100%; 
+    border: 15px solid #3a5432;  /* slightly darker green border */
+
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.progressBar{
+    background-color: white;
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid rgb(99, 128, 103);
+    height: 24px;
+}
+
+.progressBarFill{
+    background-color: rgb(88, 22, 22);
+    width: 42%; /* Hard coded for now */
+    border-radius: 9px;
+    height: 100%;
+}
+
+.progressSection{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.heading{
+    font-size: 32px;
+    font-weight: 750;
+}
+
+.ProgressDisplayP{
+    font-size: 22px;
+}

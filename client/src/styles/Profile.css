@@ -1,0 +1,138 @@
+
+.splashBg img{
+    width: 100%;
+    height: clamp(250px, 50vh, 500px);
+    object-fit: cover;
+
+    border-width: 8px;
+    border-left: 0px;
+    border-right: 0px;
+    border-color: #3C5246;
+
+}
+
+.splashBg {
+    position: relative;
+}
+
+.contain {
+    position: relative;
+}
+
+.profileContain {
+    position: absolute;
+    left: 25%;
+    transform: translate(-50%, -50%);
+
+}
+
+.profilePic img {
+    width: 100%;
+    height: clamp(200px, 10vh, 250px);
+    object-fit: cover;
+
+    border-width: 8px;
+    border-color: #3C5246;
+    border-radius: 50%;
+
+    clip-path: circle();
+}
+
+.textDescription {
+    width: 100%;
+    height: clamp(250px, 20vh, 500px);
+    color:black;
+    background-color: #C7C8B5;
+
+    border-color: #3C5246;
+    border-top:0px;
+    border-right:0px;
+    border-left:0px;;
+    border-width: 8px;
+
+    padding-left: 20%;
+}
+
+.name, .username {
+    padding-left: 20%;
+    font-size: medium;
+}
+
+.name {
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+}
+
+.description {
+    padding-top: 5%;
+    font-size: x-large;
+}
+
+.medalstrophies {
+    width: 75%;
+    height: clamp(350px, 20vh, 500px);
+    margin-left: 15%;
+
+    margin-top: 5%;
+
+    color: white;
+    text-align: center;
+
+    background-color: #5E806D;
+    border-width: 8px;
+    border-radius: 1%;
+    border-color: #3C5246;
+
+    display: grid;
+    grid-template-rows: 50% 50%;
+}
+
+.medal {
+    border-width: 8px;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+
+    padding-top: 2%;
+
+    border-color: #3C5246;
+}
+
+.trophy {
+    padding-top: 2%;
+}
+
+.mountainsComplete {
+    width: 75%;
+    height: clamp(350px, 20vh, 500px);
+
+    margin-top: 5%;
+    margin-left: 10%;
+
+    color: white;
+    text-align: center;
+
+    background-color: #5E806D;
+    border-width: 8px;
+    border-radius: 1%;
+    border-color: #3C5246;
+
+    padding-top: 2%;
+    margin-bottom: 8%;
+}
+
+.achievements {
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    font-size: large;
+}
+
+button {
+    display: grid;
+    grid-template-rows: 25% 25% 25%;
+
+    margin-left: 8%;
+    margin-top: 2%;
+
+}

@@ -1,0 +1,42 @@
+
+.cloudWrapper {
+  position: relative;
+  width: 200px;
+  display: inline-block;
+}
+
+.cloudImg {
+  width: 100%;
+}
+
+.content {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.content p {
+  margin: 0;
+  padding: 0;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #135fa5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111116;
+}
+
+.unit {
+  font-size: 11px;
+  color: #4884d9;
+}
