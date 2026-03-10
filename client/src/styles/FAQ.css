@@ -1,0 +1,49 @@
+.faq-page {
+  background-color: #E6E7D5;
+  min-height: calc(100vh - 70px);
+  padding: 60px 20px 80px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto;
+}
+
+.faq-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.faq-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #3C5246;
+  margin-bottom: 10px;
+}
+
+.faq-header p {
+  color: #5b7a6b;
+  font-size: 1rem;
+}
+
+.faq-list {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(60, 82, 70, 0.2);
+  padding-bottom: 24px;
+}
+
+.faq-question {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3C5246;
+  margin-bottom: 8px;
+}
+
+.faq-answer {
+  font-size: 0.95rem;
+  color: #5b7a6b;
+  line-height: 1.75;
+}

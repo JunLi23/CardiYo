@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import "./styles/index.css";
 import LoginSignUp from "./pages/LoginSignUp";
+import FAQ from "./pages/FAQ";
 
 const router = createBrowserRouter([
   {
@@ -70,7 +71,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/LoginSignUp",
-    element: <LoginSignUp />,  
+    element: <LoginSignUp />,
+  },
+  {
+    path: "/FAQ",
+    element: <FAQ />,
   }
 ]);
 

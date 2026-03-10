@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import splashBg from '../assets/Splash.jpg';
 import blankPf from '../assets/blank-pf.png';
@@ -11,6 +11,7 @@ import '../styles/LoginSignUp.css';
 
 const Settings = () => {
   const [activeForm, setActiveForm] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -61,7 +62,7 @@ const Settings = () => {
 
         <button onClick={() => setActiveForm("accessibility")}> Accessibility </button>
 
-        <button className="faq"> FAQ </button>
+        <button className="faq" onClick={() => navigate("/FAQ")}> FAQ </button>
 
         <button className="contactUs"> Contact Us </button>
 
