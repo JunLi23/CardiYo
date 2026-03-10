@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import splashBg from '../assets/Splash.jpg';
 import blankPf from '../assets/blank-pf.png';
 import { useState } from "react";
@@ -64,8 +65,6 @@ const Settings = () => {
 
         <button className="faq" onClick={() => navigate("/FAQ")}> FAQ </button>
 
-        <button className="contactUs"> Contact Us </button>
-
       </div>
 
 
@@ -80,6 +79,7 @@ const Settings = () => {
 
       </div>
 
+      <Footer />
     </>
   );
 };
