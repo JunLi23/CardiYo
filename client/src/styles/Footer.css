@@ -79,6 +79,14 @@
   color: #3C5246;
 }
 
+.social-icon-img {
+  filter: brightness(0) invert(1) sepia(0.2) saturate(0.6) brightness(0.92);
+}
+
+.social-icon:hover .social-icon-img {
+  filter: brightness(0);
+}
+
 .footer-bottom {
   text-align: center;
   padding: 1rem 0;
