@@ -65,6 +65,8 @@ const Settings = () => {
 
         <button className="faq" onClick={() => navigate("/FAQ")}> FAQ </button>
 
+        <button className="logout" onClick={() => navigate("/LoginSignUp")}> Log Out </button>
+
       </div>
 
 
