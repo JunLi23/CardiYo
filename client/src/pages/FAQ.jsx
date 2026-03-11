@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -39,7 +40,12 @@ const faqs = [
 ];
 
 const FAQ = () => {
+  const [openIndex, setOpenIndex] = useState(null);
   const navigate = useNavigate();
+
+  const toggle = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <>
@@ -52,9 +58,18 @@ const FAQ = () => {
         </div>
         <div className="faq-list">
           {faqs.map((item, index) => (
-            <div key={index} className="faq-item">
-              <p className="faq-question">{item.question}</p>
-              <p className="faq-answer">{item.answer}</p>
+            <div
+              key={index}
+              className={`faq-item ${openIndex === index ? "faq-open" : ""}`}
+              onClick={() => toggle(index)}
+            >
+              <div className="faq-question">
+                <span>{item.question}</span>
+                <span className="faq-icon">▼</span>
+              </div>
+              {openIndex === index && (
+                <div className="faq-answer">{item.answer}</div>
+              )}
             </div>
           ))}
         </div>
