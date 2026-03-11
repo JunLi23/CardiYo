@@ -1,179 +1,175 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import splashBg from '../assets/Splash.jpg';
-import blankPf from '../assets/blank-pf.png';
-import { useState } from "react";
-import '../styles/Profile.css';
-import '../styles/Settings.css';
-import '../styles/LoginSignUp.css';
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+import ProfileBanner from "../components/ProfileBanner";
+import React, { useState, useEffect } from "react";
 
 const Settings = () => {
+  const [profile, setProfile] = useState({
+    name: "Jane Joe",
+    username: "janejoe123",
+    bio: "The impossible journey is the one you never begin - Dan Millman"});
+
   const [activeForm, setActiveForm] = useState(null);
-  const navigate = useNavigate();
+  const settingsButton = "md:w-75 w-50 mx-auto m-2 bg-[#3C5246] text-white py-2";
+
+  {/* Loads Saved Profile Data From Local Storage */}
+  useEffect(() => {
+    const savedData = localStorage.getItem("profileData");
+    if (savedData) {
+      setProfile(JSON.parse(savedData));
+    }}, []);
 
   return (
     <>
       <Navbar />
-
-      <div className="splashBg">
-        <img src ={splashBg} alt="" />
-      </div>
-        
-      <div className="contain">
-        <div className="profileContain">
-
-          <div className="profilePic">
-            <img src ={blankPf} alt="" />
-          </div>
-
-        </div>
-
-        <div className="textDescription">
-
-          <div className="name">
-            Jane Joe
-          </div>
-          <div className="username">
-            janejoe123
-          </div>
-          <div className="description">
-            "The impossible journey is the one you never begin" - Dan Millman
-          </div>
-
-        </div> 
-
+      <ProfileBanner profile={profile} />
+      {/* Setting Buttons */}
+      <div className="w-[90%] max-w-[1100px] grid grid-cols-1 md:grid-cols-2 mt-10 mx-auto">
+        <button onClick={() => setActiveForm("editProfile")} className={settingsButton}> Edit Profile </button>
+        <button onClick={() => setActiveForm("accountInfo")} className={settingsButton}> Account Information </button>
+        <button onClick={() => setActiveForm("editBio")} className={settingsButton}> Edit Biomarkers </button>
+        <button onClick={() => setActiveForm("security")} className={settingsButton}> Security </button>
+        <button onClick={() => setActiveForm("notify")} className={settingsButton}> Notifications </button>
+        <button onClick={() => setActiveForm("accessibility")} className={settingsButton}> Accessibility </button>
+        <button onClick={() => setActiveForm("faq")} className={settingsButton}> FAQ </button>
+        <button onClick={() => setActiveForm("contactUs")} className={settingsButton}> Contact Us </button>
       </div>
 
-      <div className="settingsLayout">
-
-      <div className="settingButtons"> 
-
-        <button onClick={() => setActiveForm("editProfile")}> Edit Profile </button>
-
-        <button onClick={() => setActiveForm("accountInfo")}> Account Information </button>
-
-        <button onClick={() => setActiveForm("editBio")}> Edit Biomarkers </button>
-
-        <button onClick={() => setActiveForm("security")}> Security </button>
-
-        <button onClick={() => setActiveForm("notify")}> Notifications </button>
-
-        <button onClick={() => setActiveForm("accessibility")}> Accessibility </button>
-
-        <button className="faq" onClick={() => navigate("/FAQ")}> FAQ </button>
-
-        <button className="logout" onClick={() => navigate("/LoginSignUp")}> Log Out </button>
-
+      {/* Displays Form */}
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 md:w-150">
+        {activeForm === "editProfile" && (<EditProfileForm setProfile={setProfile} setActiveForm={setActiveForm} /> )}
+        {activeForm === "accountInfo" && <AccountForm setActiveForm={setActiveForm}/>}
+        {activeForm === "editBio" && <BiomarkerForm setActiveForm={setActiveForm}/>}
+        {activeForm === "security" && <SecurityForm setActiveForm={setActiveForm}/>}
+        {activeForm === "notify" && <NotificationForm setActiveForm={setActiveForm}/>}
+        {activeForm === "accessibility" && <AccessibilityForm setActiveForm={setActiveForm}/>}
+        {activeForm === "faq" && <FAQForm setActiveForm={setActiveForm}/>}
+        {activeForm === "contactUs" && <ContactUsForm setActiveForm={setActiveForm}/>}
       </div>
-
-
-      <div className="settingForms">
-        {activeForm === "editProfile" && <EditProfileForm />}
-        {activeForm === "accountInfo" && <AccountForm />}
-        {activeForm === "editBio" && <BiomarkerForm />}
-        {activeForm === "security" && <SecurityForm />}
-        {activeForm === "notify" && <NotificationForm />}
-        {activeForm === "accessibility" && <AccessibilityForm />}
-      </div>
-
-      </div>
-
-      <Footer />
     </>
   );
 };
 
-const EditProfileForm = () => {
+{/* Edit Profile Form */}
+const EditProfileForm = ({setProfile, setActiveForm}) => {
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [bio, setBio] = useState("");
+  const [photo, setPhoto] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const profileData = {name, username, bio, photo};
+    localStorage.setItem("profileData", JSON.stringify(profileData));
+    setProfile(profileData);
+    window.dispatchEvent(new Event("profileUpdated"));
+    setActiveForm(null);
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPhoto(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
-    <form>
-      <h2> Edit Profile </h2>
-
-      <p>First Name: </p>
-      <input type="text" placeholder="First Name" />
-
-      <p>Surname: </p>
-      <input type="text" placeholder="Surname" />
-
-      <p>Bio: </p>
-      <input type="text" placeholder="Bio" />
-
-      <button type="submit"> Enter </button>
-
+    <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full" onSubmit={handleSubmit}>
+      <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+      
+      <h2 className="text-2xl text-center mb-6">Edit Profile</h2>
+      <label className="block mb-4">
+        Name <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={name} onChange={(e) => setName(e.target.value)} />
+      </label>
+      <label className="block mb-4">
+        Username <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={username} onChange={(e) => setUsername(e.target.value)} />
+      </label>
+      <label className="block mb-6">
+        Bio <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={bio} onChange={(e) => setBio(e.target.value)} />
+      </label>
+      <label className="block mb-6">
+        Profile Picture <input type="file" accept="image/*" id="profileUpload" className="hidden" onChange={handleImageUpload} />
+        <div className="mt-3">
+          <label htmlFor="profileUpload" className="bg-[#C7C8B5] text-black px-4 py-2 rounded cursor-pointer hover:bg-[#d8d2b9]">
+            Upload Image
+          </label>
+        </div>
+      </label>
+      <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6">
+        Submit
+      </button>
     </form>
   );
 };
 
-const AccountForm = () => {
-  return (
-    <form>
-      <h2> Account Information </h2>
+{/* Account Form */}
+const AccountForm = ({setActiveForm}) => (
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+    <h2 className="text-2xl text-center mb-6">Account Information</h2>
+    <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6"> Submit </button>
+  </form>
+);
 
-      <button> Enter </button>
-    </form>
-  );
-};
+{/* Biomarker Form */}
+const BiomarkerForm = ({ setActiveForm }) => (
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+    <h2 className="text-2xl text-center mb-4">Edit Biomarkers</h2>
+    <div className="grid grid-cols-2 gap-x-10 gap-y-6">
+      <label className="flex justify-between items-center">Calories <input className="scale-150 accent-[#3C5246]" type="checkbox" checked/></label>
+      <label className="flex justify-between items-center">Heart Rate <input className="scale-150 accent-[#3C5246]" type="checkbox" checked/></label>
+      <label className="flex justify-between items-center">Steps <input className="scale-150 accent-[#3C5246]" type="checkbox" checked/></label>
+      <label className="flex justify-between items-center">Blood Pressure <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
+      <label className="flex justify-between items-center">Distance <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
+      <label className="flex justify-between items-center">Cholesterol <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
+      <label className="flex justify-between items-center">Blood Sugar <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
+      <label className="flex justify-between items-center">O2 Levels <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
+    </div>
+    <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6"> Submit </button>
+  </form>
+);
 
-const BiomarkerForm = () => {
-  return (
-    <form>
-      <h2> Edit Biomarkers </h2>
-      <h3> Change biomarkers displayed in the dashboard </h3>
+{/* Security Form */}
+const SecurityForm = ({ setActiveForm }) => (
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+    <h2 className="text-2xl text-center mb-6">Security</h2>
+  </form>
+);
 
-      <div className="row1">
-      <label> Calories: <input type="checkbox" name="calories"/> </label>
+{/* Notification Form */}
+const NotificationForm = ({ setActiveForm }) => (
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+    <h2 className="text-2xl text-center mb-6">Notifications</h2>
+  </form>
+);
+{/* Accessibility Form */}
+const AccessibilityForm = ({ setActiveForm }) => (
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+    <h2 className="text-2xl text-center mb-6">Accessibility</h2>
+  </form>
+);
 
-      <label> Heart Rate: <input type="checkbox" name="calories"/> </label>
+{/* FAQ Form */}
+const FAQForm = ({ setActiveForm }) => (
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+    <h2 className="text-2xl text-center mb-6">FAQ</h2>
+  </form>
+);
 
-      <label> Steps: <input type="checkbox" name="calories"/> </label>
+{/* Contact Us Form */}
+const ContactUsForm = ({ setActiveForm }) => (
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+    <h2 className="text-2xl text-center mb-6">Contact Us</h2>
+  </form>
+);
 
-      <label> Blood Pressure: <input type="checkbox" name="calories"/> </label>
-      </div>
-
-      <div className="row2">
-      <label> Distance: <input type="checkbox" name="calories"/> </label>
-
-      <label> Cholestrol: <input type="checkbox" name="calories"/> </label>
-
-      <label> Blood Sugar: <input type="checkbox" name="calories"/> </label>
-
-      <label> 02 Levels: <input type="checkbox" name="calories"/> </label>
-      </div>
-
-      <button> Enter </button>
-    </form>
-  );
-};
-
-const SecurityForm = () => {
-  return (
-    <form>
-      <h2> Security </h2>
-
-      <button> Enter </button>
-    </form>
-  );
-};
-
-const NotificationForm = () => {
-  return (
-    <form>
-      <h2> Notification </h2>
-
-      <button> Enter </button>
-    </form>
-  );
-};
-
-const AccessibilityForm = () => {
-  return (
-    <form>
-      <h2> Accessibility </h2>
-
-      <button> Enter </button>
-    </form>
-  );
-};
-export default Settings
+export default Settings;

@@ -1,65 +1,39 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import splashBg from '../assets/Splash.jpg';
-import blankPf from '../assets/blank-pf.png';
-import '../styles/Profile.css';
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+import ProfileBanner from "../components/ProfileBanner";
+import { useEffect, useState } from "react";
+import MedalBox from "../components/MedalBox";
+import MountainBox from "../components/MountainBox";
 
 const Profile = () => {
+  const [profile, setProfile] = useState({
+    name: "Jane Joe",
+    username: "janedoe123",
+    bio: `"The impossible journey is the one you never begin" - Dan Millman`
+  });
+  useEffect(() => {
+    const loadProfile = () => {
+      const savedData = localStorage.getItem("profileData");
+      if (savedData) { setProfile(JSON.parse(savedData)); }
+    };
+    loadProfile();
+    window.addEventListener("profileUpdated", loadProfile);
+    
+    return () => {
+      window.removeEventListener("profileUpdated", loadProfile);
+    }; }, []);
+    
   return (
     <>
       <Navbar />
-
-      <div className="splashBg">
-        <img src ={splashBg} alt="" />
+      <ProfileBanner profile={profile} />
+      
+      {/* Achievements + Mountain Section */}
+      <div className="w-[90%] max-w-[1100px] grid grid-cols-1 md:grid-cols-2 text-center mt-10 mb-10 mx-auto gap-15 md:gap-20">
+          <MedalBox />
+          <MountainBox />
       </div>
-        
-      <div className="contain">
-        <div className="profileContain">
-
-          <div className="profilePic">
-            <img src ={blankPf} alt="" />
-          </div>
-
-        </div>
-
-        <div className="textDescription">
-
-          <div className="name">
-            Jane Joe
-          </div>
-          <div className="username">
-            janedoe123
-          </div>
-          <div className="description">
-            "The impossible journey is the one you never begin" - Dan Millman
-          </div>
-
-        </div> 
-
-      </div>
-
-      <div className="achievements">
-        <div className="medalstrophies">
-
-          <div className="medal">
-            Medals
-          </div>
-
-          <div className="trophy">
-            Trophies
-          </div>
-
-        </div>
-
-        <div className="mountainsComplete">
-          Mountains Completed
-        </div>
-      </div>
-
     </>
   );
 };
-
-export default Profile
+export default Profile;
