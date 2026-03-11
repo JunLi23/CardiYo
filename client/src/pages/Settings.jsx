@@ -1,4 +1,4 @@
-
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import ProfileBanner from "../components/ProfileBanner";
 import React, { useState, useEffect } from "react";
@@ -11,6 +11,8 @@ const Settings = () => {
     bio: "The impossible journey is the one you never begin - Dan Millman"});
 
   const [activeForm, setActiveForm] = useState(null);
+  const [logoutHover, setLogoutHover] = useState(false);
+  const navigate = useNavigate();
   const settingsButton = "md:w-75 w-50 mx-auto m-2 bg-[#3C5246] text-white py-2";
 
   {/* Loads Saved Profile Data From Local Storage */}
@@ -33,6 +35,13 @@ const Settings = () => {
         <button onClick={() => setActiveForm("notify")} className={settingsButton}> Notifications </button>
         <button onClick={() => setActiveForm("accessibility")} className={settingsButton}> Accessibility </button>
         <button onClick={() => navigate("/FAQ")} className={settingsButton}> FAQ </button>
+        <button
+          onClick={() => navigate("/LoginSignUp")}
+          onMouseEnter={() => setLogoutHover(true)}
+          onMouseLeave={() => setLogoutHover(false)}
+          className="md:w-75 w-50 mx-auto m-2 py-2"
+          style={{ backgroundColor: logoutHover ? "#cc0000" : "#3C5246", color: logoutHover ? "white" : "#ff2222" }}
+        > Log Out </button>
       </div>
 
       {/* Displays Form */}
@@ -45,7 +54,9 @@ const Settings = () => {
         {activeForm === "accessibility" && <AccessibilityForm setActiveForm={setActiveForm}/>}
       </div>
 
-      <Footer />
+      <div className="mt-10">
+        <Footer />
+      </div>
     </>
   );
 };
