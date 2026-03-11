@@ -73,6 +73,18 @@
     margin-bottom: 5%;
 }
 
+.logout {
+    background-color: #3C5246;
+    color: #ff2222 !important;
+    font-size: medium;
+    margin-top: 2.5%;
+}
+
+.logout:hover {
+    background-color: #cc0000 !important;
+    color: white !important;
+}
+
 .row1, .row2 {
     display: grid;
     grid-template-rows: 25% 25%;
