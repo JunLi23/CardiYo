@@ -1,7 +1,8 @@
-import { Outlet } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import ProfileBanner from "../components/ProfileBanner";
 import React, { useState, useEffect } from "react";
+import Footer from "../components/Footer";
 
 const Settings = () => {
   const [profile, setProfile] = useState({
@@ -31,8 +32,7 @@ const Settings = () => {
         <button onClick={() => setActiveForm("security")} className={settingsButton}> Security </button>
         <button onClick={() => setActiveForm("notify")} className={settingsButton}> Notifications </button>
         <button onClick={() => setActiveForm("accessibility")} className={settingsButton}> Accessibility </button>
-        <button onClick={() => setActiveForm("faq")} className={settingsButton}> FAQ </button>
-        <button onClick={() => setActiveForm("contactUs")} className={settingsButton}> Contact Us </button>
+        <button onClick={() => navigate("/FAQ")} className={settingsButton}> FAQ </button>
       </div>
 
       {/* Displays Form */}
@@ -43,9 +43,9 @@ const Settings = () => {
         {activeForm === "security" && <SecurityForm setActiveForm={setActiveForm}/>}
         {activeForm === "notify" && <NotificationForm setActiveForm={setActiveForm}/>}
         {activeForm === "accessibility" && <AccessibilityForm setActiveForm={setActiveForm}/>}
-        {activeForm === "faq" && <FAQForm setActiveForm={setActiveForm}/>}
-        {activeForm === "contactUs" && <ContactUsForm setActiveForm={setActiveForm}/>}
       </div>
+
+      <Footer />
     </>
   );
 };
@@ -153,22 +153,6 @@ const AccessibilityForm = ({ setActiveForm }) => (
   <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
     <h2 className="text-2xl text-center mb-6">Accessibility</h2>
-  </form>
-);
-
-{/* FAQ Form */}
-const FAQForm = ({ setActiveForm }) => (
-  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
-    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
-    <h2 className="text-2xl text-center mb-6">FAQ</h2>
-  </form>
-);
-
-{/* Contact Us Form */}
-const ContactUsForm = ({ setActiveForm }) => (
-  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
-    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
-    <h2 className="text-2xl text-center mb-6">Contact Us</h2>
   </form>
 );
 

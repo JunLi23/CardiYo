@@ -4,6 +4,7 @@ import ProfileBanner from "../components/ProfileBanner";
 import { useEffect, useState } from "react";
 import MedalBox from "../components/MedalBox";
 import MountainBox from "../components/MountainBox";
+import Footer from "../components/Footer";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -27,12 +28,14 @@ const Profile = () => {
     <>
       <Navbar />
       <ProfileBanner profile={profile} />
-      
+
       {/* Achievements + Mountain Section */}
       <div className="w-[90%] max-w-[1100px] grid grid-cols-1 md:grid-cols-2 text-center mt-10 mb-10 mx-auto gap-15 md:gap-20">
           <MedalBox />
           <MountainBox />
       </div>
+      
+      <Footer />
     </>
   );
 };
