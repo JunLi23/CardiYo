@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/FAQ.css";
@@ -38,10 +39,13 @@ const faqs = [
 ];
 
 const FAQ = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Navbar />
       <div className="faq-page">
+        <button className="faq-back" onClick={() => navigate("/Settings")}>← Back to Settings</button>
         <div className="faq-header">
           <h1>Frequently Asked Questions</h1>
           <p>No mountain too high, no question too small.</p>
