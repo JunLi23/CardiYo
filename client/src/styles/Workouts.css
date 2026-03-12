@@ -1,4 +1,13 @@
 /* =========================
+   GLOBAL
+   ========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* =========================
    THEME
    ========================= */
 :root {
@@ -17,7 +26,7 @@
   background: var(--bg);
   min-height: calc(100vh - 70px);
   padding: 28px 0 60px;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
 .wk-main {
@@ -321,32 +330,43 @@
 }
 
 /* =========================
-   BOTTOM BUTTONS
+   BOTTOM BUTTONS (UPDATED FOR EQUAL SIZE)
    ========================= */
 .wk-bottomBtns {
-  margin-top: 16px;
+  margin-top: 24px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  align-items: stretch; /* Ensures buttons match height if text wraps */
+  gap: 16px;
+  width: 100%;
 }
 
 .wk-leftBtns {
-  display: flex;
-  gap: 12px;
+  /* This prevents the wrapper div from breaking the equal width flex layout */
+  display: contents; 
 }
 
 .wk-pillBtn {
+  flex: 1 1 0px; /* Forces equal width across all 3 buttons */
+  max-width: 220px; /* Keeps them from getting overly wide on huge screens */
+  min-height: 56px;
   border: none;
   border-radius: 999px;
   background: var(--pill);
   color: #fff;
-  font-size: 18px;
-  padding: 12px 32px;
+  font-size: 16px; /* Slightly smaller to fit side by side */
+  font-weight: 600;
+  padding: 10px 8px; /* Less horizontal padding since flex handles width */
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .wk-pillBtn:hover {
-  filter: brightness(.96);
+  filter: brightness(0.96);
 }
 
 .wk-pillBtn:disabled {
@@ -435,7 +455,6 @@
   padding: 0 20px;
   font-size: 20px;
   color: #111;
-  box-sizing: border-box;
   outline: none;
 }
 
@@ -463,18 +482,20 @@
   border-radius: 999px;
   padding: 10px 40px;
   font-size: 22px;
-  background: #4A6354;
+  background: #4a6354;
   color: #fff;
   cursor: pointer;
 }
 
 .wk-enterBtn:hover {
-  filter: brightness(.96);
+  filter: brightness(0.96);
 }
 
 .wk-selectInput {
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, #111 50%), linear-gradient(135deg, #111 50%, transparent 50%);
+  background-image:
+    linear-gradient(45deg, transparent 50%, #111 50%),
+    linear-gradient(135deg, #111 50%, transparent 50%);
   background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
   background-size: 6px 6px, 6px 6px;
   background-repeat: no-repeat;
@@ -493,6 +514,7 @@
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 10px;
+  gap: 10px;
 }
 
 .wk-listTitle {
@@ -529,6 +551,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .wk-cardInfo {
@@ -564,7 +587,7 @@
 }
 
 .wk-smallBtn:hover {
-  filter: brightness(.96);
+  filter: brightness(0.96);
 }
 
 .wk-dangerBtn {
@@ -611,7 +634,7 @@
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  background: rgba(0, 0, 0, 0.10);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .wk-deviceLabel {
@@ -654,7 +677,7 @@
   margin: 18px 0;
   text-align: center;
   font-size: 56px;
-  font-family: "Georgia", serif;
+  font-family: Georgia, serif;
   color: #111;
 }
 
@@ -662,7 +685,7 @@
   display: flex;
   flex-direction: column;
   gap: 26px;
-  padding: 30px 0 10px 0;
+  padding: 30px 0 10px;
   width: 420px;
   margin-left: 120px;
 }
@@ -679,7 +702,7 @@
 }
 
 .wk-dataBtn:hover {
-  filter: brightness(.96);
+  filter: brightness(0.96);
 }
 
 /* =========================
@@ -766,4 +789,496 @@
   color: #fff;
   font-weight: 500;
   margin-bottom: 30px;
+  text-align: center;
+}
+
+/* =========================
+   BIOMARKERS MODAL (LIST VIEW)
+   ========================= */
+.wk-biomarkersGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.wk-bioCard {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.wk-bioName {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+.wk-bioValueWrap {
+  margin: 4px 0;
+}
+
+.wk-bioValue {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--pill);
+}
+
+.wk-bioUnit {
+  font-size: 14px;
+  color: #555;
+  margin-left: 6px;
+}
+
+.wk-bioStatus {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-excellent { background: #d6efc2; color: #2d5a00; }
+.status-good { background: #b8d8ff; color: #003a80; }
+.status-normal { background: #e2f0cb; color: #4a632d; }
+
+/* =========================
+   BIOMARKERS TOGGLE & FILTERS
+   ========================= */
+.wk-bioToggleWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.wk-bioToggle {
+  display: flex;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.wk-bioToggleBtn {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 20px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wk-bioToggleBtn.isActive {
+  background: var(--pill);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.wk-bioFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.wk-bioFilterChip {
+  background: var(--cream);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wk-bioFilterChip.isSelected {
+  background: var(--pill);
+  color: #fff;
+  border-color: var(--pill);
+}
+
+/* =========================
+   BIOMARKERS CHART VIEW
+   ========================= */
+.wk-bioChartArea {
+  background: var(--cream);
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.wk-bioChartRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wk-bioChartLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+}
+
+.wk-bioChartValue {
+  color: #555;
+  font-weight: 500;
+}
+
+.wk-bioChartTrack {
+  width: 100%;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.wk-bioChartFill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+/* tablet */
+@media (max-width: 900px) {
+  .wk-main {
+    width: min(94vw, 100%);
+  }
+
+  .wk-monthPill {
+    width: 300px;
+    height: 54px;
+  }
+
+  .wk-monthText {
+    font-size: 24px;
+  }
+
+  .wk-dow {
+    height: 50px;
+    font-size: 20px;
+  }
+
+  .wk-cell {
+    min-height: 95px;
+    padding: 8px;
+  }
+
+  .wk-num {
+    font-size: 16px;
+  }
+
+  .wk-workoutChipText {
+    font-size: 11px;
+  }
+
+  .wk-dataTitle {
+    font-size: 44px;
+  }
+
+  .wk-dataBtns {
+    width: 100%;
+    margin-left: 0;
+    align-items: center;
+  }
+
+  .wk-mountainsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* phone */
+@media (max-width: 640px) {
+  .wk-page {
+    padding: 16px 0 40px;
+  }
+
+  .wk-main {
+    width: 94vw;
+  }
+
+  .wk-frameOuter {
+    border-radius: 24px;
+    padding: 16px 12px 12px; 
+  }
+
+  .wk-frameInner {
+    border-radius: 18px;
+    padding: 12px;
+    overflow-x: auto;
+    position: relative; 
+  }
+
+  .wk-monthPill {
+    width: 100%;
+    max-width: none;
+    height: 46px; 
+    border-radius: 14px;
+    padding: 0 12px 0 16px;
+    position: absolute;
+    top: 10px; 
+    left: 12px;
+    right: 12px;
+    width: calc(100% - 24px);
+    z-index: 5;
+  }
+
+  .wk-monthText {
+    font-size: 20px;
+  }
+
+  .wk-monthCaret {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .wk-monthMenu {
+    width: min(280px, 82vw);
+    padding: 12px;
+  }
+
+  .wk-pickerYear {
+    font-size: 18px;
+  }
+
+  .wk-pickerMonthBtn {
+    font-size: 13px;
+    padding: 8px 0;
+  }
+
+  .wk-grid {
+    margin-top: 56px; 
+    min-width: 580px; 
+    border-radius: 14px;
+  }
+
+  .wk-dow {
+    height: 36px; 
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    background: var(--card);
+    z-index: 10;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .wk-cell {
+    min-height: 52px; 
+    max-height: 70px; 
+    padding: 4px 6px;
+    overflow: hidden; 
+  }
+
+  .wk-num {
+    font-size: 14px;
+  }
+
+  .wk-cellBadge {
+    min-width: 18px;
+    height: 18px;
+    font-size: 10px;
+    padding: 0 4px;
+  }
+
+  .wk-cellFooter {
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .wk-workoutChip {
+    min-height: auto;
+    width: auto;
+    background: transparent;
+    padding: 0;
+    gap: 6px;
+    border-radius: 0;
+  }
+
+  .wk-workoutDot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .wk-workoutChipText {
+    font-size: 11px;
+    color: #fff;
+    white-space: wrap;
+    overflow: visible;
+    text-overflow: initial;
+    flex: initial;
+    line-height: 1.2;
+  }
+
+  .wk-cellWorkoutMore {
+    font-size: 8px;
+    padding-left: 0;
+  }
+
+  /* Updated responsive styling for equal buttons */
+  .wk-bottomBtns {
+    flex-wrap: wrap; 
+    padding: 0 10px;
+    gap: 12px;
+  }
+
+  .wk-pillBtn {
+    flex: 1 1 30%; /* Stays uniformly sized even when wrapping */
+    min-width: 110px; 
+    font-size: 14px;
+    min-height: 48px;
+    padding: 8px;
+  }
+
+  .wk-dataSection { margin-top: 28px; }
+  .wk-dataTopBar, .wk-dataBottomBar { height: 12px; }
+  .wk-dataTitle { margin: 14px 0; font-size: 34px; }
+  .wk-dataBtns { width: 100%; margin-left: 0; padding: 20px 0 0; gap: 16px; align-items: center; }
+  .wk-dataBtn { width: 100%; max-width: 280px; font-size: 20px; padding: 12px 16px; }
+  .wk-modal { width: 94vw; max-height: 88vh; border-radius: 24px; padding: 18px 16px 20px; }
+  .wk-modalTitle { font-size: 28px; }
+  .wk-close { width: 34px; height: 34px; font-size: 16px; right: 0; top: 0; }
+  .wk-label { font-size: 18px; margin-top: 16px; margin-left: 4px; }
+  .wk-input { height: 46px; font-size: 16px; padding: 0 16px; }
+  .wk-short, .wk-dateInput { width: 100%; }
+  .wk-listHeader { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .wk-listTitle { font-size: 18px; }
+  .wk-listCount { font-size: 14px; }
+  .wk-workoutCard { padding: 12px 14px; gap: 12px; align-items: flex-start; flex-direction: column; }
+  .wk-cardTitle { font-size: 18px; }
+  .wk-cardMeta { font-size: 14px; }
+  .wk-cardBtns { width: 100%; justify-content: flex-end; }
+  .wk-smallBtn { font-size: 13px; padding: 8px 12px; }
+  .wk-importSub { font-size: 20px; }
+  .wk-deviceRow { padding: 12px; gap: 12px; }
+  .wk-deviceIcon { width: 40px; height: 40px; }
+  .wk-deviceLabel { font-size: 16px; }
+  .wk-checkbox { width: 28px; height: 28px; font-size: 16px; }
+  .wk-mountainsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .wk-mountainName { font-size: 13px; }
+  .wk-mountainImgLargeWrap { width: 180px; height: 180px; }
+  .wk-mountainNameLarge { font-size: 22px; }
+  .wk-enterBtn { width: 100%; font-size: 18px; padding: 12px 18px; }
+
+  .wk-biomarkersGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .wk-bioCard {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding: 12px 16px;
+  }
+  
+  .wk-bioValueWrap {
+    margin: 0;
+    flex: 1;
+    text-align: right;
+    padding-right: 12px;
+  }
+  
+  .wk-bioValue {
+    font-size: 22px;
+  }
+
+  .wk-bioToggleWrap {
+    margin-bottom: 16px;
+  }
+
+  .wk-bioToggleBtn {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
+
+  .wk-bioFilters {
+    gap: 6px;
+  }
+
+  .wk-bioFilterChip {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+/* very small phones */
+@media (max-width: 420px) {
+  .wk-frameOuter {
+    border-radius: 18px;
+    padding: 12px 8px 8px;
+  }
+
+  .wk-frameInner {
+    border-radius: 14px;
+    padding: 10px;
+  }
+  
+  .wk-monthPill {
+    top: 8px;
+    height: 42px;
+    left: 8px;
+    right: 8px;
+    width: calc(100% - 16px);
+  }
+
+  .wk-grid {
+    margin-top: 50px;
+    min-width: 500px; 
+  }
+
+  .wk-dow {
+    font-size: 12px;
+    height: 32px;
+  }
+
+  .wk-cell {
+    min-height: 46px; 
+    padding: 4px;
+    overflow: hidden;
+  }
+
+  .wk-num {
+    font-size: 12px; 
+  }
+
+  .wk-workoutChipText {
+    font-size: 10px;
+  }
+
+  .wk-cellWorkoutMore {
+    font-size: 7px;
+  }
+
+  .wk-monthText {
+    font-size: 16px;
+  }
+
+  .wk-pillBtn {
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+
+  .wk-dataTitle {
+    font-size: 30px;
+  }
 }

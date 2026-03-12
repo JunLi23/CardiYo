@@ -53,6 +53,13 @@ export default function Workouts() {
   const [showManageWorkouts, setShowManageWorkouts] = useState(false);
   const [showImportWorkout, setShowImportWorkout] = useState(false);
   const [showMountains, setShowMountains] = useState(false);
+  const [showBiomarkers, setShowBiomarkers] = useState(false);
+
+  // Biomarkers view & filtering state
+  const [bioView, setBioView] = useState("list"); // "list" | "chart"
+  const [selectedBios, setSelectedBios] = useState([
+    "Resting Heart Rate", "VO2 Max", "Blood Pressure", "HRV", "Blood Glucose"
+  ]);
 
   const [selectedWorkoutId, setSelectedWorkoutId] = useState("");
   const [selectedMountain, setSelectedMountain] = useState(null);
@@ -78,10 +85,21 @@ export default function Workouts() {
     []
   );
 
+  const biomarkers = useMemo(
+    () => [
+      { name: "Resting Heart Rate", value: "58", unit: "bpm", status: "Good", score: 75 },
+      { name: "VO2 Max", value: "45.2", unit: "mL/kg/min", status: "Excellent", score: 92 },
+      { name: "Blood Pressure", value: "118/76", unit: "mmHg", status: "Normal", score: 85 },
+      { name: "HRV", value: "62", unit: "ms", status: "Good", score: 68 },
+      { name: "Blood Glucose", value: "4.8", unit: "mmol/L", status: "Normal", score: 88 },
+    ],
+    []
+  );
+
   useEffect(() => setWorkouts(loadWorkouts()), []);
   useEffect(() => saveWorkouts(workouts), [workouts]);
 
-  const anyModalOpen = showSelectWorkout || showManageWorkouts || showImportWorkout || showMountains;
+  const anyModalOpen = showSelectWorkout || showManageWorkouts || showImportWorkout || showMountains || showBiomarkers;
   useEffect(() => {
     if (!anyModalOpen) return;
     const prev = document.body.style.overflow;
@@ -170,6 +188,14 @@ export default function Workouts() {
       setSelectedWorkoutId(remaining[0]?.id ?? "");
     }
   }
+
+  const toggleBio = (name) => {
+    setSelectedBios((prev) =>
+      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name]
+    );
+  };
+
+  const filteredBiomarkers = biomarkers.filter((b) => selectedBios.includes(b.name));
 
   return (
     <>
@@ -285,28 +311,27 @@ export default function Workouts() {
             </div>
           </section>
 
+          {/* UPDATED: Centered & uniform buttons container */}
           <div className="wk-bottomBtns">
-            <div className="wk-leftBtns">
-              <button className="wk-pillBtn" onClick={() => openSelect(selectedDay)} type="button">
-                Select Workout
-              </button>
+            <button className="wk-pillBtn" onClick={() => openSelect(selectedDay)} type="button">
+              Select Workout
+            </button>
 
-              <button
-                className="wk-pillBtn wk-manageBtn"
-                onClick={() => setShowManageWorkouts(true)}
-                type="button"
-                disabled={selectedDayWorkouts.length === 0}
-                title={
-                  selectedDayWorkouts.length === 0
-                    ? "No workouts on this date"
-                    : "Manage workouts for this date"
-                }
-              >
-                Manage Workouts
-              </button>
-            </div>
+            <button
+              className="wk-pillBtn wk-manageBtn"
+              onClick={() => setShowManageWorkouts(true)}
+              type="button"
+              disabled={selectedDayWorkouts.length === 0}
+              title={
+                selectedDayWorkouts.length === 0
+                  ? "No workouts on this date"
+                  : "Manage workouts for this date"
+              }
+            >
+              Manage Workouts
+            </button>
 
-            <button className="wk-pillBtn" onClick={() => setShowImportWorkout(true)} type="button">
+            <button className="wk-pillBtn wk-importBtn" onClick={() => setShowImportWorkout(true)} type="button">
               Import
             </button>
           </div>
@@ -317,7 +342,7 @@ export default function Workouts() {
             <div className="wk-dataBottomBar" />
 
             <div className="wk-dataBtns">
-              <button className="wk-dataBtn" type="button">
+              <button className="wk-dataBtn" type="button" onClick={() => setShowBiomarkers(true)}>
                 Biomarker
               </button>
 
@@ -479,6 +504,95 @@ export default function Workouts() {
             <DeviceRow label="Jane’s Laptop 2" checked={false} />
             <DeviceRow label="Jane’s Watch" checked />
           </div>
+        </Modal>
+      )}
+
+      {/* Biomarkers Modal */}
+      {showBiomarkers && (
+        <Modal onClose={() => setShowBiomarkers(false)}>
+          <div className="wk-modalHeader">
+            <h2 className="wk-modalTitle">Biomarkers</h2>
+            <button
+              className="wk-close"
+              type="button"
+              onClick={() => setShowBiomarkers(false)}
+            >
+              X
+            </button>
+          </div>
+
+          {/* View Toggle */}
+          <div className="wk-bioToggleWrap">
+            <div className="wk-bioToggle">
+              <button
+                className={`wk-bioToggleBtn ${bioView === "list" ? "isActive" : ""}`}
+                onClick={() => setBioView("list")}
+                type="button"
+              >
+                List View
+              </button>
+              <button
+                className={`wk-bioToggleBtn ${bioView === "chart" ? "isActive" : ""}`}
+                onClick={() => setBioView("chart")}
+                type="button"
+              >
+                Chart View
+              </button>
+            </div>
+          </div>
+
+          {/* Filter Chips */}
+          <div className="wk-bioFilters">
+            {biomarkers.map((b) => (
+              <button
+                key={b.name}
+                type="button"
+                className={`wk-bioFilterChip ${selectedBios.includes(b.name) ? "isSelected" : ""}`}
+                onClick={() => toggleBio(b.name)}
+              >
+                {b.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Content Area */}
+          {filteredBiomarkers.length === 0 ? (
+            <div className="wk-emptyList" style={{ textAlign: "center", marginTop: 20 }}>
+              Select at least one biomarker to view data.
+            </div>
+          ) : bioView === "list" ? (
+            <div className="wk-biomarkersGrid">
+              {filteredBiomarkers.map((b) => (
+                <div key={b.name} className="wk-bioCard">
+                  <div className="wk-bioName">{b.name}</div>
+                  <div className="wk-bioValueWrap">
+                    <span className="wk-bioValue">{b.value}</span>
+                    <span className="wk-bioUnit">{b.unit}</span>
+                  </div>
+                  <div className={`wk-bioStatus status-${b.status.toLowerCase()}`}>
+                    {b.status}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="wk-bioChartArea">
+              {filteredBiomarkers.map((b) => (
+                <div key={b.name} className="wk-bioChartRow">
+                  <div className="wk-bioChartLabel">
+                    <span>{b.name}</span>
+                    <span className="wk-bioChartValue">{b.value} {b.unit}</span>
+                  </div>
+                  <div className="wk-bioChartTrack">
+                    <div
+                      className={`wk-bioChartFill status-${b.status.toLowerCase()}`}
+                      style={{ width: `${b.score}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </Modal>
       )}
 
