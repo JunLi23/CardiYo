@@ -1,6 +1,13 @@
 /* =========================
    GLOBAL
    ========================= */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 *,
 *::before,
 *::after {
@@ -25,12 +32,12 @@
 .wk-page {
   background: var(--bg);
   min-height: calc(100vh - 70px);
-  padding: 28px 0 60px;
+  padding: 20px 0 40px;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
 .wk-main {
-  width: min(1060px, 88vw);
+  width: min(1180px, 92vw);
   margin: 0 auto;
 }
 
@@ -39,14 +46,14 @@
    ========================= */
 .wk-frameOuter {
   background: var(--frame);
-  border-radius: 34px;
-  padding: 12px;
+  border-radius: 24px;
+  padding: 8px;
 }
 
 .wk-frameInner {
   background: var(--inner);
-  border-radius: 24px;
-  padding: 16px 16px 18px;
+  border-radius: 18px;
+  padding: 12px 12px 14px;
 }
 
 .wk-monthRow {
@@ -56,32 +63,32 @@
 
 .wk-monthPill {
   position: relative;
-  width: 360px;
-  height: 58px;
-  border-radius: 18px;
+  width: 280px;
+  height: 48px;
+  border-radius: 16px;
   background: var(--pill);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 14px 0 20px;
+  padding: 0 14px 0 18px;
   cursor: pointer;
 }
 
 .wk-monthText {
   color: #fff;
-  font-size: 28px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 600;
   user-select: none;
 }
 
 .wk-monthCaret {
-  width: 40px;
-  height: 36px;
+  width: 34px;
+  height: 30px;
   border-radius: 10px;
   border: 2px solid rgba(255, 255, 255, 0.75);
   background: transparent;
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -175,18 +182,18 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
   background: var(--card);
 }
 
 .wk-dow {
-  height: 58px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 24px;
+  font-size: 15px;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -196,7 +203,7 @@
 }
 
 .wk-cell {
-  min-height: 114px;
+  min-height: 68px;
   border: none;
   background: transparent;
   border-right: 1px solid var(--line);
@@ -204,7 +211,7 @@
   color: #fff;
   cursor: pointer;
   position: relative;
-  padding: 10px;
+  padding: 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -232,19 +239,19 @@
 }
 
 .wk-num {
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.96);
 }
 
 .wk-cellBadge {
-  min-width: 22px;
-  height: 22px;
-  padding: 0 6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.14);
   color: #fff;
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -254,25 +261,25 @@
 .wk-cellFooter {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   width: 100%;
 }
 
 .wk-workoutChip {
   width: 100%;
-  min-height: 28px;
+  min-height: 18px;
   border-radius: 999px;
-  padding: 0 10px;
+  padding: 0 6px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   background: rgba(255, 255, 255, 0.12);
   overflow: hidden;
 }
 
 .wk-workoutDot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   flex-shrink: 0;
   background: #f0d6d6;
@@ -281,7 +288,7 @@
 .wk-workoutChipText {
   flex: 1;
   min-width: 0;
-  font-size: 12px;
+  font-size: 8px;
   font-weight: 600;
   color: #fff;
   white-space: nowrap;
@@ -290,10 +297,10 @@
 }
 
 .wk-cellWorkoutMore {
-  font-size: 11px;
+  font-size: 7px;
   line-height: 1.1;
   color: rgba(255, 255, 255, 0.82);
-  padding-left: 2px;
+  padding-left: 1px;
 }
 
 .wk-cell.isSelected {
@@ -330,33 +337,32 @@
 }
 
 /* =========================
-   BOTTOM BUTTONS (UPDATED FOR EQUAL SIZE)
+   BOTTOM BUTTONS
    ========================= */
 .wk-bottomBtns {
-  margin-top: 24px;
+  margin-top: 22px;
   display: flex;
   justify-content: center;
-  align-items: stretch; /* Ensures buttons match height if text wraps */
-  gap: 16px;
+  align-items: stretch;
+  gap: 14px;
   width: 100%;
 }
 
 .wk-leftBtns {
-  /* This prevents the wrapper div from breaking the equal width flex layout */
-  display: contents; 
+  display: contents;
 }
 
 .wk-pillBtn {
-  flex: 1 1 0px; /* Forces equal width across all 3 buttons */
-  max-width: 220px; /* Keeps them from getting overly wide on huge screens */
-  min-height: 56px;
+  flex: 1 1 0;
+  max-width: 180px;
+  min-height: 48px;
   border: none;
   border-radius: 999px;
   background: var(--pill);
   color: #fff;
-  font-size: 16px; /* Slightly smaller to fit side by side */
+  font-size: 14px;
   font-weight: 600;
-  padding: 10px 8px; /* Less horizontal padding since flex handles width */
+  padding: 10px 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -660,7 +666,7 @@
    WORKOUT DATA SECTION
    ========================= */
 .wk-dataSection {
-  margin-top: 40px;
+  margin-top: 30px;
   width: 100%;
   position: relative;
   z-index: 1;
@@ -671,34 +677,45 @@
   height: 16px;
   width: 100%;
   background: var(--pill);
+  border-radius: 2px;
 }
 
 .wk-dataTitle {
-  margin: 18px 0;
+  margin: 16px 0;
   text-align: center;
-  font-size: 56px;
-  font-family: Georgia, serif;
-  color: #111;
+  font-size: 40px;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: #1f241d;
 }
 
 .wk-dataBtns {
   display: flex;
   flex-direction: column;
-  gap: 26px;
-  padding: 30px 0 10px;
-  width: 420px;
-  margin-left: 120px;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 0 8px;
+  width: 100%;
+  margin-left: 0;
 }
 
 .wk-dataBtn {
-  width: 260px;
+  width: 180px;
+  min-height: 48px;
   border: none;
   border-radius: 999px;
   background: var(--pill);
   color: #fff;
-  font-size: 26px;
-  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .wk-dataBtn:hover {
@@ -793,7 +810,7 @@
 }
 
 /* =========================
-   BIOMARKERS MODAL (LIST VIEW)
+   BIOMARKERS MODAL
    ========================= */
 .wk-biomarkersGrid {
   display: grid;
@@ -844,9 +861,20 @@
   letter-spacing: 0.5px;
 }
 
-.status-excellent { background: #d6efc2; color: #2d5a00; }
-.status-good { background: #b8d8ff; color: #003a80; }
-.status-normal { background: #e2f0cb; color: #4a632d; }
+.status-excellent {
+  background: #d6efc2;
+  color: #2d5a00;
+}
+
+.status-good {
+  background: #b8d8ff;
+  color: #003a80;
+}
+
+.status-normal {
+  background: #e2f0cb;
+  color: #4a632d;
+}
 
 /* =========================
    BIOMARKERS TOGGLE & FILTERS
@@ -960,44 +988,52 @@
 /* tablet */
 @media (max-width: 900px) {
   .wk-main {
-    width: min(94vw, 100%);
+    width: min(90vw, 100%);
   }
 
   .wk-monthPill {
-    width: 300px;
-    height: 54px;
+    width: 250px;
+    height: 44px;
   }
 
   .wk-monthText {
-    font-size: 24px;
+    font-size: 18px;
   }
 
   .wk-dow {
-    height: 50px;
-    font-size: 20px;
+    height: 32px;
+    font-size: 13px;
   }
 
   .wk-cell {
-    min-height: 95px;
-    padding: 8px;
+    min-height: 56px;
+    padding: 5px;
   }
 
   .wk-num {
-    font-size: 16px;
+    font-size: 12px;
   }
 
   .wk-workoutChipText {
-    font-size: 11px;
+    font-size: 7px;
   }
 
   .wk-dataTitle {
-    font-size: 44px;
+    font-size: 36px;
   }
 
   .wk-dataBtns {
     width: 100%;
     margin-left: 0;
     align-items: center;
+  }
+
+  .wk-dataBtn,
+  .wk-pillBtn {
+    width: 170px;
+    max-width: 170px;
+    min-height: 46px;
+    font-size: 13px;
   }
 
   .wk-mountainsGrid {
@@ -1008,196 +1044,297 @@
 /* phone */
 @media (max-width: 640px) {
   .wk-page {
-    padding: 16px 0 40px;
+    padding: 88px 0 24px;
   }
 
   .wk-main {
-    width: 94vw;
+    width: 90vw;
   }
 
   .wk-frameOuter {
-    border-radius: 24px;
-    padding: 16px 12px 12px; 
+    border-radius: 16px;
+    padding: 4px;
   }
 
   .wk-frameInner {
-    border-radius: 18px;
-    padding: 12px;
-    overflow-x: auto;
-    position: relative; 
+    border-radius: 12px;
+    padding: 8px;
   }
 
   .wk-monthPill {
     width: 100%;
     max-width: none;
-    height: 46px; 
-    border-radius: 14px;
-    padding: 0 12px 0 16px;
-    position: absolute;
-    top: 10px; 
-    left: 12px;
-    right: 12px;
-    width: calc(100% - 24px);
-    z-index: 5;
+    height: 34px;
+    border-radius: 10px;
+    padding: 0 8px 0 10px;
   }
 
   .wk-monthText {
-    font-size: 20px;
+    font-size: 11px;
+    line-height: 1;
   }
 
   .wk-monthCaret {
-    width: 30px;
-    height: 30px;
-    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    font-size: 9px;
+    border-radius: 6px;
   }
 
   .wk-monthMenu {
-    width: min(280px, 82vw);
-    padding: 12px;
+    width: min(260px, 82vw);
+    padding: 10px;
   }
 
   .wk-pickerYear {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .wk-pickerMonthBtn {
-    font-size: 13px;
-    padding: 8px 0;
+    font-size: 12px;
+    padding: 7px 0;
   }
 
   .wk-grid {
-    margin-top: 56px; 
-    min-width: 580px; 
-    border-radius: 14px;
+    margin-top: 8px;
+    border-radius: 12px;
   }
 
   .wk-dow {
-    height: 36px; 
-    font-size: 14px;
-    position: sticky;
-    top: 0;
-    background: var(--card);
-    z-index: 10;
-    border-bottom: 2px solid var(--line);
+    height: 20px;
+    font-size: 9px;
   }
 
   .wk-cell {
-    min-height: 52px; 
-    max-height: 70px; 
-    padding: 4px 6px;
-    overflow: hidden; 
+    min-height: 28px;
+    padding: 2px;
   }
 
   .wk-num {
-    font-size: 14px;
+    font-size: 8px;
   }
 
   .wk-cellBadge {
-    min-width: 18px;
-    height: 18px;
-    font-size: 10px;
-    padding: 0 4px;
+    min-width: 11px;
+    height: 11px;
+    font-size: 6px;
+    padding: 0 2px;
   }
 
   .wk-cellFooter {
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
+    gap: 1px;
   }
 
   .wk-workoutChip {
-    min-height: auto;
-    width: auto;
-    background: transparent;
-    padding: 0;
-    gap: 6px;
-    border-radius: 0;
+    min-height: 10px;
+    padding: 0 2px;
+    gap: 3px;
+    border-radius: 999px;
   }
 
   .wk-workoutDot {
-    width: 6px;
-    height: 6px;
+    width: 3px;
+    height: 3px;
   }
 
   .wk-workoutChipText {
-    font-size: 11px;
-    color: #fff;
-    white-space: wrap;
-    overflow: visible;
-    text-overflow: initial;
-    flex: initial;
-    line-height: 1.2;
+    font-size: 5px;
   }
 
   .wk-cellWorkoutMore {
-    font-size: 8px;
+    font-size: 5px;
     padding-left: 0;
   }
 
-  /* Updated responsive styling for equal buttons */
   .wk-bottomBtns {
-    flex-wrap: wrap; 
-    padding: 0 10px;
-    gap: 12px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 0;
   }
 
   .wk-pillBtn {
-    flex: 1 1 30%; /* Stays uniformly sized even when wrapping */
-    min-width: 110px; 
-    font-size: 14px;
-    min-height: 48px;
-    padding: 8px;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+    font-size: 10px;
+    min-height: 34px;
+    padding: 6px 3px;
+    border-radius: 999px;
   }
 
-  .wk-dataSection { margin-top: 28px; }
-  .wk-dataTopBar, .wk-dataBottomBar { height: 12px; }
-  .wk-dataTitle { margin: 14px 0; font-size: 34px; }
-  .wk-dataBtns { width: 100%; margin-left: 0; padding: 20px 0 0; gap: 16px; align-items: center; }
-  .wk-dataBtn { width: 100%; max-width: 280px; font-size: 20px; padding: 12px 16px; }
-  .wk-modal { width: 94vw; max-height: 88vh; border-radius: 24px; padding: 18px 16px 20px; }
-  .wk-modalTitle { font-size: 28px; }
-  .wk-close { width: 34px; height: 34px; font-size: 16px; right: 0; top: 0; }
-  .wk-label { font-size: 18px; margin-top: 16px; margin-left: 4px; }
-  .wk-input { height: 46px; font-size: 16px; padding: 0 16px; }
-  .wk-short, .wk-dateInput { width: 100%; }
-  .wk-listHeader { flex-direction: column; align-items: flex-start; gap: 4px; }
-  .wk-listTitle { font-size: 18px; }
-  .wk-listCount { font-size: 14px; }
-  .wk-workoutCard { padding: 12px 14px; gap: 12px; align-items: flex-start; flex-direction: column; }
-  .wk-cardTitle { font-size: 18px; }
-  .wk-cardMeta { font-size: 14px; }
-  .wk-cardBtns { width: 100%; justify-content: flex-end; }
-  .wk-smallBtn { font-size: 13px; padding: 8px 12px; }
-  .wk-importSub { font-size: 20px; }
-  .wk-deviceRow { padding: 12px; gap: 12px; }
-  .wk-deviceIcon { width: 40px; height: 40px; }
-  .wk-deviceLabel { font-size: 16px; }
-  .wk-checkbox { width: 28px; height: 28px; font-size: 16px; }
-  .wk-mountainsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-  .wk-mountainName { font-size: 13px; }
-  .wk-mountainImgLargeWrap { width: 180px; height: 180px; }
-  .wk-mountainNameLarge { font-size: 22px; }
-  .wk-enterBtn { width: 100%; font-size: 18px; padding: 12px 18px; }
+  .wk-dataSection {
+    margin-top: 22px;
+  }
+
+  .wk-dataTopBar,
+  .wk-dataBottomBar {
+    height: 7px;
+  }
+
+  .wk-dataTitle {
+    margin: 10px 0;
+    font-size: 24px;
+  }
+
+  .wk-dataBtns {
+    width: 100%;
+    margin-left: 0;
+    padding: 16px 0 0;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .wk-dataBtn {
+    width: 160px;
+    max-width: 160px;
+    min-height: 34px;
+    font-size: 10px;
+    padding: 6px 3px;
+  }
+
+  .wk-modal {
+    width: 94vw;
+    max-height: 88vh;
+    border-radius: 24px;
+    padding: 18px 16px 20px;
+  }
+
+  .wk-modalTitle {
+    font-size: 28px;
+  }
+
+  .wk-close {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+    right: 0;
+    top: 0;
+  }
+
+  .wk-label {
+    font-size: 18px;
+    margin-top: 16px;
+    margin-left: 4px;
+  }
+
+  .wk-input {
+    height: 46px;
+    font-size: 16px;
+    padding: 0 16px;
+  }
+
+  .wk-short,
+  .wk-dateInput {
+    width: 100%;
+  }
+
+  .wk-listHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .wk-listTitle {
+    font-size: 18px;
+  }
+
+  .wk-listCount {
+    font-size: 14px;
+  }
+
+  .wk-workoutCard {
+    padding: 12px 14px;
+    gap: 12px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .wk-cardTitle {
+    font-size: 18px;
+  }
+
+  .wk-cardMeta {
+    font-size: 14px;
+  }
+
+  .wk-cardBtns {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .wk-smallBtn {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  .wk-importSub {
+    font-size: 20px;
+  }
+
+  .wk-deviceRow {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .wk-deviceIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .wk-deviceLabel {
+    font-size: 16px;
+  }
+
+  .wk-checkbox {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .wk-mountainsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .wk-mountainName {
+    font-size: 13px;
+  }
+
+  .wk-mountainImgLargeWrap {
+    width: 180px;
+    height: 180px;
+  }
+
+  .wk-mountainNameLarge {
+    font-size: 22px;
+  }
+
+  .wk-enterBtn {
+    width: 100%;
+    font-size: 18px;
+    padding: 12px 18px;
+  }
 
   .wk-biomarkersGrid {
     grid-template-columns: 1fr;
     gap: 12px;
   }
-  
+
   .wk-bioCard {
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
     padding: 12px 16px;
   }
-  
+
   .wk-bioValueWrap {
     margin: 0;
     flex: 1;
     text-align: right;
     padding-right: 12px;
   }
-  
+
   .wk-bioValue {
     font-size: 22px;
   }
@@ -1223,62 +1360,76 @@
 
 /* very small phones */
 @media (max-width: 420px) {
+  .wk-page {
+    padding: 84px 0 20px;
+  }
+
+  .wk-main {
+    width: 92vw;
+  }
+
   .wk-frameOuter {
-    border-radius: 18px;
-    padding: 12px 8px 8px;
+    padding: 3px;
+    border-radius: 14px;
   }
 
   .wk-frameInner {
-    border-radius: 14px;
-    padding: 10px;
+    padding: 6px;
+    border-radius: 10px;
   }
-  
+
   .wk-monthPill {
-    top: 8px;
-    height: 42px;
-    left: 8px;
-    right: 8px;
-    width: calc(100% - 16px);
-  }
-
-  .wk-grid {
-    margin-top: 50px;
-    min-width: 500px; 
-  }
-
-  .wk-dow {
-    font-size: 12px;
-    height: 32px;
-  }
-
-  .wk-cell {
-    min-height: 46px; 
-    padding: 4px;
-    overflow: hidden;
-  }
-
-  .wk-num {
-    font-size: 12px; 
-  }
-
-  .wk-workoutChipText {
-    font-size: 10px;
-  }
-
-  .wk-cellWorkoutMore {
-    font-size: 7px;
+    height: 30px;
+    padding: 0 6px 0 8px;
   }
 
   .wk-monthText {
-    font-size: 16px;
+    font-size: 10px;
   }
 
-  .wk-pillBtn {
-    font-size: 15px;
-    padding: 12px 14px;
+  .wk-monthCaret {
+    width: 18px;
+    height: 18px;
+    font-size: 8px;
+  }
+
+  .wk-dow {
+    font-size: 8px;
+    height: 18px;
+  }
+
+  .wk-cell {
+    min-height: 24px;
+    padding: 1px;
+  }
+
+  .wk-num {
+    font-size: 7px;
+  }
+
+  .wk-workoutChip {
+    min-height: 8px;
+    padding: 0 2px;
+  }
+
+  .wk-workoutChipText {
+    font-size: 4px;
+  }
+
+  .wk-cellWorkoutMore {
+    font-size: 4px;
+  }
+
+  .wk-pillBtn,
+  .wk-dataBtn {
+    font-size: 9px;
+    min-height: 30px;
+    width: 145px;
+    max-width: 145px;
+    padding: 5px 2px;
   }
 
   .wk-dataTitle {
-    font-size: 30px;
+    font-size: 22px;
   }
 }

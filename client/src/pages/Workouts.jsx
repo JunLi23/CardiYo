@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import Navbar from "../components/Navbar";
 import "../styles/workouts.css";
+import MountainBox from "../components/MountainBox";
 
 /* ---------- date helpers (Date datatype) ---------- */
 const weekdayLabels = ["M", "T", "W", "T", "F", "S", "S"];
@@ -595,6 +596,7 @@ export default function Workouts() {
           )}
         </Modal>
       )}
+      
 
       {showMountains && (
         <Modal
