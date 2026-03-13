@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import PopUp from "../components/HealthHub/PopUp";
+import ProfileCard from "../components/HealthHub/ProfileCard";
 import { Fragment } from "react";
 
 const HealthHub = () => {
@@ -11,6 +12,7 @@ const HealthHub = () => {
       <div style={{ padding: "2rem" }}>
         <h1>Health Hub Page</h1>
       </div>
+      <ProfileCard />
       {/* </PopUp /> */}
       </Fragment>
     </>

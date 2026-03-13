@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import Navbar from "../components/Navbar";
-import "../styles/workouts.css";
+import "../styles/Workouts.css"
 
 /* ---------- date helpers (Date datatype) ---------- */
 const weekdayLabels = ["M", "T", "W", "T", "F", "S", "S"];

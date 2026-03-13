@@ -13,7 +13,7 @@ frontend:
   artifacts:
     baseDirectory: client/dist
     files:
-      - '**/*'
+      - "**/*"
   cache:
     paths:
       - client/node_modules/**/*
