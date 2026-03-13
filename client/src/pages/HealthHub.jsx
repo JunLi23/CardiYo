@@ -7,15 +7,14 @@ import { Fragment } from "react";
 const HealthHub = () => {
   return (
     <>
-      <Fragment>
       <Navbar />
-      <div style={{ padding: "2rem" }}>
-        <h1>Health Hub Page</h1>
+      <div className="p-8 w-full">
+        <div className="mt-6 w-full">
+          <ProfileCard />
+        </div>
       </div>
-      <ProfileCard />
-      {/* </PopUp /> */}
-      </Fragment>
     </>
   );
 };
-export default HealthHub
+
+export default HealthHub;
