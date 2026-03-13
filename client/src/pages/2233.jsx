@@ -7,14 +7,10 @@ import { Fragment } from "react";
 const HealthHub = () => {
   return (
     <>
-      <Fragment>
       <Navbar />
       <div style={{ padding: "2rem" }}>
-        <h1>Health Hub Page</h1>
+        <h1>Push Chat and Notification page</h1>
       </div>
-      <ProfileCard />
-      {/* </PopUp /> */}
-      </Fragment>
     </>
   );
 };

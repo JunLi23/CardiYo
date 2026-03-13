@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -43,6 +43,10 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const toggle = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
@@ -80,3 +84,4 @@ const FAQ = () => {
 };
 
 export default FAQ;
+// test

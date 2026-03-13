@@ -1,6 +1,6 @@
-import everest from "../assets/everest.svg";
-import fuji from "../assets/everest.svg";
-import k2 from "../assets/everest.svg";
+import everest from "../assets/Everest.svg";
+import fuji from "../assets/Everest.svg";
+import k2 from "../assets/Everest.svg";
 const MountainIcon = ({name, image}) => {
   return (
     <div>
