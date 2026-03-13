@@ -15,10 +15,11 @@ const LoginSignUp = () => {
             <div className="underline"></div>
         </div>
         <div className="inputs">
-            <div className="input">
+            {action==="Login"?<div></div>:<div className="input">
                 <img src={userIcon} alt="" />
                 <input type="text" placeholder='Name' />
-            </div>
+            </div>}
+            
             <div className="input">
                 <img src={emailIcon} alt="" />
                 <input type="email" placeholder='Email' />
