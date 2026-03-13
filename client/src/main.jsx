@@ -19,35 +19,39 @@ import LoginSignUp from "./pages/LoginSignUp";
 import FAQ from "./pages/FAQ";
 
 const router = createBrowserRouter([
+  // {
+  //   path: "/",
+  //   element: <App />,
+  //   children: [
+  //     {
+  //       path: "/",
+  //       element: <RecordList />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: "/edit/:id",
+  //   element: <App />,
+  //   children: [
+  //     {
+  //       path: "/edit/:id",
+  //       element: <Record />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: "/create",
+  //   element: <App />,
+  //   children: [
+  //     {
+  //       path: "/create",
+  //       element: <Record />,
+  //     },
+  //   ],
+  // }, 
   {
-    path: "/",
-    element: <App />,
-    children: [
-      {
-        path: "/",
-        element: <RecordList />,
-      },
-    ],
-  },
-  {
-    path: "/edit/:id",
-    element: <App />,
-    children: [
-      {
-        path: "/edit/:id",
-        element: <Record />,
-      },
-    ],
-  },
-  {
-    path: "/create",
-    element: <App />,
-    children: [
-      {
-        path: "/create",
-        element: <Record />,
-      },
-    ],
+  path: "/",
+  element: <LoginSignUp />,
   },
   {
     path: "/dashboard",
