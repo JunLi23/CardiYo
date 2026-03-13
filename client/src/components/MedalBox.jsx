@@ -11,7 +11,7 @@ const MedalIcon = ({earned, label}) => {
 
 const MedalBox = () => {
     const medals = [
-        { id: 1, label: "Everest", earned: true },
+        { id: 1, label: "Everest", earned: false },
         { id: 2, label: "Fuji", earned: true },
         { id: 3, label: "K2", earned: true },
         { id: 4, label: "Kilimanjaro", earned: false },
