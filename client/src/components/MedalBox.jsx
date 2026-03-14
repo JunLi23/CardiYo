@@ -1,5 +1,6 @@
 import goldMedel from "../assets/gBadge.png";
 import greyMedel from "../assets/greyBadge.png";
+
 const MedalIcon = ({earned, label}) => {
   return (
     <div>
@@ -17,10 +18,12 @@ const MedalBox = () => {
         { id: 4, label: "Kilimanjaro", earned: false },
         { id: 5, label: "Blanc", earned: false },
     ];
-  return (
+
+    return (
     <>
         {/* Achievements Section */}
         <div className="bg-[#5E806D] border-8 border-[#3C5246]">
+            
             {/* Medal Section */}
             <h2 className="text-xl pt-2">Medals</h2>
             <div className="grid grid-cols-3 justify-items-center mt-3">
@@ -32,9 +35,9 @@ const MedalBox = () => {
                 <h2 className="text-xl pt-2">Trophies</h2>
                 <div className="m-3 text-[#DCDCDC]"> No Trophies Earned </div> 
             </div>
-            
         </div>
     </>
   );
 };
+
 export default MedalBox;

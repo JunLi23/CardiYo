@@ -12,11 +12,13 @@ const Profile = () => {
     username: "janedoe123",
     bio: `"The impossible journey is the one you never begin" - Dan Millman`
   });
+
   useEffect(() => {
     const loadProfile = () => {
       const savedData = localStorage.getItem("profileData");
       if (savedData) { setProfile(JSON.parse(savedData)); }
     };
+
     loadProfile();
     window.addEventListener("profileUpdated", loadProfile);
     
@@ -34,9 +36,10 @@ const Profile = () => {
           <MedalBox />
           <MountainBox />
       </div>
-      
+
       <Footer />
     </>
   );
 };
+
 export default Profile;
