@@ -128,7 +128,7 @@ const AccountForm = ({setActiveForm, profile}) => (
     <label className="block mb-4"> Username: @{profile.username} </label>
     <label className="block mb-4"> Date of Birth <input type="date" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]"/> </label>
     <label className="block mb-4"> 
-      Country / Region <select className="w-full mt-1 p-2 text-black bg-[#F0ECD1]">
+      Country <select className="w-full mt-1 p-2 text-black bg-[#F0ECD1]">
         <option>United Kingdom</option>
         <option>Other</option>
       </select>
