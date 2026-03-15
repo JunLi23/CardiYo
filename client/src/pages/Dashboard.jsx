@@ -5,8 +5,10 @@ import AchievementDisplay from "../components/dashboardComponents/AchievementDis
 import ProgressDisplay from "../components/dashboardComponents/ProgressDisplay";
 import NotifacationDisplay from "../components/dashboardComponents/NotificationCentre";
 import MountainImg from "../assets/Everest.svg"
+import MountainPath from "../components/dashboardComponents/MountainPath";
 
 const Dashboard = ()=> {
+    
     return (
         <>
 
@@ -15,13 +17,13 @@ const Dashboard = ()=> {
                 <div className={styles.mountainSection}>
                     <img src={MountainImg} alt="Mountain" className={styles.mountainImg} />
                     <div className={styles.cloudLeft}>
-                        <BioMarker label="Calories" value={1640} unit="kcal"/>
+                        <BioMarker index={0} />                    
                     </div>
                     <div className={styles.cloudCenter}>
-                        <BioMarker label="Steps" value={8432} unit="steps"/>
+                        <BioMarker index={1} />                    
                     </div>
                     <div className={styles.cloudRight}>
-                        <BioMarker label="Heart Rate" value={57} unit="BPM"/>
+                        <BioMarker index={2} />
                     </div>
                 </div>
                 <div className={styles.middleSection}>

@@ -1,22 +1,28 @@
 import styles from "./NotificationCentre.module.css";
-import { useState } from "react";
-
-/*Temp notifications*/
-const Tempnotifications = [
-    {id: 1, sender: "BOB", message: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.", date: "20/1/2026", read: false},
-    {id: 2, sender: "DAVE", message: "Lorem ipsum dolor sit amet consectetur adipiscing elit.", date: "10/1/2026", read: false},
-    {id: 3, sender: "BOB", message: "HI", date: "8/1/2026", read: true},
-    {id: 4, sender: "JILL", message: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet consectetur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.", date: "7/1/2026", read: true},
-    {id: 5, sender: "SAM", message: "Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amet consectetur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.", date: "7/1/2026", read: false},
-]
+import { useEffect, useState } from 'react';
 
 export default function NotificationCentre(){
-    const [notifications, setNotifications] = useState(Tempnotifications);
+
+    const [notifications, setNotifications] = useState([]);
+
+    useEffect(() => {
+    fetch('http://localhost:5050/dashboard/notifications')
+      .then(res => res.json())
+      .then(data => {
+            setNotifications(data)}) 
+      .catch(err => console.error(err));
+  }, []);
 
     function handleClick(id) {
         setNotifications(prev =>
-            prev.map(n => n.id === id ? { ...n, read: true } : n)
+            prev.map(n => n._id === id ? { ...n, read: true } : n)
         );
+
+        // Update in database
+        fetch(`http://localhost:5050/dashboard/notifications/${id}`, {
+            method: 'PATCH',
+        })
+        .catch(err => console.error(err));
     }
 
     return (
@@ -26,7 +32,7 @@ export default function NotificationCentre(){
             </div>
             <div className={styles.notificationsWrapper}>
                 {notifications.map((notification) => (
-                    <div key={notification.id} onClick={() => handleClick(notification.id)} className={`${styles.notification} ${notification.read ? styles.read : styles.unread}`}>
+                    <div key={notification._id} onClick={() => handleClick(notification._id)} className={`${styles.notification} ${notification.read ? styles.read : styles.unread}`}>
                         <div className={styles.notificationHeader}>
                             <p>{notification.sender}</p>
                             <p>{notification.date}</p>
