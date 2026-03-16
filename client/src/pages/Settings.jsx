@@ -15,7 +15,6 @@ const Settings = () => {
   const navigate = useNavigate();
   const settingsButton = "md:w-75 w-50 mx-auto m-2 bg-[#3C5246] text-white py-2";
 
-  {/* Loads Saved Profile Data From Local Storage */}
   useEffect(() => {
     const savedData = localStorage.getItem("profileData");
     if (savedData) {

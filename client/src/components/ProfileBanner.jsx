@@ -13,7 +13,7 @@ const ProfileBanner = ({ profile }) => {
         <img src={profile.photo || blankPf} alt="" className="w-35 h-35 md:w-45 md:h-45 object-cover border-8 border-[#3C5246] rounded-full" />
       </div>
 
-      {/* Container For Profile Description (Displays Name, Username, Bio) */}
+      {/* Profile Description (Displays Name, Username, Bio) */}
       <div className="bg-[#C7C8B5] border-b-8 border-[#3C5246] pt-19 pb-4 md:pt-25 md:pb-5 text-center text-black">  
         <div className="text-lg md:text-xl font-semibold"> {profile.name} </div>
         <div className="text-sm"> {'@' + profile.username} </div>
