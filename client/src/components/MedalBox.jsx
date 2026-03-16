@@ -12,11 +12,15 @@ const MedalIcon = ({earned, label}) => {
 
 const MedalBox = () => {
     const medals = [
-        { id: 1, label: "Everest", earned: false },
-        { id: 2, label: "Fuji", earned: true },
-        { id: 3, label: "K2", earned: true },
-        { id: 4, label: "Kilimanjaro", earned: false },
-        { id: 5, label: "Blanc", earned: false },
+      { id: 1, label: "Aoraki", earned: false},
+      { id: 2, label: "Ben Nevis", earned: false},
+      { id: 3, label: "Chimborazo", earned: false},
+      { id: 4, label: "Eiger", earned: false},
+      { id: 5, label: "Fuji", earned: true},
+      { id: 6, label: "Matterhorn", earned: false},
+      { id: 7, label: "Annapurna", earned: false},
+      { id: 8, label: "Kinabalu", earned: true},
+      { id: 9, label: "Everest", earned: true},
     ];
 
     return (

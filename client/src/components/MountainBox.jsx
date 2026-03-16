@@ -1,6 +1,12 @@
-import everest from "../assets/Everest.svg";
-import fuji from "../assets/Everest.svg";
-import k2 from "../assets/Everest.svg";
+import aoraki from "../assets/aoraki.png";
+import benNevis from "../assets/ben-nevis.png";
+import chimborazo from "../assets/chimborazo.png";
+import eiger from "../assets/eiger.png";
+import fuji from "../assets/fuji.png";
+import matterhorn from "../assets/matterhorn.png";
+import mountAnnapurna from "../assets/mount-annapurna.png";
+import mountKinabalu from "../assets/mount-kinabalu.png";
+import everest from  "../assets/everest.svg"
 
 const MountainIcon = ({name, image}) => {
   return (
@@ -13,14 +19,15 @@ const MountainIcon = ({name, image}) => {
 
 const MountainBox = () => {
     const mountains = [
-    { id: 1, name: "Everest", image: everest, completed: true},
-    { id: 2, name: "Mount Fuji", image: fuji, completed: true},
-    { id: 3, name: "K2", image: k2, completed: false},
-    { id: 4, name: "Chimborazo", image: everest, completed: false},
-    { id: 5, name: "Aoraki", image: fuji, completed: false},
-    { id: 6, name: "Eiger", image: k2, completed: true},
-    { id: 7, name: "Ben Nevis", image: everest, completed: true},
-    { id: 8, name: "Mount Kinabalu", image: k2, completed: false},
+    { id: 1, name: "Aoraki", image: aoraki, completed: true},
+    { id: 2, name: "Ben Nevis", image: benNevis, completed: true},
+    { id: 3, name: "Chimborazo", image: chimborazo, completed: true},
+    { id: 4, name: "Eiger", image: eiger, completed: false},
+    { id: 5, name: "Fuji", image: fuji, completed: false},
+    { id: 6, name: "Matterhorn", image: matterhorn, completed: true},
+    { id: 7, name: "Annapurna", image: mountAnnapurna, completed: true},
+    { id: 8, name: "Kinabalu", image: mountKinabalu, completed: false},
+    { id: 9, name: "Everest", image: everest, completed: true},
     ];
 
 const completedMountains = mountains.filter((m) => m.completed);
