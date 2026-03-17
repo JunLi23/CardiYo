@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import ProfileCard from "../components/HealthHub/ProfileCard";
 import Goals from "../components/HealthHub/Goals";
 import PostBoard from "../components/HealthHub/PostBoard";
+import Footer from "../components/Footer";
 import PopUp from "../components/HealthHub/PopUp";
 
 const HealthHub = () => {
@@ -33,6 +34,7 @@ const HealthHub = () => {
           <PostBoard items={messages} />
         </div>
       </div>
+      <Footer />
     </>
   );
 };
