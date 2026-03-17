@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import Navbar from "../components/Navbar";
-import "../styles/workouts.css";
+import Navbar from "../components/Navbar"
+import "../styles/Workouts.css";
+import Footer from "../components/Footer"
 
 
 
@@ -668,6 +669,7 @@ export default function Workouts() {
           )}
         </Modal>
       )}
+      <Footer />
     </>
   );
 }
