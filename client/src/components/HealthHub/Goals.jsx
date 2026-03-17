@@ -1,3 +1,4 @@
+// don't change imports, unless adding new ones, thank you!
 import React, { useState } from "react";
 
 function Goal({ goal, onToggle }) {

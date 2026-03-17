@@ -1,11 +1,8 @@
+// don't change imports, unless adding new ones, thank you!
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
-
 import App from "./pages/App";
 import Record from "./components/Record";
 import RecordList from "./components/RecordList";

@@ -1,3 +1,4 @@
+// don't change imports, unless adding new ones, thank you!
 import splashBg from "../assets/Splash.jpg";
 import blankPf from "../assets/blank-pf.png";
 const ProfileBanner = ({ profile }) => {

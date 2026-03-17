@@ -1,3 +1,4 @@
+// don't change imports, unless adding new ones, thank you!
 import goldMedel from "../assets/gBadge.png";
 import greyMedel from "../assets/greyBadge.png";
 

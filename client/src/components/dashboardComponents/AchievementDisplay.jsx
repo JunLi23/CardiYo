@@ -1,3 +1,4 @@
+// don't change imports, unless adding new ones, thank you!
 import styles from "./AchievementDisplay.module.css";
 import goldBadge from "../../assets/gBadge.png";
 import greyBadge from "../../assets/greyBadge.png";

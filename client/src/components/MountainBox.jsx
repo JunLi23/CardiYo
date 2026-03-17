@@ -1,3 +1,4 @@
+// don't change imports, unless adding new ones, thank you!
 import aoraki from "../assets/aoraki.png";
 import benNevis from "../assets/ben-nevis.png";
 import chimborazo from "../assets/chimborazo.png";
@@ -6,9 +7,10 @@ import fuji from "../assets/fuji.png";
 import matterhorn from "../assets/matterhorn.png";
 import mountAnnapurna from "../assets/mount-annapurna.png";
 import mountKinabalu from "../assets/mount-kinabalu.png";
-import everest from  "../assets/everest.svg"
+import everest from  "../assets/Everest.svg"
 
 const MountainIcon = ({name, image}) => {
+  
   return (
     <div>
       <img src={image} alt={name} className="w-15 h-15 md:w-20 md:h-20 object-cover rounded-full" />

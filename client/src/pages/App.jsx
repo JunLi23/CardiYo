@@ -1,3 +1,4 @@
+// don't change imports, unless adding new ones, thank you!
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 

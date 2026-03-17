@@ -1,3 +1,4 @@
+// don't change imports, unless adding new ones, thank you!
 import React from "react";
 import "../styles/Footer.css";
 import instaLogo from "../assets/insta-logo.png";

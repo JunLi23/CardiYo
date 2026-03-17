@@ -1,3 +1,4 @@
+// don't change imports, unless adding new ones, thank you!
 import styles from "./ProgressDisplay.module.css";
 
 /* temp data for finding spacing  */
