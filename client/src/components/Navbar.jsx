@@ -50,8 +50,7 @@ const NavbarComponent = () => {
       style={{ backgroundColor: "#AEB9A1" }}
     >
       <div className="flex items-center justify-between w-full text-white">
-        {/* Logo */}
-        <Link to="/" className="flex items-center">
+        <Link to="/Dashboard" className="flex items-center">
           <img
             src={Logo}
             alt="CardiYo Logo"
@@ -59,12 +58,10 @@ const NavbarComponent = () => {
           />
         </Link>
 
-        {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-6">
           {navList}
         </div>
 
-        {/* Mobile hamburger */}
        <div className="lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +76,6 @@ const NavbarComponent = () => {
         </div>
       </div>
 
-      {/* Mobile nav */}
       <div className="lg:hidden">
         <MobileNav open={openNav}>{navList}</MobileNav>
       </div>

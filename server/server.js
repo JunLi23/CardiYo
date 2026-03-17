@@ -8,6 +8,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+mongoose.connect("YOUR_MONGO_URI");
+
 app.use("/record", records);
 app.use("/dashboard", dashboard);
 

@@ -63,7 +63,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/HealthHub",
-    element: <HealthHub />,
+    element:<HealthHub />,
   },
   {
     path: "/Profile",
