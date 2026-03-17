@@ -1,12 +1,24 @@
 import { Outlet } from "react-router-dom";
+import React, { useState } from "react";
+import "../styles/HealthHub/HealthHub.css"
 import Navbar from "../components/Navbar";
-import PopUp from "../components/HealthHub/PopUp";
 import ProfileCard from "../components/HealthHub/ProfileCard";
 import Goals from "../components/HealthHub/Goals";
-import PostageBoard from "../components/HealthHub/PostageBoard";
-import { Fragment } from "react";
+import PostBoard from "../components/HealthHub/PostBoard";
+import PopUp from "../components/HealthHub/PopUp";
 
 const HealthHub = () => {
+  const messages = [
+    "I see you have already completed 3 mountains! Only 2 more to go for a trophy, well done! I have assigned you a goal to reach by next week."
+  ];
+
+  const [goals, setGoals] = useState([]);
+
+  const handleAddGoal = (goalText) => {
+    if (!goals.includes(goalText)) {
+      setGoals((prev) => [...prev, goalText]);
+    }
+  };
   return (
     <>
       <Navbar />
@@ -15,11 +27,11 @@ const HealthHub = () => {
           <ProfileCard />
         </div>
         <div className="mt-6 w-full">
-          <Goals />
+          <Goals goals={goals} onAddGoal={handleAddGoal} />
         </div>
-        {/* <div className="mt-6 w-full">
-          <PostageBoard />
-        </div> */}
+        <div className="mt-6 w-full">
+          <PostBoard items={messages} />
+        </div>
       </div>
     </>
   );
