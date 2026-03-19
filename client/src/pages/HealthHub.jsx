@@ -1,6 +1,6 @@
 // don't change imports, unless adding new ones, thank you!
 import { Outlet } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; 
 import "../styles/HealthHub/HealthHub.css"
 import Navbar from "../components/Navbar";
 import ProfileCard from "../components/HealthHub/ProfileCard";
@@ -10,15 +10,20 @@ import Footer from "../components/Footer";
 import PopUp from "../components/HealthHub/PopUp";
 
 const HealthHub = () => {
-  const messages = [
-    "I see you have already completed 3 mountains! Only 2 more to go for a trophy, well done! I have assigned you a goal to reach by next week."
-  ];
+  const [messages, setMessages] = useState([]);
 
   const [goals, setGoals] = useState([]);
 
+  useEffect(() => {
+    fetch("http://localhost:5000/api/messages")   // change if your backend port is different
+      .then(res => res.json())
+      .then(data => setMessages(data))
+      .catch(err => console.log(err));
+  }, []);
+
   const handleAddGoal = (goalText) => {
     if (!goals.includes(goalText)) {
-      setGoals((prev) => [...prev, goalText]);
+      setGoals(prev => [...prev, goalText]);
     }
   };
   return (
@@ -29,10 +34,10 @@ const HealthHub = () => {
           <ProfileCard />
         </div>
         <div className="mt-6 w-full">
-          <Goals goals={goals} onAddGoal={handleAddGoal} />
+          <Goals goals={goals} />
         </div>
         <div className="mt-6 w-full">
-          <PostBoard items={messages} />
+          <PostBoard items={messages} onAddGoal={handleAddGoal}/>
         </div>
       </div>
       <Footer />
