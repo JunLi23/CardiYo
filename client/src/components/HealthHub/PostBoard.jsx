@@ -9,7 +9,6 @@ const PostBoard = ({ onAddGoal }) => {
     fetch(`${import.meta.env.VITE_API_URL}/api/messages`)
       .then((res) => res.json())
       .then((data) => {
-        // Sort messages by createdAt (newest first)
         const sorted = data.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
