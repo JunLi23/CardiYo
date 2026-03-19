@@ -22,6 +22,10 @@
   object-position: top;
 }
 
+:global(.dark) .mountainImg {
+  filter: brightness(0.35) saturate(0.4) hue-rotate(195deg);
+}
+
 .middleSection {
   display: flex;
   padding: 40px;
