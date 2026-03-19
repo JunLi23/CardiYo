@@ -15,7 +15,7 @@ const HealthHub = () => {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-  fetch("http://localhost:5050/api/messages/")
+  fetch(`${import.meta.env.VITE_API_URL}/api/messages`)
     .then(res => res.json())
     .then(data => setMessages(data))
     .catch(err => console.log(err));
