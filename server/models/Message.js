@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema({
   text: { type: String, required: true },
-  isGoal: { type: Boolean, default: false }, // tag for goal messages
+  isGoal: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
 });
 

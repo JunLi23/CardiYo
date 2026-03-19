@@ -15,11 +15,11 @@ const HealthHub = () => {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/messages")   // change if your backend port is different
-      .then(res => res.json())
-      .then(data => setMessages(data))
-      .catch(err => console.log(err));
-  }, []);
+  fetch("http://localhost:5050/api/messages/")
+    .then(res => res.json())
+    .then(data => setMessages(data))
+    .catch(err => console.log(err));
+}, []);
 
   const handleAddGoal = (goalText) => {
     if (!goals.includes(goalText)) {

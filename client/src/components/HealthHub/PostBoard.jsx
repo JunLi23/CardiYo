@@ -13,21 +13,18 @@ const PostBoard = ({ items = [], onAddGoal }) => {
       }}
     >
       {items.map((item, index) => (
-        <div
-          key={index}
-          className="p-2 sm:p-3 md:p-4 rounded-lg shadow-sm w-full flex flex-col gap-2 bg-white"
+    <div key={index} className="mb-2 p-2 border rounded">
+      <p>{item.text}</p>   {/* ✅ render the text only */}
+      {item.isGoal && (
+        <button
+          onClick={() => onAddGoal(item.text)}
+          className="mt-1 px-2 py-1 bg-green-600 text-white rounded"
         >
-          <p className="text-black text-sm sm:text-base md:text-lg lg:text-xl break-words">
-            {item}
-          </p>
-          <button
-            onClick={() => onAddGoal(item)}
-            className="mt-1 px-3 py-1 bg-green-700 text-white text-sm rounded hover:bg-green-800 transition-colors"
-          >
-            Add Goal
-          </button>
-        </div>
-      ))}
+          Add Goal
+        </button>
+      )}
+    </div>
+    ))}
     </div>
   );
 };
