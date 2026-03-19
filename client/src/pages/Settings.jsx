@@ -94,42 +94,42 @@ const EditProfileForm = ({setProfile, setActiveForm}) => {
   };
 
   return (
-    <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full" onSubmit={handleSubmit}>
-      <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+    <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl" onSubmit={handleSubmit}>
+      <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bol rounded-2xl"> ✕ </button>
       
       <h2 className="text-2xl text-center mb-6">Edit Profile</h2>
       <label className="block mb-4"> Name 
-        <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={name} onChange={(e) => setName(e.target.value)} />
+        <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1] rounded-2xl" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
       <label className="block mb-4"> Username 
-        <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1] rounded-2xl" value={username} onChange={(e) => setUsername(e.target.value)} />
       </label>
       <label className="block mb-4"> Bio 
-        <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={bio} onChange={(e) => setBio(e.target.value)} />
+        <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1] rounded-2xl" value={bio} onChange={(e) => setBio(e.target.value)} />
       </label>
       <label className="block mb-4"> Profile Picture 
         <input type="file" accept="image/*" id="profileUpload" className="hidden" onChange={handleImageUpload} />
-        <div className="mt-3">
+        <div className="mt-3 rounded-2xl">
           <label htmlFor="profileUpload" className="bg-[#C7C8B5] text-black px-4 py-2 rounded cursor-pointer hover:bg-[#d8d2b9]"> Upload Image </label>
         </div>
       </label>
 
-      <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6"> Submit </button>
+      <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6 rounded-2xl"> Submit </button>
     </form>
   );
 };
 
 {/* Account Form */}
 const AccountForm = ({setActiveForm, profile}) => (
-  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
-    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
+    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold rounded-2xl"> ✕ </button>
       
     <h2 className="text-2xl text-center mb-6">Account Information</h2>
     <label className="block mb-4"> Name: {profile.name} </label>
     <label className="block mb-4"> Username: @{profile.username} </label>
-    <label className="block mb-4"> Date of Birth <input type="date" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]"/> </label>
+    <label className="block mb-4"> Date of Birth <input type="date" className="w-full mt-1 p-2 text-black bg-[#F0ECD1] rounded-2xl"/> </label>
     <label className="block mb-4">  Country 
-      <select className="w-full mt-1 p-2 text-black bg-[#F0ECD1]">
+      <select className="w-full mt-1 p-2 text-black bg-[#F0ECD1] rounded-2xl">
         <option>United Kingdom</option>
         <option>Other</option>
       </select>
@@ -165,7 +165,7 @@ const BiomarkerForm = ({ setActiveForm }) => {
   };
   
   return (
-    <form onSubmit={handleSubmit} className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+    <form onSubmit={handleSubmit} className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
       <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
 
       <h2 className="text-2xl text-center mb-6">Edit Biomarkers</h2>
@@ -184,7 +184,7 @@ const BiomarkerForm = ({ setActiveForm }) => {
 
 {/* Security Form */}
 const SecurityForm = ({ setActiveForm }) => (
-  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
     
     <h2 className="text-2xl text-center mb-6">Security</h2>
@@ -203,7 +203,7 @@ const SecurityForm = ({ setActiveForm }) => (
 
 {/* Notification Form */}
 const NotificationForm = ({ setActiveForm }) => (
-  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
 
     <h2 className="text-2xl text-center mb-6">Notifications</h2>
@@ -228,7 +228,7 @@ const AccessibilityForm = ({ setActiveForm }) => {
   };
 
   return (
-    <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+    <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
       <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
 
       <h2 className="text-2xl text-center mb-6">Accessibility</h2>
