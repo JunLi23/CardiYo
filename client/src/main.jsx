@@ -15,6 +15,10 @@ import "./styles/index.css";
 import LoginSignUp from "./pages/LoginSignUp";
 import FAQ from "./pages/FAQ";
 
+if (localStorage.getItem("darkMode") === "true") {
+  document.body.classList.add("dark");
+}
+
 const router = createBrowserRouter([
   // {
   //   path: "/",

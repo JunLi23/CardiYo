@@ -51,3 +51,62 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+body.dark {
+  background-color: #2e3d35;
+  color: #F0ECD1;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background-color: #4a6354;
+  color: #F0ECD1;
+  border-color: #3C5246;
+}
+
+body.dark .bg-\[\#C7C8B5\] {
+  background-color: #3C5246 !important;
+  color: #F0ECD1 !important;
+}
+
+/* Navbar */
+body.dark nav {
+  background-color: #3C5246 !important;
+}
+
+/* Workouts page - override CSS variables */
+body.dark .wk-page {
+  --bg: #2e3d35;
+  --inner: #3C5246;
+  --cream: #4a6354;
+}
+
+body.dark .wk-monthMenu {
+  background: #3C5246;
+}
+
+body.dark .wk-pickerYear,
+body.dark .wk-pickerMonthBtn {
+  color: #F0ECD1;
+}
+
+body.dark .wk-pickerArrow {
+  background: #4a6354;
+  color: #F0ECD1;
+}
+
+body.dark .wk-cardTitle,
+body.dark .wk-cardMeta,
+body.dark .wk-bioName,
+body.dark .wk-bioUnit,
+body.dark .wk-bioChartLabel,
+body.dark .wk-bioChartValue,
+body.dark .wk-dataTitle,
+body.dark .wk-deviceLabel {
+  color: #F0ECD1;
+}
+
+body.dark .wk-bioFilterChip {
+  color: #F0ECD1;
+}

@@ -218,27 +218,37 @@ const NotificationForm = ({ setActiveForm }) => (
 );
 
 {/* Accessibility Form */}
-const AccessibilityForm = ({ setActiveForm }) => (
-  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
-    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+const AccessibilityForm = ({ setActiveForm }) => {
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem("darkMode") === "true");
 
-    <h2 className="text-2xl text-center mb-6">Accessibility</h2>
-    <div className="flex justify-between items-center"> 
-      <span>Dark Mode</span> 
-      <div className="flex gap-2"> 
-        <button type="button" className="bg-[#3C5246] px-4 py-1 mt-2">Yes</button> 
-        <button type="button" className="bg-[#C7C8B5] px-4 py-1 mt-2">No</button> 
-      </div> 
-    </div>
-    <div className="flex justify-between items-center"> 
-      <span>Large Text</span> 
-      <div className="flex gap-2"> 
-        <button type="button" className="bg-[#3C5246] px-4 py-1 mt-2">Yes</button> 
-        <button type="button" className="bg-[#C7C8B5] px-4 py-1 mt-2">No</button> 
-      </div> 
-    </div>
-  </form>
-);
+  const toggleDark = (enable) => {
+    setDarkMode(enable);
+    localStorage.setItem("darkMode", enable);
+    document.body.classList.toggle("dark", enable);
+  };
+
+  return (
+    <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+      <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+
+      <h2 className="text-2xl text-center mb-6">Accessibility</h2>
+      <div className="flex justify-between items-center">
+        <span>Dark Mode</span>
+        <div className="flex gap-2">
+          <button type="button" onClick={() => toggleDark(true)} className={`px-4 py-1 mt-2 ${darkMode ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Yes</button>
+          <button type="button" onClick={() => toggleDark(false)} className={`px-4 py-1 mt-2 ${!darkMode ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>No</button>
+        </div>
+      </div>
+      <div className="flex justify-between items-center">
+        <span>Large Text</span>
+        <div className="flex gap-2">
+          <button type="button" className="bg-[#3C5246] px-4 py-1 mt-2">Yes</button>
+          <button type="button" className="bg-[#C7C8B5] px-4 py-1 mt-2">No</button>
+        </div>
+      </div>
+    </form>
+  );
+};
 
 const biomarkerOptions = [
   { id: "calories", name: "Calories", icon: flame},
