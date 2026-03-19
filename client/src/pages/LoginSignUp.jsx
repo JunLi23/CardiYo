@@ -13,11 +13,12 @@ const LoginSignUp = () => {
     const [action,setAction] = useState("Sign Up");
 
   return (
+    <div className="page">
+    <div className="logo">
+        <img src={logoIcon} alt="logo" />
+    </div>
     <div className='container'>
         <div className="header">
-            <div className="logo">
-                <img src={logoIcon} alt="logo" />
-            </div>
             <div className="text">{action}</div>
             <div className="underline"></div>
         </div>
@@ -50,6 +51,7 @@ const LoginSignUp = () => {
                 Login
             </div>
         </div>
+    </div>
     </div>
 
   )
