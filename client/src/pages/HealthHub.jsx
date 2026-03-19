@@ -1,8 +1,8 @@
 // don't change imports, unless adding new ones, thank you!
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useContext } from "react";
-import { NotificationContext } from "../pages/App";
+import { useContext, useEffect } from "react";
+import { Notification } from "../context/Notification";
 import "../styles/HealthHub/HealthHub.css";
 import Navbar from "../components/Navbar";
 import ProfileCard from "../components/HealthHub/ProfileCard";
@@ -12,9 +12,11 @@ import Footer from "../components/Footer";
 
 const HealthHub = () => {
   const [goals, setGoals] = useState([]);
-  const { setNotification } = useContext(NotificationContext);
+  const { setNotification } = useContext(Notification);
 
+  useEffect(() => {
   setNotification("You have a message in Health Hub!");
+}, []);
 
   const handleAddGoal = (msg) => {
     const newGoal = {

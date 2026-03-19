@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Notification from "../context/Notification"
+import { Notification } from "../context/Notification";
 
 const App = () => {
   const [notification, setNotification] = useState("");
 
   return (
-    <NotificationContext.Provider value={{ notification, setNotification }}>
+    <Notification.Provider value={{ notification, setNotification }}>
       <Navbar />
       <div className="w-full p-6">
         <Outlet />
@@ -19,7 +19,7 @@ const App = () => {
           {notification}
         </div>
       )}
-    </NotificationContext.Provider>
+    </Notification.Provider>
   );
 };
 

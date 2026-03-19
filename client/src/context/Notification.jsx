@@ -1,5 +1,3 @@
 import React from "react";
 
-const NotificationContext = React.createContext();
-
-export default NotificationContext;
+export const Notification = React.createContext();
