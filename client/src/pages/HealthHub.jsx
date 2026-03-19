@@ -42,4 +42,22 @@ const HealthHub = () => {
       <Navbar />
 
       <div className="w-full px-6 md:px-10 lg:px-16 py-8">
-        <di
+        <div className="mt-6 w-full">
+          <ProfileCard />
+        </div>
+
+        <div className="mt-6 w-full">
+          <GoalsBox goals={goals} onToggleGoal={toggleGoal} />
+        </div>
+
+        <div className="mt-6 w-full">
+          <PostBoard onAddGoal={handleAddGoal} />
+        </div>
+      </div>
+      <Footer />
+      <Outlet />
+    </>
+  );
+};
+
+export default HealthHub;

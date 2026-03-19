@@ -38,4 +38,27 @@ const NewMessage = () => {
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Message text"
-          className="p-2 bo
+          className="p-2 border rounded"
+          required
+        />
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={isGoal}
+            onChange={() => setIsGoal(!isGoal)}
+          />
+          This message is a goal
+        </label>
+        <button
+          type="submit"
+          className="bg-[#3C5246] text-white px-4 py-2 rounded hover:opacity-90 transition"
+        >
+          Add Message
+        </button>
+      </form>
+      {status && <p className="mt-2">{status}</p>}
+    </div>
+  );
+};
+
+export default NewMessage;
