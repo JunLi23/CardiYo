@@ -5,6 +5,7 @@ import '../styles/LoginSignUp.css';
 import userIcon from '../assets/person.png';
 import emailIcon from '../assets/email.png';
 import passwordIcon from '../assets/password.png';
+import logoIcon from '../assets/Logo.png';
 
 const LoginSignUp = () => {
 
@@ -14,6 +15,9 @@ const LoginSignUp = () => {
   return (
     <div className='container'>
         <div className="header">
+            <div className="logo">
+                <img src={logoIcon} alt="logo" />
+            </div>
             <div className="text">{action}</div>
             <div className="underline"></div>
         </div>
