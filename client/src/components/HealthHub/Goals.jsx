@@ -1,5 +1,5 @@
 // don't change imports, unless adding new ones, thank you!
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 function Goal({ goal, onToggle }) {
   return (
@@ -23,30 +23,7 @@ function Goal({ goal, onToggle }) {
   );
 }
 
-function GoalsBox() {
-  const [goals, setGoals] = useState([]);
-
-  useEffect(() => {
-    // Fetch all messages from backend and filter for goals
-    fetch(`${import.meta.env.VITE_API_URL}/api/messages`)
-      .then(res => res.json())
-      .then(data => {
-        const goalMessages = data
-          .filter(msg => msg.isGoal)
-          .map(msg => ({ ...msg, completed: false })); // optional completed field
-        setGoals(goalMessages);
-      })
-      .catch(err => console.log(err));
-  }, []);
-
-  const toggleGoal = (id) => {
-    setGoals((prev) =>
-      prev.map((goal) =>
-        goal._id === id ? { ...goal, completed: !goal.completed } : goal
-      )
-    );
-  };
-
+function GoalsBox({ goals, onToggleGoal }) {
   return (
     <div
       className="w-full flex flex-col gap-4 p-6 border-4 rounded-2xl"
@@ -56,7 +33,7 @@ function GoalsBox() {
         <p className="text-white">No goals yet</p>
       ) : (
         goals.map((goal) => (
-          <Goal key={goal._id} goal={goal} onToggle={() => toggleGoal(goal._id)} />
+          <Goal key={goal._id} goal={goal} onToggle={() => onToggleGoal(goal._id)} />
         ))
       )}
     </div>

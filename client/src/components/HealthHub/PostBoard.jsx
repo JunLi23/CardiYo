@@ -19,17 +19,16 @@ const PostBoard = ({ onAddGoal }) => {
 
   return (
     <div className="w-full bg-[#5E806D] border-4 border-[#3C5246] rounded-2xl p-6 max-h-[350px] overflow-y-auto">
-
-      {messages.map((msg, index) => (
+      {messages.map((msg) => (
         <div
-          key={index}
+          key={msg._id}
           className="bg-white rounded-xl p-4 mb-4 flex flex-col md:flex-row md:items-center md:justify-between"
         >
           <p className="text-black text-sm md:text-base">{msg.text}</p>
 
           {msg.isGoal && (
             <button
-              onClick={() => onAddGoal(msg.text)}
+              onClick={() => onAddGoal(msg)}
               className="mt-3 md:mt-0 bg-[#3C5246] text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
             >
               Add Goal
@@ -37,7 +36,6 @@ const PostBoard = ({ onAddGoal }) => {
           )}
         </div>
       ))}
-
     </div>
   );
 };
