@@ -18,7 +18,7 @@ const App = () => {
   return (
     <Notification.Provider value={{ notification, setNotification }}>
       <Navbar />
-      <div className="w-full p-6">
+      <div className="w-full">
         <Outlet />
       </div>
       <Footer />
