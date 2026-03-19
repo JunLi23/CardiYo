@@ -4,8 +4,15 @@ import Navbar from "../components/Navbar";
 import ProfileBanner from "../components/ProfileBanner";
 import React, { useState, useEffect } from "react";
 import Footer from "../components/Footer";
+import flame from "../assets/flame.png";
+import bloodpressure from "../assets/blood-pressure.png";
+import heart from "../assets/heart.png";
+import o2 from "../assets/o2.png";
+import sneaker from "../assets/sneaker.png";
+import walking from "../assets/walking.png";
 
 const Settings = () => {
+
   const [profile, setProfile] = useState({
     name: "Jane Joe",
     username: "janejoe123",
@@ -55,12 +62,10 @@ const Settings = () => {
         {activeForm === "accessibility" && <AccessibilityForm setActiveForm={setActiveForm}/>}
       </div>
 
-      
       <Footer />
     </>
   );
 };
-
 
 {/* Edit Profile Form */}
 const EditProfileForm = ({setProfile, setActiveForm}) => {
@@ -77,7 +82,7 @@ const EditProfileForm = ({setProfile, setActiveForm}) => {
     window.dispatchEvent(new Event("profileUpdated"));
     setActiveForm(null);
   };
-
+  
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -93,18 +98,17 @@ const EditProfileForm = ({setProfile, setActiveForm}) => {
       <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
       
       <h2 className="text-2xl text-center mb-6">Edit Profile</h2>
-
-      <label className="block mb-4">
-        Name <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={name} onChange={(e) => setName(e.target.value)} />
+      <label className="block mb-4"> Name 
+        <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
-      <label className="block mb-4">
-        Username <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <label className="block mb-4"> Username 
+        <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={username} onChange={(e) => setUsername(e.target.value)} />
       </label>
-      <label className="block mb-4">
-        Bio <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={bio} onChange={(e) => setBio(e.target.value)} />
+      <label className="block mb-4"> Bio 
+        <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]" value={bio} onChange={(e) => setBio(e.target.value)} />
       </label>
-      <label className="block mb-4">
-        Profile Picture <input type="file" accept="image/*" id="profileUpload" className="hidden" onChange={handleImageUpload} />
+      <label className="block mb-4"> Profile Picture 
+        <input type="file" accept="image/*" id="profileUpload" className="hidden" onChange={handleImageUpload} />
         <div className="mt-3">
           <label htmlFor="profileUpload" className="bg-[#C7C8B5] text-black px-4 py-2 rounded cursor-pointer hover:bg-[#d8d2b9]"> Upload Image </label>
         </div>
@@ -115,19 +119,17 @@ const EditProfileForm = ({setProfile, setActiveForm}) => {
   );
 };
 
-
 {/* Account Form */}
 const AccountForm = ({setActiveForm, profile}) => (
   <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
       
     <h2 className="text-2xl text-center mb-6">Account Information</h2>
-
     <label className="block mb-4"> Name: {profile.name} </label>
     <label className="block mb-4"> Username: @{profile.username} </label>
     <label className="block mb-4"> Date of Birth <input type="date" className="w-full mt-1 p-2 text-black bg-[#F0ECD1]"/> </label>
-    <label className="block mb-4"> 
-      Country <select className="w-full mt-1 p-2 text-black bg-[#F0ECD1]">
+    <label className="block mb-4">  Country 
+      <select className="w-full mt-1 p-2 text-black bg-[#F0ECD1]">
         <option>United Kingdom</option>
         <option>Other</option>
       </select>
@@ -137,37 +139,55 @@ const AccountForm = ({setActiveForm, profile}) => (
   </form>
 );
 
-
 {/* Biomarker Form */}
-const BiomarkerForm = ({ setActiveForm }) => (
-  <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
-    <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
+const BiomarkerForm = ({ setActiveForm }) => {
+  const [checkedItems, setCheckedItems] = useState(Object.fromEntries(biomarkerOptions.map((item) => [item.id, false])));
+  
+  const handleChange = (id) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const selected = biomarkerOptions
+      .filter(item => checkedItems[item.id])
+      .map(item => ({
+        id: item.id,
+        name: item.label,
+        value: biomarkerData[item.id],
+        icon: item.icon,
+    }));
+    localStorage.setItem("biomarkers", JSON.stringify(selected));
+    setActiveForm(null);
+  };
+  
+  return (
+    <form onSubmit={handleSubmit} className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
+      <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
 
-    <h2 className="text-2xl text-center mb-6">Edit Biomarkers</h2>
-
-    <div className="grid grid-cols-2 gap-x-10 gap-y-6">
-      <label className="flex justify-between items-center"> Calories <input className="scale-150 accent-[#3C5246]" type="checkbox" checked/></label>
-      <label className="flex justify-between items-center"> Heart Rate <input className="scale-150 accent-[#3C5246]" type="checkbox" checked/></label>
-      <label className="flex justify-between items-center"> Steps <input className="scale-150 accent-[#3C5246]" type="checkbox" checked/></label>
-      <label className="flex justify-between items-center"> Blood Pressure <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
-      <label className="flex justify-between items-center"> Distance <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
-      <label className="flex justify-between items-center"> Cholesterol <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
-      <label className="flex justify-between items-center"> Blood Sugar <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
-      <label className="flex justify-between items-center"> O2 Levels <input className="scale-150 accent-[#3C5246]" type="checkbox"/></label>
-    </div>
-
-    <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6"> Submit </button>
-  </form>
-);
-
+      <h2 className="text-2xl text-center mb-6">Edit Biomarkers</h2>
+      <div className="grid grid-cols-2 gap-x-10 gap-y-6">
+        {biomarkerOptions.map((item) => (
+          <label key={item.id} className="flex justify-between items-center"> {item.name}
+              <input type="checkbox" checked={checkedItems[item.id]} onChange={() => handleChange(item.id)} className="scale-150 accent-[#3C5246]"/>
+          </label>
+        ))}
+      </div>
+      
+      <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6"> Submit </button>
+    </form>
+  );
+};
 
 {/* Security Form */}
 const SecurityForm = ({ setActiveForm }) => (
   <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
-
+    
     <h2 className="text-2xl text-center mb-6">Security</h2>
-
       <div className="flex justify-between items-center"> 
         <span>Enable Two-Step Verification</span> 
         <div className="flex gap-2"> 
@@ -175,13 +195,11 @@ const SecurityForm = ({ setActiveForm }) => (
           <button type="button" className="bg-[#C7C8B5] px-4 py-1 mt-2">No</button> 
         </div> 
       </div>
-
     <div className="mb-4"> 
       <button type="button" className="bg-[#3C5246] px-4 py-2" > Log Out of All Devices </button> 
     </div>
   </form>
 );
-
 
 {/* Notification Form */}
 const NotificationForm = ({ setActiveForm }) => (
@@ -189,7 +207,6 @@ const NotificationForm = ({ setActiveForm }) => (
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
 
     <h2 className="text-2xl text-center mb-6">Notifications</h2>
-
     <div className="flex justify-between items-center mb-4"> 
       <span>Enable Notifications</span>
       <div className="flex gap-2"> 
@@ -200,14 +217,12 @@ const NotificationForm = ({ setActiveForm }) => (
   </form>
 );
 
-
 {/* Accessibility Form */}
 const AccessibilityForm = ({ setActiveForm }) => (
   <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full">
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
 
     <h2 className="text-2xl text-center mb-6">Accessibility</h2>
-
     <div className="flex justify-between items-center"> 
       <span>Dark Mode</span> 
       <div className="flex gap-2"> 
@@ -215,7 +230,6 @@ const AccessibilityForm = ({ setActiveForm }) => (
         <button type="button" className="bg-[#C7C8B5] px-4 py-1 mt-2">No</button> 
       </div> 
     </div>
-
     <div className="flex justify-between items-center"> 
       <span>Large Text</span> 
       <div className="flex gap-2"> 
@@ -225,5 +239,27 @@ const AccessibilityForm = ({ setActiveForm }) => (
     </div>
   </form>
 );
+
+const biomarkerOptions = [
+  { id: "calories", name: "Calories", icon: flame},
+  { id: "heartRate", name: "Heart Rate", icon: heart},
+  { id: "steps", name: "Steps", icon: sneaker},
+  { id: "bloodPressure", name: "Blood Pressure", icon: bloodpressure},
+  { id: "distance", name: "Distance", icon: walking},
+  { id: "cholesterol", name: "Cholesterol", icon: flame},
+  { id: "bloodSugar", name: "Blood Sugar", icon: bloodpressure},
+  { id: "o2Levels", name: "O2 Levels", icon: o2},
+];
+
+const biomarkerData = {
+  calories: "1,200kcal",
+  heartRate: "72bpm",
+  steps: "8,543",
+  bloodPressure: "120/80",
+  distance: "5.2km",
+  cholesterol: "180mg/dL",
+  bloodSugar: "95mg/dL",
+  o2Levels: "98%",
+};
 
 export default Settings;
