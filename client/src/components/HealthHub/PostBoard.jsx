@@ -1,30 +1,38 @@
 // don't change imports, unless adding new ones, thank you!
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const PostBoard = ({ items = [], onAddGoal }) => {
+const PostBoard = ({ onAddGoal }) => {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/messages`)
+      .then(res => res.json())
+      .then(data => setMessages(data))
+      .catch(err => console.log(err));
+  }, []);
+
   return (
-    <div
-      className="w-full flex flex-col gap-4 p-6 border-4 rounded-2xl flex-col gap-3 overflow-y-auto"
-      style={{
-        backgroundColor: "#5E806D",
-        borderColor: "#3C5246",
-        height: "60vh",
-      }}
-    >
-      {items.map((item, index) => (
-    <div key={index} className="mb-2 p-2 border rounded">
-      <p>{item.text}</p>   {/* ✅ render the text only */}
-      {item.isGoal && (
-        <button
-          onClick={() => onAddGoal(item.text)}
-          className="mt-1 px-2 py-1 bg-green-600 text-white rounded"
+    <div className="w-full bg-[#5E806D] border-4 border-[#3C5246] rounded-2xl p-6 max-h-[350px] overflow-y-auto">
+
+      {messages.map((msg, index) => (
+        <div
+          key={index}
+          className="bg-white rounded-xl p-4 mb-4 flex flex-col md:flex-row md:items-center md:justify-between"
         >
-          Add Goal
-        </button>
-      )}
-    </div>
-    ))}
+          <p className="text-black text-sm md:text-base">{msg.text}</p>
+
+          {msg.isGoal && (
+            <button
+              onClick={() => onAddGoal(msg.text)}
+              className="mt-3 md:mt-0 bg-[#3C5246] text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
+            >
+              Add Goal
+            </button>
+          )}
+        </div>
+      ))}
+
     </div>
   );
 };
