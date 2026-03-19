@@ -29,7 +29,7 @@ const MedalBox = () => {
   return (
     <>
       {/* Achievements Section */}
-      <div className="bg-[#5E806D] border-8 border-[#3C5246]">
+      <div className="bg-[#5E806D] border-8 border-[#3C5246] rounded-2xl">
             
         {/* Medal Section */}
         <h2 className="text-xl pt-2">Medals</h2>
@@ -39,7 +39,7 @@ const MedalBox = () => {
         </div>
               
         {/* Trophy Section */}
-        <div className="border-t-8 border-[#3C5246]">
+        <div className="border-t-8 border-[#3C5246] ">
           <h2 className="text-xl pt-2">Trophies</h2>
 
           <div className="m-3 text-[#DCDCDC]"> No Trophies Earned </div> 

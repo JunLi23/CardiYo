@@ -9,6 +9,8 @@ import MountainImg from "../assets/Everest.svg"
 import MountainPath from "../components/dashboardComponents/MountainPath";
 import Footer from "../components/Footer";
 
+import BioClouds from "../components/BioClouds";
+
 const Dashboard = ()=> {
     
     return (
@@ -17,15 +19,7 @@ const Dashboard = ()=> {
                 <div className={styles.dashboard}>
                     <div className={styles.mountainSection}>
                         <img src={MountainImg} alt="Mountain" className={styles.mountainImg} />
-                        <div className={styles.cloudLeft}>
-                            <BioMarker index={0} />                    
-                        </div>
-                        <div className={styles.cloudCenter}>
-                            <BioMarker index={1} />                    
-                        </div>
-                        <div className={styles.cloudRight}>
-                            <BioMarker index={2} />
-                        </div>
+                        <BioClouds />
                     </div>
                     <div className={styles.middleSection}>
                         <ProgressDisplay />

@@ -36,9 +36,9 @@ const MountainBox = () => {
   return (
     <>
       {/* Mountain Section */}
-      <div className="bg-[#5E806D] border-8 border-[#3C5246] pb-5 md:p-0 md:pb-0">
+      <div className="bg-[#5E806D] border-8 border-[#3C5246] pb-5 md:p-0 md:pb-0 rounded-2xl">
           <h2 className="text-xl pt-2"> Mountains Completed </h2>
-          
+
           <div className="grid grid-cols-3 justify-items-center mt-3">
               {completedMountains.map((mountain) => (<MountainIcon key={mountain.id} name={mountain.name} image={mountain.image}/>))}
           </div>

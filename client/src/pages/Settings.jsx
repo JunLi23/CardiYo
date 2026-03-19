@@ -35,7 +35,7 @@ const Settings = () => {
       <ProfileBanner profile={profile} />
 
       {/* Setting Buttons */}
-      <div className="w-[90%] max-w-[1100px] grid grid-cols-1 md:grid-cols-2 mt-10 mx-auto">
+      <div className="w-[90%] max-w-[1100px] grid grid-cols-1 md:grid-cols-2 mt-10 mx-auto mb-10">
         <button onClick={() => setActiveForm("editProfile")} className={settingsButton}> Edit Profile </button>
         <button onClick={() => setActiveForm("accountInfo")} className={settingsButton}> Account Information </button>
         <button onClick={() => setActiveForm("editBio")} className={settingsButton}> Edit Biomarkers </button>
@@ -176,7 +176,7 @@ const BiomarkerForm = ({ setActiveForm }) => {
           </label>
         ))}
       </div>
-      
+
       <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6"> Submit </button>
     </form>
   );
