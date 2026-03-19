@@ -17,10 +17,4 @@ dotenv.config();
 mongoose.connect(process.env.ATLAS_URI);
 
 app.use("/record", records);
-app.use("/dashboard", dashboard);
-app.use("/api/messages", messages);
-
-// start the Express server
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+app.use("/das

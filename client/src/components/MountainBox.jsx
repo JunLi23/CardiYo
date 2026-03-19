@@ -47,4 +47,4 @@ const MountainBox = () => {
   );
 };
 
-export default MountainBox;
+export default MountainBox
