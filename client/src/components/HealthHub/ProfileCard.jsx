@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Report from "./ReportPopUp"
-import ProfilePic from "../../assets/blank-pf.png"
+import ProfilePic from "../../assets/doctor.png"
 import ReportIcon from "../../assets/Report.png"
 
 

@@ -55,9 +55,8 @@ const Settings = () => {
         {activeForm === "accessibility" && <AccessibilityForm setActiveForm={setActiveForm}/>}
       </div>
 
-      <div className="mt-10">
-        <Footer />
-      </div>
+      
+      <Footer />
     </>
   );
 };
