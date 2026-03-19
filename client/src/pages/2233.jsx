@@ -1,53 +1,64 @@
-// don't change imports, unless adding new ones, thank you!
-import { useState } from "react";
-import { useGoals } from "../context/UseGoals";
+import React, { useState } from "react";
 
-import Navbar from "../components/Navbar";
+const NewMessage = () => {
+  const [text, setText] = useState("");
+  const [isGoal, setIsGoal] = useState(false);
+  const [status, setStatus] = useState("");
 
-const AddStuff = () => {
-  const { addGoal } = useGoals();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const [message, setMessage] = useState("");
-  const [date, setDate] = useState("");
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/messages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, isGoal }),
+    });  
 
-  const handleSubmit = () => {
-    if (!message || !date) return;
-
-    addGoal({ message, date });
-    setMessage("");
-    setDate("");
+      if (res.ok) {
+        const newMsg = await res.json();
+        setStatus("Message added successfully!");
+        setText("");
+        setIsGoal(false);
+        console.log("New message added:", newMsg);
+      } else {
+        setStatus("Failed to add message");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("Error sending message");
+    }
   };
 
   return (
-    <>
-      <Navbar />
-
-      <div className="p-8 max-w-xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Add a Goal</h1>
-
-        <input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Goal..."
-          className="border p-2 mb-3 w-full rounded"
+    <div className="p-6 max-w-md mx-auto">
+      <h2 className="text-xl font-bold mb-4">Add New Message</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Message text"
+          className="p-2 border rounded"
+          required
         />
-
-        <input
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          placeholder="Date..."
-          className="border p-2 mb-3 w-full rounded"
-        />
-
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={isGoal}
+            onChange={() => setIsGoal(!isGoal)}
+          />
+          This message is a goal
+        </label>
         <button
-          onClick={handleSubmit}
-          className="bg-green-600 text-white px-4 py-2 rounded"
+          type="submit"
+          className="bg-[#3C5246] text-white px-4 py-2 rounded hover:opacity-90 transition"
         >
-          Add Goal
+          Add Message
         </button>
-      </div>
-    </>
+      </form>
+      {status && <p className="mt-2">{status}</p>}
+    </div>
   );
 };
 
-export default AddStuff;
+export default NewMessage;

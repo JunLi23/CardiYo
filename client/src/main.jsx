@@ -14,6 +14,7 @@ import Settings from "./pages/Settings";
 import "./styles/index.css";
 import LoginSignUp from "./pages/LoginSignUp";
 import FAQ from "./pages/FAQ";
+import NewMessage from "./pages/2233";
 
 if (localStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark");
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
   {
     path: "/FAQ",
     element: <FAQ />,
+  },
+  {
+    path: "/new-message",
+    element: <NewMessage />,
   }
 ]);
 
