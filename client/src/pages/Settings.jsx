@@ -97,7 +97,7 @@ const EditProfileForm = ({setProfile, setActiveForm}) => {
     <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl" onSubmit={handleSubmit}>
       <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bol rounded-2xl"> ✕ </button>
       
-      <h2 className="text-2xl text-center mb-6">Edit Profile</h2>
+      <h2 className="md:text-2xl md:text-center text-xl mb-6">Edit Profile</h2>
       <label className="block mb-4"> Name 
         <input type="text" className="w-full mt-1 p-2 text-black bg-[#F0ECD1] rounded-2xl" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
@@ -124,7 +124,7 @@ const AccountForm = ({setActiveForm, profile}) => (
   <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold rounded-2xl"> ✕ </button>
       
-    <h2 className="text-2xl text-center mb-6">Account Information</h2>
+    <h2 className="md:text-2xl md:text-center text-xl mb-6">Account Information</h2>
     <label className="block mb-4"> Name: {profile.name} </label>
     <label className="block mb-4"> Username: @{profile.username} </label>
     <label className="block mb-4"> Date of Birth <input type="date" className="w-full mt-1 p-2 text-black bg-[#F0ECD1] rounded-2xl"/> </label>
@@ -168,7 +168,7 @@ const BiomarkerForm = ({ setActiveForm }) => {
     <form onSubmit={handleSubmit} className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
       <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
 
-      <h2 className="text-2xl text-center mb-6">Edit Biomarkers</h2>
+      <h2 className="md:text-2xl md:text-center text-xl mb-6">Edit Biomarkers</h2>
       <div className="grid grid-cols-2 gap-x-10 gap-y-6">
         {biomarkerOptions.map((item) => (
           <label key={item.id} className="flex justify-between items-center"> {item.name}
@@ -187,16 +187,16 @@ const SecurityForm = ({ setActiveForm }) => (
   <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
     
-    <h2 className="text-2xl text-center mb-6">Security</h2>
-      <div className="flex justify-between items-center"> 
+    <h2 className="md:text-2xl md:text-center text-xl mb-6">Security</h2>
+      <div className="flex justify-between items-center mb-2"> 
         <span>Enable Two-Step Verification</span> 
         <div className="flex gap-2"> 
-          <button type="button" className="bg-[#3C5246] px-4 py-1 mt-2">Yes</button> 
+          <button type="button" className="bg-[#3C5246] px-4 py-1 mt-2 mx-1">Yes</button> 
           <button type="button" className="bg-[#C7C8B5] px-4 py-1 mt-2">No</button> 
         </div> 
       </div>
     <div className="mb-4"> 
-      <button type="button" className="bg-[#3C5246] px-4 py-2" > Log Out of All Devices </button> 
+      <button type="button" className="bg-[#3C5246] px-4 py-2 mt-5" > Log Out of All Devices </button> 
     </div>
   </form>
 );
@@ -206,7 +206,7 @@ const NotificationForm = ({ setActiveForm }) => (
   <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
     <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
 
-    <h2 className="text-2xl text-center mb-6">Notifications</h2>
+    <h2 className="md:text-2xl md:text-center text-xl mb-6">Notifications</h2>
     <div className="flex justify-between items-center mb-4"> 
       <span>Enable Notifications</span>
       <div className="flex gap-2"> 
@@ -231,7 +231,7 @@ const AccessibilityForm = ({ setActiveForm }) => {
     <form className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
       <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold"> ✕ </button>
 
-      <h2 className="text-2xl text-center mb-6">Accessibility</h2>
+      <h2 className="md:text-2xl md:text-center text-xl mb-6">Accessibility</h2>
       <div className="flex justify-between items-center">
         <span>Dark Mode</span>
         <div className="flex gap-2">
