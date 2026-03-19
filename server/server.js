@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import messages from "./routes/messages"
+import dotenv from "dotenv";
+import messages from "./routes/messages.js";
 import records from "./routes/record.js";
 import dashboard from "./routes/dashboard.js";
+import { formatMessages } from "esbuild";
 
 const PORT = process.env.PORT || 5050;
 const app = express();
@@ -13,11 +15,11 @@ app.use(express.json());
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.ATLAS_URI);
 
 app.use("/record", records);
 app.use("/dashboard", dashboard);
-app.use("/dashboard", messages);
+app.use("/api/messages", formatMessages);
 
 // start the Express server
 app.listen(PORT, () => {
