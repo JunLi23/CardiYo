@@ -7,9 +7,15 @@ const PostBoard = ({ onAddGoal }) => {
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/messages`)
-      .then(res => res.json())
-      .then(data => setMessages(data))
-      .catch(err => console.log(err));
+      .then((res) => res.json())
+      .then((data) => {
+        // Sort messages by createdAt (newest first)
+        const sorted = data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setMessages(sorted);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
