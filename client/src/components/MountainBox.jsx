@@ -7,7 +7,7 @@ import fuji from "../assets/fuji.png";
 import matterhorn from "../assets/matterhorn.png";
 import mountAnnapurna from "../assets/mount-annapurna.png";
 import mountKinabalu from "../assets/mount-kinabalu.png";
-import everest from  "../assets/Everest.svg"
+import everest from  "../assets/Everest.svg";
 
 const MountainIcon = ({name, image}) => {
   return (

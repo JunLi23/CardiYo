@@ -5,7 +5,7 @@ import "../styles/HealthHub/HealthHub.css";
 import Navbar from "../components/Navbar";
 import ProfileCard from "../components/HealthHub/ProfileCard";
 import PostBoard from "../components/HealthHub/PostBoard";
-import GoalsBox from "../components/HealthHub/GoalsBox";
+import GoalsBox from "../components/HealthHub/Goals";
 import Footer from "../components/Footer";
 
 const HealthHub = () => {
