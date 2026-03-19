@@ -1,9 +1,7 @@
 // don't change imports, unless adding new ones, thank you!
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import ProfileBanner from "../components/ProfileBanner";
 import React, { useState, useEffect } from "react";
-import Footer from "../components/Footer";
 import flame from "../assets/flame.png";
 import bloodpressure from "../assets/blood-pressure.png";
 import heart from "../assets/heart.png";
@@ -31,7 +29,6 @@ const Settings = () => {
 
   return (
     <>
-      <Navbar />
       <ProfileBanner profile={profile} />
 
       {/* Setting Buttons */}
@@ -61,8 +58,6 @@ const Settings = () => {
         {activeForm === "notify" && <NotificationForm setActiveForm={setActiveForm}/>}
         {activeForm === "accessibility" && <AccessibilityForm setActiveForm={setActiveForm}/>}
       </div>
-
-      <Footer />
     </>
   );
 };

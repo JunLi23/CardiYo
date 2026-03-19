@@ -21,72 +21,48 @@ if (localStorage.getItem("darkMode") === "true") {
 }
 
 const router = createBrowserRouter([
-  // {
-  //   path: "/",
-  //   element: <App />,
-  //   children: [
-  //     {
-  //       path: "/",
-  //       element: <RecordList />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "/edit/:id",
-  //   element: <App />,
-  //   children: [
-  //     {
-  //       path: "/edit/:id",
-  //       element: <Record />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: "/create",
-  //   element: <App />,
-  //   children: [
-  //     {
-  //       path: "/create",
-  //       element: <Record />,
-  //     },
-  //   ],
-  // }, 
   {
-  path: "/",
-  element: <LoginSignUp />,
-  },
-  {
-    path: "/dashboard",
-    element: <Dashboard />,
-  },
-  {
-    path: "/Workouts",
-    element: <Workouts />,
-  },
-  {
-    path: "/HealthHub",
-    element:<HealthHub />,
-  },
-  {
-    path: "/Profile",
-    element: <Profile />,
-  },
-  {
-    path: "/Settings",
-    element: <Settings />,
+    path: "/",
+    element: <LoginSignUp />,
   },
   {
     path: "/LoginSignUp",
     element: <LoginSignUp />,
   },
   {
-    path: "/FAQ",
-    element: <FAQ />,
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/Workouts",
+        element: <Workouts />,
+      },
+      {
+        path: "/HealthHub",
+        element: <HealthHub />,
+      },
+      {
+        path: "/Profile",
+        element: <Profile />,
+      },
+      {
+        path: "/Settings",
+        element: <Settings />,
+      },
+      {
+        path: "/FAQ",
+        element: <FAQ />,
+      },
+      {
+        path: "/new-message",
+        element: <NewMessage />,
+      },
+    ],
   },
-  {
-    path: "/new-message",
-    element: <NewMessage />,
-  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

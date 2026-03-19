@@ -1,11 +1,9 @@
 // don't change imports, unless adding new ones, thank you!
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import ProfileBanner from "../components/ProfileBanner";
 import { useEffect, useState } from "react";
 import MedalBox from "../components/MedalBox";
 import MountainBox from "../components/MountainBox";
-import Footer from "../components/Footer";
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -29,7 +27,6 @@ const Profile = () => {
     
   return (
     <>
-      <Navbar />
       <ProfileBanner profile={profile} />
 
       {/* Achievements + Mountain Section */}
@@ -37,8 +34,6 @@ const Profile = () => {
           <MedalBox />
           <MountainBox />
       </div>
-
-      <Footer />
     </>
   );
 };

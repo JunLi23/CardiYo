@@ -1,7 +1,6 @@
 // don't change imports, unless adding new ones, thank you!
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import Navbar from "../components/Navbar"
 import "../styles/Workouts.css";
 import Footer from "../components/Footer"
 
@@ -203,8 +202,6 @@ export default function Workouts() {
 
   return (
     <>
-      <Navbar />
-
       <div className="wk-page">
         <main className="wk-main">
           <section className="wk-frameOuter">
@@ -670,7 +667,6 @@ export default function Workouts() {
           )}
         </Modal>
       )}
-      <Footer />
     </>
   );
 }

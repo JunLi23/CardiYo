@@ -1,8 +1,6 @@
 // don't change imports, unless adding new ones, thank you!
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import "../styles/FAQ.css";
 
 const faqs = [
@@ -54,7 +52,6 @@ const FAQ = () => {
 
   return (
     <>
-      <Navbar />
       <div className="faq-page">
         <button className="faq-back" onClick={() => navigate("/Settings")}>← Back to Settings</button>
         <div className="faq-header">
@@ -79,7 +76,6 @@ const FAQ = () => {
           ))}
         </div>
       </div>
-      <Footer />
     </>
   );
 };

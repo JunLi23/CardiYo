@@ -4,11 +4,9 @@ import { Outlet } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { Notification } from "../context/Notification";
 import "../styles/HealthHub/HealthHub.css";
-import Navbar from "../components/Navbar";
 import ProfileCard from "../components/HealthHub/ProfileCard";
 import PostBoard from "../components/HealthHub/PostBoard";
 import GoalsBox from "../components/HealthHub/Goals";
-import Footer from "../components/Footer";
 
 const HealthHub = () => {
   const [goals, setGoals] = useState([]);
@@ -41,8 +39,6 @@ const HealthHub = () => {
 
   return (
     <>
-      <Navbar />
-
       <div className="w-full px-6 md:px-10 lg:px-16 py-8">
         <div className="mt-6 w-full">
           <ProfileCard />
@@ -56,7 +52,6 @@ const HealthHub = () => {
           <PostBoard onAddGoal={handleAddGoal} />
         </div>
       </div>
-      <Footer />
       <Outlet />
     </>
   );
