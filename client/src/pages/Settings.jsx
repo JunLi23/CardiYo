@@ -110,7 +110,7 @@ const EditProfileForm = ({setProfile, setActiveForm}) => {
       <label className="block mb-4"> Profile Picture 
         <input type="file" accept="image/*" id="profileUpload" className="hidden" onChange={handleImageUpload} />
         <div className="mt-3 rounded-2xl">
-          <label htmlFor="profileUpload" className="bg-[#C7C8B5] text-black px-4 py-2 rounded cursor-pointer hover:bg-[#d8d2b9]"> Upload Image </label>
+          <label htmlFor="profileUpload" className="bg-[#3C5246] text-white px-4 py-2 rounded cursor-pointer hover:bg-[#d8d2b9]"> Upload Image </label>
         </div>
       </label>
 
