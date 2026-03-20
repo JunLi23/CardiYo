@@ -1,24 +1,21 @@
 // don't change imports, unless adding new ones, thank you!
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Notification } from "../context/Notification";
 import "../styles/HealthHub/HealthHub.css";
 import ProfileCard from "../components/HealthHub/ProfileCard";
 import PostBoard from "../components/HealthHub/PostBoard";
 import GoalsBox from "../components/HealthHub/Goals";
+import Footer from "../components/Footer";
 
 const HealthHub = () => {
   const [goals, setGoals] = useState([]);
   const { setNotification } = useContext(Notification);
 
-  useEffect(() => {
-  setNotification("You have a message in Health Hub!");
-}, []);
-
   const handleAddGoal = (msg) => {
     const newGoal = {
-      _id: msg._id, // keep backend id
+      _id: msg._id,
       text: msg.text,
       createdAt: msg.createdAt,
       completed: false,
@@ -26,6 +23,7 @@ const HealthHub = () => {
 
     if (!goals.find((goal) => goal._id === msg._id)) {
       setGoals((prev) => [...prev, newGoal]);
+      setNotification("You have a new goal in Health Hub!");
     }
   };
 

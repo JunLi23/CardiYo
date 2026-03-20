@@ -6,16 +6,25 @@ const PostBoard = ({ onAddGoal }) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/messages`)
-      .then((res) => res.json())
-      .then((data) => {
-        const sorted = data.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-        setMessages(sorted);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    const fetchMessages = () => {
+      fetch(`${import.meta.env.VITE_API_URL}/api/messages`)
+        .then((res) => res.json())
+        .then((data) => {
+          const sorted = data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          setMessages(sorted);
+          sorted.forEach((msg) => {
+            if (msg.isGoal) onAddGoal(msg);
+          });
+        })
+        .catch((err) => console.log(err));
+    };
+
+    fetchMessages();
+    const interval = setInterval(fetchMessages, 5000);
+    return () => clearInterval(interval);
+  }, [onAddGoal]);
 
   return (
     <div className="w-full bg-[#5E806D] border-4 border-[#3C5246] rounded-2xl p-6 max-h-[350px] overflow-y-auto">

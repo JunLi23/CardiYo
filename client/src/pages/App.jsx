@@ -1,5 +1,5 @@
 // don't change imports, unless adding new ones, thank you!
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -7,6 +7,27 @@ import { Notification } from "../context/Notification";
 
 const App = () => {
   const [notification, setNotification] = useState("");
+  const seenGoalIds = useRef(new Set());
+
+  useEffect(() => {
+    const fetchMessages = () => {
+      fetch(`${import.meta.env.VITE_API_URL}/api/messages`)
+        .then((res) => res.json())
+        .then((data) => {
+          data.forEach((msg) => {
+            if (msg.isGoal && !seenGoalIds.current.has(msg._id)) {
+              seenGoalIds.current.add(msg._id);
+              setNotification("You have a new goal in Health Hub!");
+            }
+          });
+        })
+        .catch((err) => console.log(err));
+    };
+
+    fetchMessages();
+    const interval = setInterval(fetchMessages, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (notification) {
@@ -33,4 +54,3 @@ const App = () => {
 };
 
 export default App;
-
