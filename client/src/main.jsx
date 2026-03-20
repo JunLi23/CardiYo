@@ -19,6 +19,10 @@ import NewMessage from "./pages/2233";
 if (localStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark");
 }
+const textScale = localStorage.getItem("textScale");
+if (textScale && textScale !== "off") {
+  document.documentElement.classList.add(`large-text-${textScale}`);
+}
 
 const router = createBrowserRouter([
   {

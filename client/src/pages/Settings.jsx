@@ -215,11 +215,19 @@ const NotificationForm = ({ setActiveForm }) => (
 {/* Accessibility Form */}
 const AccessibilityForm = ({ setActiveForm }) => {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("darkMode") === "true");
+  const [textScale, setTextScale] = useState(() => localStorage.getItem("textScale") || "off");
 
   const toggleDark = (enable) => {
     setDarkMode(enable);
     localStorage.setItem("darkMode", enable);
     document.body.classList.toggle("dark", enable);
+  };
+
+  const setScale = (scale) => {
+    setTextScale(scale);
+    localStorage.setItem("textScale", scale);
+    document.documentElement.classList.remove("large-text-1", "large-text-2");
+    if (scale !== "off") document.documentElement.classList.add(`large-text-${scale}`);
   };
 
   return (
@@ -234,11 +242,12 @@ const AccessibilityForm = ({ setActiveForm }) => {
           <button type="button" onClick={() => toggleDark(false)} className={`px-4 py-1 mt-2 ${!darkMode ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>No</button>
         </div>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mt-4">
         <span>Large Text</span>
         <div className="flex gap-2">
-          <button type="button" className="bg-[#3C5246] px-4 py-1 mt-2">Yes</button>
-          <button type="button" className="bg-[#C7C8B5] px-4 py-1 mt-2">No</button>
+          <button type="button" onClick={() => setScale("off")} className={`px-4 py-1 mt-2 ${textScale === "off" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Off</button>
+          <button type="button" onClick={() => setScale("1")} className={`px-4 py-1 mt-2 ${textScale === "1" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>x1.2</button>
+          <button type="button" onClick={() => setScale("2")} className={`px-4 py-1 mt-2 ${textScale === "2" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>x1.4</button>
         </div>
       </div>
     </form>

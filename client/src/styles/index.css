@@ -52,6 +52,15 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Large text */
+html.large-text-1 {
+  font-size: 120%;
+}
+
+html.large-text-2 {
+  font-size: 140%;
+}
+
 /* Dark mode base */
 body.dark {
   background-color: #2e3d35;
