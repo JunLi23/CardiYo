@@ -41,12 +41,12 @@ const Settings = () => {
         <button onClick={() => setActiveForm("accessibility")} className={settingsButton}> Accessibility </button>
         <button onClick={() => navigate("/FAQ")} className={settingsButton}> FAQ </button>
         <button
-          onClick={() => navigate("/LoginSignUp")}
+          onClick={() => setActiveForm("deleteAccount")}
           onMouseEnter={() => setLogoutHover(true)}
           onMouseLeave={() => setLogoutHover(false)}
           className="md:w-75 w-50 mx-auto m-2 py-2"
           style={{ backgroundColor: logoutHover ? "#cc0000" : "#3C5246", color: logoutHover ? "white" : "#ff2222" }}
-        > Log Out </button>
+        > Delete Account </button>
       </div>
 
       {/* Displays Form */}
@@ -57,6 +57,7 @@ const Settings = () => {
         {activeForm === "security" && <SecurityForm setActiveForm={setActiveForm}/>}
         {activeForm === "notify" && <NotificationForm setActiveForm={setActiveForm}/>}
         {activeForm === "accessibility" && <AccessibilityForm setActiveForm={setActiveForm}/>}
+        {activeForm === "deleteAccount" && <DeleteAccountForm setActiveForm={setActiveForm}/>}
       </div>
     </>
   );
@@ -251,6 +252,67 @@ const AccessibilityForm = ({ setActiveForm }) => {
         </div>
       </div>
     </form>
+  );
+};
+
+{/* Delete Account Form */}
+const DeleteAccountForm = ({ setActiveForm }) => {
+  const [step, setStep] = useState(1);
+  const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(false);
+
+  return (
+    <div className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
+      <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold rounded-2xl"> ✕ </button>
+
+      {step === 1 && (
+        <>
+          <h2 className="md:text-2xl md:text-center text-xl mb-4">Delete Account</h2>
+          <p className="text-sm mb-8 text-center">Are you sure you want to delete your account?</p>
+          <div className="flex gap-4">
+            <button onClick={() => setStep(2)} className="flex-1 py-2 font-bold rounded-xl bg-[#cc0000] text-white">Yes</button>
+            <button onClick={() => setActiveForm(null)} className="flex-1 py-2 font-bold rounded-xl bg-[#3C5246] text-white">No</button>
+          </div>
+        </>
+      )}
+
+      {step === 2 && (
+        <>
+          <h2 className="md:text-2xl md:text-center text-xl mb-4">Are you really sure?</h2>
+          <p className="text-sm mb-6 text-center">This will permanently delete all your data and cannot be undone.</p>
+          <label className="flex items-center gap-3 mb-6 cursor-pointer">
+            <input type="checkbox" checked={checked2} onChange={() => setChecked2(!checked2)} className="scale-150 accent-[#3C5246]" />
+            <span className="text-sm">Yes, I'm really sure</span>
+          </label>
+          <button
+            disabled={!checked2}
+            onClick={() => setStep(3)}
+            className="w-full py-2 font-bold rounded-xl"
+            style={{ backgroundColor: checked2 ? "#cc0000" : "#9e9e9e", color: "white", cursor: checked2 ? "pointer" : "not-allowed" }}
+          >
+            Continue
+          </button>
+        </>
+      )}
+
+      {step === 3 && (
+        <>
+          <h2 className="md:text-2xl md:text-center text-xl mb-4">Are you really, really sure?</h2>
+          <p className="text-sm mb-6 text-center">Last chance. Once deleted, your account cannot be recovered.</p>
+          <label className="flex items-center gap-3 mb-6 cursor-pointer">
+            <input type="checkbox" checked={checked3} onChange={() => setChecked3(!checked3)} className="scale-150 accent-[#3C5246]" />
+            <span className="text-sm">I understand, delete my account.</span>
+          </label>
+          <button
+            disabled={!checked3}
+            className="w-full py-2 font-bold rounded-xl"
+            style={{ backgroundColor: checked3 ? "#cc0000" : "#9e9e9e", color: "white", cursor: checked3 ? "pointer" : "not-allowed" }}
+          >
+            Delete My Account
+          </button>
+        </>
+      )}
+    </div>
   );
 };
 
