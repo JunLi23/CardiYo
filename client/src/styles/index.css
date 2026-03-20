@@ -52,6 +52,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Dark mode base */
 body.dark {
   background-color: #2e3d35;
   color: #F0ECD1;
@@ -65,6 +66,7 @@ body.dark textarea {
   border-color: #3C5246;
 }
 
+/* Tailwind inline colour overridess */
 body.dark .bg-\[\#C7C8B5\] {
   background-color: #3C5246 !important;
   color: #F0ECD1 !important;
@@ -75,7 +77,7 @@ body.dark nav {
   background-color: #3C5246 !important;
 }
 
-/* Workouts page - override CSS variables */
+/* Workouts page */
 body.dark .wk-page {
   --bg: #2e3d35;
   --inner: #3C5246;
@@ -103,10 +105,7 @@ body.dark .wk-bioUnit,
 body.dark .wk-bioChartLabel,
 body.dark .wk-bioChartValue,
 body.dark .wk-dataTitle,
-body.dark .wk-deviceLabel {
-  color: #F0ECD1;
-}
-
+body.dark .wk-deviceLabel,
 body.dark .wk-bioFilterChip {
   color: #F0ECD1;
 }
@@ -130,10 +129,4 @@ body.dark .mountainsComplete {
 /* Settings page */
 body.dark .settingForms form {
   background-color: #3C5246;
-}
-
-body.dark .settingForms input {
-  background-color: #4a6354;
-  color: #F0ECD1;
-  border-color: #2e3d35;
 }
