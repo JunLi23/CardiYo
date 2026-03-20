@@ -1,17 +1,17 @@
 // don't change imports, unless adding new ones, thank you!
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../styles/LoginSignUp.css';
-import userIcon from '../assets/person.png';
-import emailIcon from '../assets/email.png';
-import passwordIcon from '../assets/password.png';
-import logoIcon from '../assets/Logo.png';
-import splashBg from '../assets/Splash.jpg';
+import "../styles/LoginSignUp.css";
+import userIcon from "../assets/person.png";
+import emailIcon from "../assets/email.png";
+import passwordIcon from "../assets/password.png";
+import logoIcon from "../assets/Logo.png";
+import splashBg from "../assets/Splash.jpg";
 
 const LoginSignUp = () => {
     const navigate = useNavigate();
-    const [action,setAction] = useState("Sign Up");
-    const [form,setForm] = useState({name: "", email: "", password: ""});
+    const [action, setAction] = useState("Sign Up");
+    const [form, setForm] = useState({name: "", email: "", password: ""});
     const [error, setError] = useState({});
 
     const validate = () => {
