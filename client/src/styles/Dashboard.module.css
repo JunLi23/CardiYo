@@ -8,18 +8,24 @@
 }
 
 .mountainSection{
+  position: relative;
   width: 100%;
-  height: 75vh;
-  overflow: hidden;
-  position: relative; 
-  border-bottom: 10px solid #4a6741;
+  border-bottom: 8px solid #4a6741;
 }
 
 .mountainImg{
   width: 100%;
-  height: 100%;
+  display: block;
+  aspect-ratio: 21 / 8;
   object-fit: cover;
-  object-position: top;
+}
+
+.svgOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 :global(.dark) .mountainImg {
@@ -57,9 +63,6 @@
 }
 
 @media (max-width: 1024px) {
-  .mountainSection {
-    height: 60vh;
-  }
 
   .middleSection {
     flex-direction: column;
@@ -68,10 +71,7 @@
 }
 
 @media (max-width: 480px) {
-  .mountainSection {
-    height: 30vh;
-  }
-
+  
   .middleSection {
     flex-direction: column;
     padding: 10px;

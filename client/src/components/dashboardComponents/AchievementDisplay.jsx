@@ -14,11 +14,15 @@ const achievements = [
     ];
 
 /*Helper function that displays a gold medal if earned or a silver if not */
-function MedalIcon({ earned, label}) {
+function MedalIcon({ earned, label }) {
   return (
-    <div>
-      {earned ? <img src={goldBadge} alt="gBadge" className={styles.badge} /> : <img src={greyBadge} alt="greyBadge" className={styles.badge}/>}
-      {label}
+    <div className={styles.medal}>
+      <img
+        src={earned ? goldBadge : greyBadge}
+        alt={label}
+        className={styles.badge}
+      />
+      <p className={styles.medalLabel}>{label}</p>
     </div>
   )
 }
