@@ -100,6 +100,36 @@
   padding-top: 16px;
 }
 
+/* Dark mode */
+.dark .faq-page {
+  background-color: #2a3b32;
+}
+
+.dark .faq-header h1 {
+  color: #E6E7D5;
+}
+
+.dark .faq-header p {
+  color: #9acfb3;
+}
+
+.dark .faq-back {
+  color: #9acfb3;
+}
+
+.dark .faq-back:hover {
+  color: #E6E7D5;
+}
+
+.dark .faq-item {
+  background-color: #3C5246;
+}
+
+.dark .faq-item.faq-open {
+  background-color: #2a3b32;
+  border-left: 4px solid #9acfb3;
+}
+
 @media (max-width: 480px) {
   .faq-question {
     padding: 14px 14px;
