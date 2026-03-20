@@ -110,3 +110,30 @@ body.dark .wk-deviceLabel {
 body.dark .wk-bioFilterChip {
   color: #F0ECD1;
 }
+
+/* Profile page */
+body.dark .textDescription {
+  background-color: #3C5246;
+  color: #F0ECD1;
+}
+
+body.dark .name,
+body.dark .username {
+  color: #F0ECD1;
+}
+
+body.dark .medalstrophies,
+body.dark .mountainsComplete {
+  background-color: #3C5246;
+}
+
+/* Settings page */
+body.dark .settingForms form {
+  background-color: #3C5246;
+}
+
+body.dark .settingForms input {
+  background-color: #4a6354;
+  color: #F0ECD1;
+  border-color: #2e3d35;
+}
