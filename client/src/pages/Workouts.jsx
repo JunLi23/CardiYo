@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 
 import "../styles/workouts.css";
 
+
 import aoraki from "../assets/aoraki.png";
 import benNevis from "../assets/ben-nevis.png";
 import chimborazo from "../assets/chimborazo.png";
@@ -271,37 +272,28 @@ export default function Workouts() {
   }, [month, year]);
 
   const displayDistance = useMemo(() => {
-    if (selectedDayBiomarker && parseFloat(selectedDayBiomarker.distance) > 0) {
-      return parseFloat(selectedDayBiomarker.distance).toFixed(2);
-    }
     let total = 0;
     selectedDayWorkouts.forEach((w) => {
       total += parseFloat(w.distance) || 0;
     });
     return total > 0 ? total.toFixed(2) : "0.00";
-  }, [selectedDayBiomarker, selectedDayWorkouts]);
+  }, [selectedDayWorkouts]);
 
   const displayCalories = useMemo(() => {
-    if (selectedDayBiomarker && parseInt(selectedDayBiomarker.calories, 10) > 0) {
-      return String(selectedDayBiomarker.calories);
-    }
     let totalCals = 0;
     selectedDayWorkouts.forEach((w) => {
       totalCals += parseFloat(w.caloriesBurned) || 0;
     });
     return totalCals > 0 ? String(totalCals) : "0";
-  }, [selectedDayBiomarker, selectedDayWorkouts]);
+  }, [selectedDayWorkouts]);
 
   const displaySteps = useMemo(() => {
-    if (selectedDayBiomarker && parseInt(selectedDayBiomarker.steps, 10) > 0) {
-      return String(selectedDayBiomarker.steps);
-    }
     let totalSteps = 0;
     selectedDayWorkouts.forEach((w) => {
       totalSteps += parseInt(w.stepsAdded, 10) || 0;
     });
     return totalSteps > 0 ? String(totalSteps) : "0";
-  }, [selectedDayBiomarker, selectedDayWorkouts]);
+  }, [selectedDayWorkouts]);
 
   const displayActiveMins = useMemo(() => {
     let totalMins = 0;
@@ -411,32 +403,30 @@ export default function Workouts() {
       const generatedSteps = Math.floor(Math.random() * 5000) + 3000;
       const generatedCalories = Math.floor(Math.random() * 300) + 1500;
 
-      if (dayOffset >= 0) {
-        const type = getRandomItem(["Run", "Cycling", "Swimming", "Walk"]);
-        const deviceShortName = selectedDevice.includes("Watch")
-          ? "Watch"
-          : selectedDevice.includes("Iphone")
-          ? "Phone"
-          : "Laptop";
+      const type = getRandomItem(["Run", "Cycling", "Swimming", "Walk"]);
+      const deviceShortName = selectedDevice.includes("Watch")
+        ? "Watch"
+        : selectedDevice.includes("Iphone")
+        ? "Phone"
+        : "Laptop";
 
-        const importedWorkout = {
-          userId: USER_ID,
-          date: syncDateKey,
-          title: `${deviceShortName} Sync: ${type}`,
-          type,
-          duration: "45min",
-          distance: generatedDistance,
-          stepsAdded: generatedSteps,
-          caloriesBurned: generatedCalories,
-          sourceDevice: selectedDevice,
-        };
+      const importedWorkout = {
+        userId: USER_ID,
+        date: syncDateKey,
+        title: `${deviceShortName} Sync: ${type}`,
+        type,
+        duration: "45min",
+        distance: generatedDistance,
+        stepsAdded: generatedSteps,
+        caloriesBurned: generatedCalories,
+        sourceDevice: selectedDevice,
+      };
 
-        await fetch("http://localhost:5050/workouts/record-workout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(importedWorkout),
-        });
-      }
+      await fetch("http://localhost:5050/workouts/record-workout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(importedWorkout),
+      });
 
       await fetch("http://localhost:5050/biomarker", {
         method: "POST",
@@ -660,17 +650,42 @@ export default function Workouts() {
             </button>
           </div>
 
-          <section className="wk-dataSection">
-            <div className="wk-dataTopBar" />
-            <h2 className="wk-dataTitle">Workout Data</h2>
-            <div className="wk-dataBottomBar" />
+          <section 
+            className="wk-dataSection"
+            style={{
+              backgroundColor: "#3C5246",
+              borderRadius: "24px",
+              padding: "24px 0 32px 0",
+              marginTop: "40px",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.15)"
+            }}
+          >
+            <h2 
+              className="wk-dataTitle" 
+              style={{ 
+                color: "white", 
+                margin: "0 0 20px 0" 
+              }}
+            >
+              Workout Data
+            </h2>
 
-            <div className="wk-dataBtns">
-              <button className="wk-dataBtn" type="button" onClick={() => setShowBiomarkers(true)}>
+            <div className="wk-dataBtns" style={{ padding: 0 }}>
+              <button 
+                className="wk-dataBtn" 
+                type="button" 
+                style={{ backgroundColor: "#5b7a6b", border: "2px solid rgba(255,255,255,0.1)" }}
+                onClick={() => setShowBiomarkers(true)}
+              >
                 Biomarker
               </button>
 
-              <button className="wk-dataBtn" type="button" onClick={() => setShowMountains(true)}>
+              <button 
+                className="wk-dataBtn" 
+                type="button" 
+                style={{ backgroundColor: "#5b7a6b", border: "2px solid rgba(255,255,255,0.1)" }}
+                onClick={() => setShowMountains(true)}
+              >
                 Mountain
               </button>
             </div>
@@ -1045,6 +1060,8 @@ export default function Workouts() {
           </div>
         </div>
       )}
+
+     
     </>
   );
 }
