@@ -8,6 +8,10 @@ import heart from "../assets/heart.png";
 import o2 from "../assets/o2.png";
 import sneaker from "../assets/sneaker.png";
 import walking from "../assets/walking.png";
+import imgEverest from "../assets/Everest_cropped.svg";
+import imgBenNevis from "../assets/ben-nevis.png"; // temporary image
+import imgFuji from "../assets/fuji.png";
+import lockIcon from "../assets/lock-closed.svg";
 
 const Settings = () => {
 
@@ -36,6 +40,7 @@ const Settings = () => {
         <button onClick={() => setActiveForm("editProfile")} className={settingsButton}> Edit Profile </button>
         <button onClick={() => setActiveForm("accountInfo")} className={settingsButton}> Account Information </button>
         <button onClick={() => setActiveForm("editBio")} className={settingsButton}> Edit Biomarkers </button>
+        <button onClick={() => setActiveForm("changeMountain")} className={settingsButton}> Change Mountain </button>
         <button onClick={() => setActiveForm("security")} className={settingsButton}> Security </button>
         <button onClick={() => setActiveForm("notify")} className={settingsButton}> Notifications </button>
         <button onClick={() => setActiveForm("accessibility")} className={settingsButton}> Accessibility </button>
@@ -54,6 +59,7 @@ const Settings = () => {
         {activeForm === "editProfile" && (<EditProfileForm setProfile={setProfile} setActiveForm={setActiveForm} /> )}
         {activeForm === "accountInfo" && <AccountForm profile={profile} setActiveForm={setActiveForm}/>}
         {activeForm === "editBio" && <BiomarkerForm setActiveForm={setActiveForm}/>}
+        {activeForm === "changeMountain" && <ChangeMountainForm setActiveForm={setActiveForm}/>}
         {activeForm === "security" && <SecurityForm setActiveForm={setActiveForm}/>}
         {activeForm === "notify" && <NotificationForm setActiveForm={setActiveForm}/>}
         {activeForm === "accessibility" && <AccessibilityForm setActiveForm={setActiveForm}/>}
@@ -313,6 +319,48 @@ const DeleteAccountForm = ({ setActiveForm }) => {
         </>
       )}
     </div>
+  );
+};
+
+{/* Change Mountain Form */}
+const mountains = [
+  { name: "Everest",    img: imgEverest  },
+  { name: "Ben Nevis",  img: imgBenNevis }, // temporary image, no svg yet
+  { name: "Mount Fuji", img: imgFuji,    locked: true },
+  { name: "Coming Soon", locked: true },
+  { name: "Coming Soon", locked: true },
+  { name: "Coming Soon", locked: true },
+  { name: "Coming Soon", locked: true },
+  { name: "Coming Soon", locked: true },
+];
+
+const ChangeMountainForm = ({ setActiveForm }) => {
+  const [selected, setSelected] = useState("Everest");
+
+  return (
+    <form onSubmit={() => setActiveForm(null)} className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
+      <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold rounded-2xl"> ✕ </button>
+      <h2 className="md:text-2xl md:text-center text-xl mb-6">Change Mountain</h2>
+      <div className="grid grid-cols-4 gap-4 mb-6">
+        {mountains.map((m, i) => {
+          const selectable = !m.locked;
+          return (
+            <button key={i} type="button" onClick={() => selectable && setSelected(m.name)}
+              className={`flex flex-col items-center gap-2 bg-transparent border-0 ${selectable ? "cursor-pointer" : "cursor-not-allowed"}`}>
+              <div className={`relative w-full aspect-square rounded-full overflow-hidden ${selectable && selected === m.name ? "ring-4 ring-white" : "opacity-70"}`}>
+                {m.name === "Coming Soon"
+                  ? <div className="w-full h-full bg-[#3a3a3a] flex items-center justify-center"><img src={lockIcon} className="w-8 h-8 opacity-50" /></div>
+                  : !m.img
+                  ? <div className="w-full h-full bg-[#6b6b6b] flex items-center justify-center text-xs text-white">Placeholder</div>
+                  : <><img src={m.img} alt={m.name} className="w-full h-full object-cover" />{m.locked && <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full"><img src={lockIcon} className="w-8 h-8 opacity-80" /></div>}</>}
+              </div>
+              <span className={`text-xs text-center font-semibold ${selectable && selected === m.name ? "text-white" : "text-[#C7C8B5]"}`}>{m.name}</span>
+            </button>
+          );
+        })}
+      </div>
+      <button className="bg-[#3C5246] px-4 py-2 ml-auto block rounded-2xl"> Confirm </button>
+    </form>
   );
 };
 
