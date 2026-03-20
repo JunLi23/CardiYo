@@ -60,7 +60,7 @@ const LoginSignUp = () => {
 
     return (
         
-        <div className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center" style={{backgroundImage: `url(${splashBg})`}}>
+        <div className="login-page min-h-screen bg-cover bg-center flex flex-col items-center justify-center" style={{backgroundImage: `url(${splashBg})`}}>
             
             {/* SignUp/Login Form */}
             <div className="relative md:w-110 w-85 bg-[#3C5246] rounded-2xl p-10">

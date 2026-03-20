@@ -61,6 +61,13 @@ html.large-text-2 {
   font-size: 140%;
 }
 
+/* Login page - keep inputs light in dark mode */
+body.dark .login-page input {
+  background-color: transparent;
+  color: black;
+  border-color: transparent;
+}
+
 /* Dark mode base */
 body.dark {
   background-color: #2e3d35;
