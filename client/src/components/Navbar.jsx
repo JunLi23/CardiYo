@@ -61,6 +61,11 @@ const NavbarComponent = () => {
 
         <div className="hidden lg:flex items-center gap-6">
           {navList}
+          <Link to="/LoginSignUp" className="p-1 font-normal transition-colors duration-150" style={{ color: "white", textDecoration: "none" }}
+            onMouseEnter={e => e.target.style.color = "#ff4444"}
+            onMouseLeave={e => e.target.style.color = "white"}>
+            Logout
+          </Link>
         </div>
 
        <div className="lg:hidden">
