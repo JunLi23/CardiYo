@@ -1,56 +1,76 @@
-// don't change imports, unless adding new ones, thank you!
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import "../styles/Workouts.css";
-import Footer from "../components/Footer"
 
+import "../styles/workouts.css";
 
+import aoraki from "../assets/aoraki.png";
+import benNevis from "../assets/ben-nevis.png";
+import chimborazo from "../assets/chimborazo.png";
+import eiger from "../assets/eiger.png";
+import fuji from "../assets/fuji.png";
+import matterhorn from "../assets/matterhorn.png";
+import mountKinabalu from "../assets/mount-kinabalu.png";
+import everest from "../assets/everest.svg";
 
-/* ---------- date helpers (Date datatype) ---------- */
+/* ---------- date helpers ---------- */
 const weekdayLabels = ["M", "T", "W", "T", "F", "S", "S"];
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const pad2 = (n) => String(n).padStart(2, "0");
 
-const dateKey = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+const dateKey = (d) => {
+  const dateObj = d instanceof Date ? d : new Date(d);
+  return `${dateObj.getFullYear()}-${pad2(dateObj.getMonth() + 1)}-${pad2(dateObj.getDate())}`;
+};
 
-const toInputDate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+const toInputDate = (d) => {
+  const dateObj = d instanceof Date ? d : new Date(d);
+  return `${dateObj.getFullYear()}-${pad2(dateObj.getMonth() + 1)}-${pad2(dateObj.getDate())}`;
+};
+
 const fromInputDate = (s) => {
-  const [y, m, d] = s.split("-").map(Number);
-  if (!y || !m || !d) return null;
+  if (!s) return null;
+  if (typeof s !== "string") return new Date(s);
+  const str = s.includes("T") ? s.split("T")[0] : s;
+  const [y, m, d] = str.split("-").map(Number);
+  if (!y || !m || !d) return new Date(s);
   return new Date(y, m - 1, d);
 };
 
-/* ---------- localStorage (store ISO, revive Date) ---------- */
-const LS_KEY = "cardiyo_workouts_v9";
-
-const loadWorkouts = () => {
-  const raw = localStorage.getItem(LS_KEY);
-  if (!raw) return [];
-  try {
-    const arr = JSON.parse(raw);
-    return arr.map((w) => ({ ...w, date: new Date(w.date) }));
-  } catch {
-    return [];
-  }
-};
-
-const saveWorkouts = (workouts) => {
-  localStorage.setItem(
-    LS_KEY,
-    JSON.stringify(workouts.map((w) => ({ ...w, date: w.date.toISOString() })))
-  );
-};
+const USER_ID = "user123";
+const distanceBasedTypes = ["Walk", "Run", "Cycling", "Swimming"];
 
 export default function Workouts() {
   const today = useMemo(() => new Date(), []);
+  const toastTimeoutRef = useRef(null);
+
+  const [preferences, setPreferences] = useState(() => {
+    const saved = localStorage.getItem("biomarkerPreferences");
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    return {
+      Calories: true,
+      Steps: true,
+      Distance: true,
+      BloodSugar: false,
+      HeartRate: true,
+      BloodPressure: false,
+      Cholesterol: false,
+      O2Levels: false,
+    };
+  });
+
   const [month, setMonth] = useState(today.getMonth());
   const [year, setYear] = useState(today.getFullYear());
 
   const [monthOpen, setMonthOpen] = useState(false);
-  const [viewYear, setViewYear] = useState(year);
+  const [viewYear, setViewYear] = useState(today.getFullYear());
 
   const [workouts, setWorkouts] = useState([]);
+  const [biomarkersList, setBiomarkersList] = useState([]);
   const [selectedDay, setSelectedDay] = useState(today);
+
+  const [syncedDates, setSyncedDates] = useState(new Set());
 
   const [showSelectWorkout, setShowSelectWorkout] = useState(false);
   const [showManageWorkouts, setShowManageWorkouts] = useState(false);
@@ -58,51 +78,135 @@ export default function Workouts() {
   const [showMountains, setShowMountains] = useState(false);
   const [showBiomarkers, setShowBiomarkers] = useState(false);
 
-  // Biomarkers view & filtering state
-  const [bioView, setBioView] = useState("list"); // "list" | "chart"
+  const [bioView, setBioView] = useState("list");
+
   const [selectedBios, setSelectedBios] = useState([
-    "Resting Heart Rate", "VO2 Max", "Blood Pressure", "HRV", "Blood Glucose"
+    "Resting Heart Rate",
+    "VO2 Max",
+    "Blood Pressure",
+    "HRV",
+    "Blood Glucose",
+    "Cholesterol",
+    "O2 Levels",
+    "Calories",
+    "Steps",
+    "Distance",
+    "Active Minutes",
   ]);
 
   const [selectedWorkoutId, setSelectedWorkoutId] = useState("");
   const [selectedMountain, setSelectedMountain] = useState(null);
+  const [selectedDevice, setSelectedDevice] = useState("Jane’s Watch");
+
+  const [toast, setToast] = useState({
+    show: false,
+    title: "",
+    message: "",
+  });
 
   const [form, setForm] = useState({
     title: "New Workout",
     type: "Walk",
     date: today,
     duration: "1hr",
+    distance: "",
   });
 
   const mountains = useMemo(
     () => [
-      { name: "Mount Fuji", img: "https://api.dicebear.com/7.x/shapes/svg?seed=Fuji&backgroundColor=ffb3ba,ffdfba", locked: false },
-      { name: "Chimborazo", img: "https://api.dicebear.com/7.x/shapes/svg?seed=Chimborazo&backgroundColor=baffc9,bae1ff", locked: false },
-      { name: "Aoraki", img: "https://api.dicebear.com/7.x/shapes/svg?seed=Aoraki&backgroundColor=e2f0cb,ffb3ba", locked: true },
-      { name: "Mount Annapurna", img: "https://api.dicebear.com/7.x/shapes/svg?seed=Anna&backgroundColor=bae1ff,f3b0e1", locked: false },
-      { name: "Eiger", img: "https://api.dicebear.com/7.x/shapes/svg?seed=Eiger&backgroundColor=ffffba,baffc9", locked: true },
-      { name: "Ben Nevis", img: "https://api.dicebear.com/7.x/shapes/svg?seed=Ben&backgroundColor=ffb3ba,ffffba", locked: false },
-      { name: "Matterhorn", img: "https://api.dicebear.com/7.x/shapes/svg?seed=Matter&backgroundColor=bae1ff,e2f0cb", locked: true },
-      { name: "Mount Kinabalu", img: "https://api.dicebear.com/7.x/shapes/svg?seed=Kina&backgroundColor=f3b0e1,ffffba", locked: true },
+      { name: "Mount Fuji", img: fuji, locked: false, height: "3,776m", location: "Honshu, Japan", difficulty: "Moderate" },
+      { name: "Chimborazo", img: chimborazo, locked: false, height: "6,263m", location: "Andes, Ecuador", difficulty: "Hard" },
+      { name: "Aoraki", img: aoraki, locked: false, height: "3,724m", location: "Southern Alps, NZ", difficulty: "Extreme" },
+      { name: "Mount Annapurna", img: everest, locked: false, height: "8,091m", location: "Himalayas, Nepal", difficulty: "Fatal" },
+      { name: "Eiger", img: eiger, locked: false, height: "3,967m", location: "Bernese Alps, CH", difficulty: "Extreme" },
+      { name: "Ben Nevis", img: benNevis, locked: false, height: "1,345m", location: "Grampian Mtns, UK", difficulty: "Easy" },
+      { name: "Matterhorn", img: matterhorn, locked: false, height: "4,478m", location: "Alps, CH/IT", difficulty: "Hard" },
+      { name: "Mount Kinabalu", img: mountKinabalu, locked: false, height: "4,095m", location: "Borneo, MY", difficulty: "Moderate" },
     ],
     []
   );
 
-  const biomarkers = useMemo(
+  const staticVitals = useMemo(
     () => [
-      { name: "Resting Heart Rate", value: "58", unit: "bpm", status: "Good", score: 75 },
-      { name: "VO2 Max", value: "45.2", unit: "mL/kg/min", status: "Excellent", score: 92 },
-      { name: "Blood Pressure", value: "118/76", unit: "mmHg", status: "Normal", score: 85 },
-      { name: "HRV", value: "62", unit: "ms", status: "Good", score: 68 },
-      { name: "Blood Glucose", value: "4.8", unit: "mmol/L", status: "Normal", score: 88 },
+      { name: "Resting Heart Rate", value: "58", unit: "bpm", status: "Good", score: 75, dependsOn: "HeartRate" },
+      { name: "HRV", value: "62", unit: "ms", status: "Good", score: 68, dependsOn: "HeartRate" },
+      { name: "Blood Pressure", value: "118/76", unit: "mmHg", status: "Normal", score: 85, dependsOn: "BloodPressure" },
+      { name: "Blood Glucose", value: "5.1", unit: "mmol/L", status: "Normal", score: 88, dependsOn: "BloodSugar" },
+      { name: "Cholesterol", value: "185", unit: "mg/dL", status: "Normal", score: 82, dependsOn: "Cholesterol" },
+      { name: "O2 Levels", value: "98", unit: "%", status: "Excellent", score: 95, dependsOn: "O2Levels" },
+      { name: "VO2 Max", value: "45.2", unit: "mL/kg/min", status: "Excellent", score: 92, dependsOn: "O2Levels" },
     ],
     []
   );
 
-  useEffect(() => setWorkouts(loadWorkouts()), []);
-  useEffect(() => saveWorkouts(workouts), [workouts]);
+  function showToast(title, message) {
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current);
+    }
+    setToast({ show: true, title, message });
+    toastTimeoutRef.current = setTimeout(() => {
+      setToast({ show: false, title: "", message: "" });
+      toastTimeoutRef.current = null;
+    }, 3200);
+  }
 
-  const anyModalOpen = showSelectWorkout || showManageWorkouts || showImportWorkout || showMountains || showBiomarkers;
+  useEffect(() => {
+    return () => {
+      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const saved = localStorage.getItem("biomarkerPreferences");
+      if (saved) {
+        setPreferences(JSON.parse(saved));
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  async function fetchAllData() {
+    try {
+      const woRes = await fetch(`http://localhost:5050/workouts/${USER_ID}`);
+      if (woRes.ok) {
+        const text = await woRes.text();
+        const data = text ? JSON.parse(text) : [];
+        setWorkouts(
+          data.map((w) => ({
+            ...w,
+            id: w.id || w._id?.toString?.() || w._id || String(Date.now() + Math.random()),
+            title: w.title || "Workout",
+            type: w.type || "Walk",
+            distance: parseFloat(w.distance) || 0,
+            caloriesBurned: parseFloat(w.caloriesBurned) || 0,
+            stepsAdded: parseInt(w.stepsAdded, 10) || 0,
+            date: fromInputDate(w.date) || new Date(),
+            createdAt: w.createdAt ? new Date(w.createdAt).getTime() : Date.now(),
+          }))
+        );
+      }
+
+      const bioRes = await fetch(`http://localhost:5050/biomarker/${USER_ID}`);
+      if (bioRes.ok) {
+        const text = await bioRes.text();
+        const data = text ? JSON.parse(text) : [];
+        setBiomarkersList(data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchAllData();
+  }, []);
+
+  const anyModalOpen =
+    showSelectWorkout || showManageWorkouts || showImportWorkout || showMountains || showBiomarkers;
+
   useEffect(() => {
     if (!anyModalOpen) return;
     const prev = document.body.style.overflow;
@@ -125,9 +229,10 @@ export default function Workouts() {
   const workoutsByDay = useMemo(() => {
     const map = new Map();
     for (const w of workouts) {
-      const k = dateKey(w.date);
+      const workoutDate = w.date instanceof Date ? w.date : new Date(w.date);
+      const k = dateKey(workoutDate);
       if (!map.has(k)) map.set(k, []);
-      map.get(k).push(w);
+      map.get(k).push({ ...w, date: w.date });
     }
     for (const [k, arr] of map.entries()) {
       arr.sort((a, b) => a.createdAt - b.createdAt);
@@ -139,6 +244,15 @@ export default function Workouts() {
   const selectedDayKey = useMemo(() => dateKey(selectedDay), [selectedDay]);
   const selectedDayWorkouts = workoutsByDay.get(selectedDayKey) ?? [];
 
+  const selectedDayBiomarker = useMemo(() => {
+    const dayBios = biomarkersList.filter((b) => dateKey(b.date) === selectedDayKey);
+    if (dayBios.length > 0) {
+      dayBios.sort((a, b) => new Date(b.date) - new Date(a.date));
+      return dayBios[0];
+    }
+    return null;
+  }, [biomarkersList, selectedDayKey]);
+
   const monthLabel = useMemo(() => {
     const d = new Date(year, month, 1);
     return d.toLocaleString("en-GB", { month: "long", year: "numeric" });
@@ -147,10 +261,8 @@ export default function Workouts() {
   const calendarCells = useMemo(() => {
     const first = new Date(year, month, 1);
     const last = new Date(year, month + 1, 0);
-
     const firstDow = (first.getDay() + 6) % 7;
     const daysInMonth = last.getDate();
-
     const cells = [];
     for (let i = 0; i < firstDow; i++) cells.push(null);
     for (let day = 1; day <= daysInMonth; day++) cells.push(new Date(year, month, day));
@@ -158,37 +270,223 @@ export default function Workouts() {
     return cells;
   }, [month, year]);
 
+  const displayDistance = useMemo(() => {
+    if (selectedDayBiomarker && parseFloat(selectedDayBiomarker.distance) > 0) {
+      return parseFloat(selectedDayBiomarker.distance).toFixed(2);
+    }
+    let total = 0;
+    selectedDayWorkouts.forEach((w) => {
+      total += parseFloat(w.distance) || 0;
+    });
+    return total > 0 ? total.toFixed(2) : "0.00";
+  }, [selectedDayBiomarker, selectedDayWorkouts]);
+
+  const displayCalories = useMemo(() => {
+    if (selectedDayBiomarker && parseInt(selectedDayBiomarker.calories, 10) > 0) {
+      return String(selectedDayBiomarker.calories);
+    }
+    let totalCals = 0;
+    selectedDayWorkouts.forEach((w) => {
+      totalCals += parseFloat(w.caloriesBurned) || 0;
+    });
+    return totalCals > 0 ? String(totalCals) : "0";
+  }, [selectedDayBiomarker, selectedDayWorkouts]);
+
+  const displaySteps = useMemo(() => {
+    if (selectedDayBiomarker && parseInt(selectedDayBiomarker.steps, 10) > 0) {
+      return String(selectedDayBiomarker.steps);
+    }
+    let totalSteps = 0;
+    selectedDayWorkouts.forEach((w) => {
+      totalSteps += parseInt(w.stepsAdded, 10) || 0;
+    });
+    return totalSteps > 0 ? String(totalSteps) : "0";
+  }, [selectedDayBiomarker, selectedDayWorkouts]);
+
+  const displayActiveMins = useMemo(() => {
+    let totalMins = 0;
+    selectedDayWorkouts.forEach((w) => {
+      const durStr = String(w.duration || "").toLowerCase();
+      let val = parseInt(durStr, 10);
+      if (isNaN(val)) val = 0;
+      if (durStr.includes("hr") || durStr.includes("hour")) {
+        totalMins += val * 60;
+      } else {
+        totalMins += val;
+      }
+    });
+    return totalMins > 0 ? String(totalMins) : "0";
+  }, [selectedDayWorkouts]);
+
   function openSelect(dateObj) {
     const d = dateObj ?? selectedDay ?? today;
     setSelectedDay(d);
-    setForm((f) => ({ ...f, date: d }));
+
+    setForm((f) => ({
+      ...f,
+      date: d,
+      distance: distanceBasedTypes.includes(f.type) ? f.distance : "",
+    }));
 
     const dayList = workoutsByDay.get(dateKey(d)) ?? [];
     setSelectedWorkoutId(dayList[0]?.id ?? "");
-
     setShowSelectWorkout(true);
   }
 
-  function addWorkout() {
+  async function addWorkout() {
+    const requiresDistance = distanceBasedTypes.includes(form.type);
+    const parsedDistance = parseFloat(form.distance);
+
+    if (requiresDistance && (isNaN(parsedDistance) || parsedDistance <= 0)) {
+      alert(`Please enter a valid distance (km) for your ${form.type} session.`);
+      return;
+    }
+
+    const finalDistance = requiresDistance ? parsedDistance : 0;
+
     const newWorkout = {
-      id: crypto?.randomUUID ? crypto.randomUUID() : String(Date.now()),
-      date: new Date(form.date.getTime()),
-      title: form.title.trim() || "Workout",
+      userId: USER_ID,
+      date: toInputDate(form.date),
+      title: form.title.trim() || "Manual Workout",
       type: form.type,
-      duration: form.duration.trim() || "1hr",
-      createdAt: Date.now(),
+      duration: form.duration.trim() || "30min",
+      distance: finalDistance,
+      stepsAdded: finalDistance > 0 ? Math.floor(finalDistance * 1250) : 1500,
+      caloriesBurned: finalDistance > 0 ? Math.floor(finalDistance * 60) : 200,
     };
 
-    setWorkouts((prev) => [...prev, newWorkout]);
-    setSelectedWorkoutId(newWorkout.id);
-    setShowSelectWorkout(false);
+    try {
+      const res = await fetch("http://localhost:5050/workouts/record-workout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newWorkout),
+      });
+
+      if (!res.ok) throw new Error("Failed to save workout");
+
+      if (finalDistance > 0 || newWorkout.stepsAdded > 0) {
+        await fetch("http://localhost:5050/biomarker", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: USER_ID,
+            date: newWorkout.date,
+            distance: finalDistance,
+            steps: newWorkout.stepsAdded,
+            calories: newWorkout.caloriesBurned,
+          }),
+        });
+      }
+
+      await fetchAllData();
+      setSelectedDay(form.date);
+      setSelectedWorkoutId("");
+      setShowSelectWorkout(false);
+
+      showToast(
+        "Workout saved",
+        `${newWorkout.title} • ${new Date(form.date).toLocaleDateString("en-GB")}`
+      );
+    } catch (error) {
+      console.error("Failed to add workout:", error);
+      alert("Something went wrong while saving workout.");
+    }
   }
 
-  function deleteWorkoutById(id) {
-    setWorkouts((prev) => prev.filter((w) => w.id !== id));
-    if (selectedWorkoutId === id) {
-      const remaining = selectedDayWorkouts.filter((x) => x.id !== id);
-      setSelectedWorkoutId(remaining[0]?.id ?? "");
+  async function handleImportWorkout() {
+    const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const dayOffset = Math.floor(Math.random() * 3) - 1;
+    const randomDateObj = new Date();
+    randomDateObj.setDate(randomDateObj.getDate() + dayOffset);
+    const syncDateKey = toInputDate(randomDateObj);
+
+    if (syncedDates.has(syncDateKey)) {
+      showToast("Already Up to Date", `Health data for ${syncDateKey} is already synced.`);
+      setShowImportWorkout(false);
+      return;
+    }
+
+    try {
+      const generatedDistance = parseFloat((Math.random() * 4 + 2).toFixed(1));
+      const generatedSteps = Math.floor(Math.random() * 5000) + 3000;
+      const generatedCalories = Math.floor(Math.random() * 300) + 1500;
+
+      if (dayOffset >= 0) {
+        const type = getRandomItem(["Run", "Cycling", "Swimming", "Walk"]);
+        const deviceShortName = selectedDevice.includes("Watch")
+          ? "Watch"
+          : selectedDevice.includes("Iphone")
+          ? "Phone"
+          : "Laptop";
+
+        const importedWorkout = {
+          userId: USER_ID,
+          date: syncDateKey,
+          title: `${deviceShortName} Sync: ${type}`,
+          type,
+          duration: "45min",
+          distance: generatedDistance,
+          stepsAdded: generatedSteps,
+          caloriesBurned: generatedCalories,
+          sourceDevice: selectedDevice,
+        };
+
+        await fetch("http://localhost:5050/workouts/record-workout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(importedWorkout),
+        });
+      }
+
+      await fetch("http://localhost:5050/biomarker", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: USER_ID,
+          date: syncDateKey,
+          steps: generatedSteps,
+          distance: generatedDistance,
+          heartRate: Math.floor(Math.random() * 10) + 60,
+          calories: generatedCalories,
+        }),
+      });
+
+      setSyncedDates((prev) => new Set(prev).add(syncDateKey));
+      await fetchAllData();
+      setSelectedDay(randomDateObj);
+      setShowImportWorkout(false);
+
+      let relativeDay = "Today";
+      if (dayOffset === -1) relativeDay = "Yesterday";
+      if (dayOffset === 1) relativeDay = "Tomorrow";
+
+      showToast("Data Sync Complete", `Biomarkers & Schedule updated for ${relativeDay}`);
+    } catch (error) {
+      console.error("Sync error:", error);
+      alert("Device connection failed.");
+    }
+  }
+
+  async function deleteWorkoutById(id) {
+    try {
+      const res = await fetch(`http://localhost:5050/workouts/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete workout");
+      }
+
+      await fetchAllData();
+
+      if (selectedWorkoutId === id) {
+        setSelectedWorkoutId("");
+      }
+
+      showToast("Workout deleted", "The workout was removed successfully.");
+    } catch (error) {
+      console.error("Failed to delete workout:", error);
+      alert("Could not delete workout.");
     }
   }
 
@@ -198,7 +496,19 @@ export default function Workouts() {
     );
   };
 
-  const filteredBiomarkers = biomarkers.filter((b) => selectedBios.includes(b.name));
+  const combinedBiomarkers = [
+    ...staticVitals,
+    { name: "Calories", value: displayCalories, unit: "kcal", status: "Good", score: 85, dependsOn: "Calories" },
+    { name: "Steps", value: displaySteps, unit: "steps", status: "Excellent", score: 95, dependsOn: "Steps" },
+    { name: "Distance", value: displayDistance, unit: "km", status: "Good", score: 80, dependsOn: "Distance" },
+    { name: "Active Minutes", value: displayActiveMins, unit: "min", status: "Excellent", score: 90, dependsOn: null },
+  ];
+
+  const availableBiomarkers = useMemo(() => {
+    return combinedBiomarkers.filter((b) => b.dependsOn === null || preferences[b.dependsOn]);
+  }, [combinedBiomarkers, preferences]);
+
+  const filteredBiomarkers = availableBiomarkers.filter((b) => selectedBios.includes(b.name));
 
   return (
     <>
@@ -223,20 +533,31 @@ export default function Workouts() {
                   {monthOpen && (
                     <div className="wk-monthMenu" onClick={(e) => e.stopPropagation()}>
                       <div className="wk-pickerHeader">
-                        <button type="button" className="wk-pickerArrow" onClick={() => setViewYear((y) => y - 1)}>
+                        <button
+                          type="button"
+                          className="wk-pickerArrow"
+                          onClick={() => setViewYear((y) => y - 1)}
+                        >
                           &lt;
                         </button>
                         <div className="wk-pickerYear">{viewYear}</div>
-                        <button type="button" className="wk-pickerArrow" onClick={() => setViewYear((y) => y + 1)}>
+                        <button
+                          type="button"
+                          className="wk-pickerArrow"
+                          onClick={() => setViewYear((y) => y + 1)}
+                        >
                           &gt;
                         </button>
                       </div>
+
                       <div className="wk-pickerGrid">
                         {monthNames.map((m, idx) => (
                           <button
                             key={m}
                             type="button"
-                            className={`wk-pickerMonthBtn ${idx === month && viewYear === year ? "isActive" : ""}`}
+                            className={`wk-pickerMonthBtn ${
+                              idx === month && viewYear === year ? "isActive" : ""
+                            }`}
                             onClick={() => {
                               setMonth(idx);
                               setYear(viewYear);
@@ -265,14 +586,15 @@ export default function Workouts() {
                   const k = dateKey(d);
                   const dayWorkouts = workoutsByDay.get(k) ?? [];
                   const hasWorkout = dayWorkouts.length > 0;
-
                   const isSelected = dateKey(d) === selectedDayKey;
                   const isToday = dateKey(d) === dateKey(today);
 
                   return (
                     <button
                       key={idx}
-                      className={`wk-cell ${hasWorkout ? "wk-cellHasWorkout" : ""} ${isSelected ? "isSelected" : ""} ${isToday ? "isToday" : ""}`}
+                      className={`wk-cell ${hasWorkout ? "wk-cellHasWorkout" : ""} ${
+                        isSelected ? "isSelected" : ""
+                      } ${isToday ? "isToday" : ""}`}
                       onClick={() => setSelectedDay(d)}
                       onDoubleClick={() => openSelect(d)}
                       type="button"
@@ -280,10 +602,10 @@ export default function Workouts() {
                     >
                       <div className="wk-cellHeader">
                         <span className="wk-num">{d.getDate()}</span>
-
-                        {hasWorkout && (
-                          <span className="wk-cellBadge">{dayWorkouts.length}</span>
+                        {syncedDates.has(k) && (
+                          <span style={{ fontSize: "12px", color: "green", marginLeft: "4px" }}>✓</span>
                         )}
+                        {hasWorkout && <span className="wk-cellBadge">{dayWorkouts.length}</span>}
                       </div>
 
                       {hasWorkout && (
@@ -299,9 +621,7 @@ export default function Workouts() {
                           ))}
 
                           {dayWorkouts.length > 2 && (
-                            <div className="wk-cellWorkoutMore">
-                              +{dayWorkouts.length - 2} more
-                            </div>
+                            <div className="wk-cellWorkoutMore">+{dayWorkouts.length - 2} more</div>
                           )}
                         </div>
                       )}
@@ -312,7 +632,6 @@ export default function Workouts() {
             </div>
           </section>
 
-          {/* UPDATED: Centered & uniform buttons container */}
           <div className="wk-bottomBtns">
             <button className="wk-pillBtn" onClick={() => openSelect(selectedDay)} type="button">
               Select Workout
@@ -332,8 +651,12 @@ export default function Workouts() {
               Manage Workouts
             </button>
 
-            <button className="wk-pillBtn wk-importBtn" onClick={() => setShowImportWorkout(true)} type="button">
-              Import
+            <button
+              className="wk-pillBtn wk-importBtn"
+              onClick={() => setShowImportWorkout(true)}
+              type="button"
+            >
+              Sync Device
             </button>
           </div>
 
@@ -384,10 +707,18 @@ export default function Workouts() {
                     </div>
 
                     <div className="wk-cardBtns">
-                      <button className="wk-smallBtn" type="button" onClick={() => setSelectedWorkoutId(w.id)}>
+                      <button
+                        className="wk-smallBtn"
+                        type="button"
+                        onClick={() => setSelectedWorkoutId(w.id)}
+                      >
                         Select
                       </button>
-                      <button className="wk-smallBtn wk-dangerBtn" type="button" onClick={() => deleteWorkoutById(w.id)}>
+                      <button
+                        className="wk-smallBtn wk-dangerBtn"
+                        type="button"
+                        onClick={() => deleteWorkoutById(w.id)}
+                      >
                         Delete
                       </button>
                     </div>
@@ -409,7 +740,11 @@ export default function Workouts() {
             <select
               className="wk-input wk-selectInput"
               value={form.type}
-              onChange={(e) => setForm((f) => ({ ...f, type: e.target.value }))}
+              onChange={(e) => {
+                const newType = e.target.value;
+                const newDist = distanceBasedTypes.includes(newType) ? form.distance : "";
+                setForm((f) => ({ ...f, type: newType, distance: newDist }));
+              }}
             >
               <option>Walk</option>
               <option>Run</option>
@@ -435,9 +770,25 @@ export default function Workouts() {
             <label className="wk-label">Duration of Workout</label>
             <input
               className="wk-input wk-short"
+              placeholder="e.g. 45min"
               value={form.duration}
               onChange={(e) => setForm((f) => ({ ...f, duration: e.target.value }))}
             />
+
+            {distanceBasedTypes.includes(form.type) && (
+              <>
+                <label className="wk-label">Distance (km)</label>
+                <input
+                  className="wk-input wk-short"
+                  type="number"
+                  min="0"
+                  step="0.1"
+                  placeholder="e.g. 5.2"
+                  value={form.distance}
+                  onChange={(e) => setForm((f) => ({ ...f, distance: e.target.value }))}
+                />
+              </>
+            )}
 
             <div className="wk-formActions">
               <button className="wk-enterBtn" type="button" onClick={addWorkout}>
@@ -472,12 +823,16 @@ export default function Workouts() {
                     <div className="wk-cardInfo">
                       <div className="wk-cardTitle">{w.title}</div>
                       <div className="wk-cardMeta">
-                        {w.type} • {w.duration}
+                        {w.type} • {w.duration} {w.distance > 0 && `• ${w.distance}km`}
                       </div>
                     </div>
 
                     <div className="wk-cardBtns">
-                      <button className="wk-smallBtn wk-dangerBtn" type="button" onClick={() => deleteWorkoutById(w.id)}>
+                      <button
+                        className="wk-smallBtn wk-dangerBtn"
+                        type="button"
+                        onClick={() => deleteWorkoutById(w.id)}
+                      >
                         Delete
                       </button>
                     </div>
@@ -492,37 +847,49 @@ export default function Workouts() {
       {showImportWorkout && (
         <Modal onClose={() => setShowImportWorkout(false)}>
           <div className="wk-modalHeader">
-            <h2 className="wk-modalTitle">Import Workout</h2>
+            <h2 className="wk-modalTitle">Sync Device Data</h2>
             <button className="wk-close" onClick={() => setShowImportWorkout(false)} type="button">
               X
             </button>
           </div>
 
-          <div className="wk-importSub">Choose Device</div>
+          <div className="wk-importSub">Choose device to sync biomarkers & workouts</div>
 
           <div className="wk-deviceBox">
-            <DeviceRow label="Joe’s Iphone" checked={false} />
-            <DeviceRow label="Jane’s Laptop 2" checked={false} />
-            <DeviceRow label="Jane’s Watch" checked />
+            <DeviceRow
+              label="Jane’s iPhone"
+              checked={selectedDevice === "Jane’s iPhone"}
+              onClick={() => setSelectedDevice("Jane’s iPhone")}
+            />
+            <DeviceRow
+              label="Jane’s Laptop 2"
+              checked={selectedDevice === "Jane’s Laptop 2"}
+              onClick={() => setSelectedDevice("Jane’s Laptop 2")}
+            />
+            <DeviceRow
+              label="Jane’s Watch"
+              checked={selectedDevice === "Jane’s Watch"}
+              onClick={() => setSelectedDevice("Jane’s Watch")}
+            />
+          </div>
+
+          <div className="wk-formActions">
+            <button className="wk-enterBtn" type="button" onClick={handleImportWorkout}>
+              Sync
+            </button>
           </div>
         </Modal>
       )}
 
-      {/* Biomarkers Modal */}
       {showBiomarkers && (
         <Modal onClose={() => setShowBiomarkers(false)}>
           <div className="wk-modalHeader">
             <h2 className="wk-modalTitle">Biomarkers</h2>
-            <button
-              className="wk-close"
-              type="button"
-              onClick={() => setShowBiomarkers(false)}
-            >
+            <button className="wk-close" type="button" onClick={() => setShowBiomarkers(false)}>
               X
             </button>
           </div>
 
-          {/* View Toggle */}
           <div className="wk-bioToggleWrap">
             <div className="wk-bioToggle">
               <button
@@ -542,9 +909,8 @@ export default function Workouts() {
             </div>
           </div>
 
-          {/* Filter Chips */}
           <div className="wk-bioFilters">
-            {biomarkers.map((b) => (
+            {availableBiomarkers.map((b) => (
               <button
                 key={b.name}
                 type="button"
@@ -556,7 +922,6 @@ export default function Workouts() {
             ))}
           </div>
 
-          {/* Content Area */}
           {filteredBiomarkers.length === 0 ? (
             <div className="wk-emptyList" style={{ textAlign: "center", marginTop: 20 }}>
               Select at least one biomarker to view data.
@@ -570,9 +935,7 @@ export default function Workouts() {
                     <span className="wk-bioValue">{b.value}</span>
                     <span className="wk-bioUnit">{b.unit}</span>
                   </div>
-                  <div className={`wk-bioStatus status-${b.status.toLowerCase()}`}>
-                    {b.status}
-                  </div>
+                  <div className={`wk-bioStatus status-${b.status.toLowerCase()}`}>{b.status}</div>
                 </div>
               ))}
             </div>
@@ -582,7 +945,9 @@ export default function Workouts() {
                 <div key={b.name} className="wk-bioChartRow">
                   <div className="wk-bioChartLabel">
                     <span>{b.name}</span>
-                    <span className="wk-bioChartValue">{b.value} {b.unit}</span>
+                    <span className="wk-bioChartValue">
+                      {b.value} {b.unit}
+                    </span>
                   </div>
                   <div className="wk-bioChartTrack">
                     <div
@@ -596,7 +961,6 @@ export default function Workouts() {
           )}
         </Modal>
       )}
-      
 
       {showMountains && (
         <Modal
@@ -648,7 +1012,11 @@ export default function Workouts() {
             <div className="wk-mountainSingleView">
               <div className="wk-mountainImgLargeWrap">
                 {selectedMountain.img && (
-                  <img className="wk-mountainImg" src={selectedMountain.img} alt={selectedMountain.name} />
+                  <img
+                    className="wk-mountainImg"
+                    src={selectedMountain.img}
+                    alt={selectedMountain.name}
+                  />
                 )}
               </div>
               <div className="wk-mountainNameLarge">{selectedMountain.name}</div>
@@ -667,6 +1035,16 @@ export default function Workouts() {
           )}
         </Modal>
       )}
+
+      {toast.show && (
+        <div className="wk-toast" role="status" aria-live="polite">
+          <div className="wk-toastIcon">✓</div>
+          <div className="wk-toastText">
+            <div className="wk-toastTitle">{toast.title}</div>
+            <div className="wk-toastMessage">{toast.message}</div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -682,12 +1060,16 @@ function Modal({ children, onClose }) {
   );
 }
 
-function DeviceRow({ label, checked }) {
+function DeviceRow({ label, checked, onClick }) {
   return (
-    <div className="wk-deviceRow">
+    <button
+      className={`wk-deviceRow ${checked ? "isSelected" : ""}`}
+      type="button"
+      onClick={onClick}
+    >
       <div className="wk-deviceIcon" aria-hidden="true" />
       <div className="wk-deviceLabel">{label}</div>
       <div className={`wk-checkbox ${checked ? "isChecked" : ""}`}>{checked ? "✓" : ""}</div>
-    </div>
+    </button>
   );
 }
