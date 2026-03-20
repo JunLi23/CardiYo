@@ -1,5 +1,5 @@
 // don't change imports, unless adding new ones, thank you!
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useContext } from "react";
 import { Notification } from "../context/Notification";
