@@ -3,16 +3,6 @@ import { createPortal } from "react-dom";
 
 import "../styles/workouts.css";
 
-
-import aoraki from "../assets/aoraki.png";
-import benNevis from "../assets/ben-nevis.png";
-import chimborazo from "../assets/chimborazo.png";
-import eiger from "../assets/eiger.png";
-import fuji from "../assets/fuji.png";
-import matterhorn from "../assets/matterhorn.png";
-import mountKinabalu from "../assets/mount-kinabalu.png";
-import everest from "../assets/everest.svg";
-
 /* ---------- date helpers ---------- */
 const weekdayLabels = ["M", "T", "W", "T", "F", "S", "S"];
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -76,7 +66,6 @@ export default function Workouts() {
   const [showSelectWorkout, setShowSelectWorkout] = useState(false);
   const [showManageWorkouts, setShowManageWorkouts] = useState(false);
   const [showImportWorkout, setShowImportWorkout] = useState(false);
-  const [showMountains, setShowMountains] = useState(false);
   const [showBiomarkers, setShowBiomarkers] = useState(false);
 
   const [bioView, setBioView] = useState("list");
@@ -96,7 +85,6 @@ export default function Workouts() {
   ]);
 
   const [selectedWorkoutId, setSelectedWorkoutId] = useState("");
-  const [selectedMountain, setSelectedMountain] = useState(null);
   const [selectedDevice, setSelectedDevice] = useState("Jane’s Watch");
 
   const [toast, setToast] = useState({
@@ -112,20 +100,6 @@ export default function Workouts() {
     duration: "1hr",
     distance: "",
   });
-
-  const mountains = useMemo(
-    () => [
-      { name: "Mount Fuji", img: fuji, locked: false, height: "3,776m", location: "Honshu, Japan", difficulty: "Moderate" },
-      { name: "Chimborazo", img: chimborazo, locked: false, height: "6,263m", location: "Andes, Ecuador", difficulty: "Hard" },
-      { name: "Aoraki", img: aoraki, locked: false, height: "3,724m", location: "Southern Alps, NZ", difficulty: "Extreme" },
-      { name: "Mount Annapurna", img: everest, locked: false, height: "8,091m", location: "Himalayas, Nepal", difficulty: "Fatal" },
-      { name: "Eiger", img: eiger, locked: false, height: "3,967m", location: "Bernese Alps, CH", difficulty: "Extreme" },
-      { name: "Ben Nevis", img: benNevis, locked: false, height: "1,345m", location: "Grampian Mtns, UK", difficulty: "Easy" },
-      { name: "Matterhorn", img: matterhorn, locked: false, height: "4,478m", location: "Alps, CH/IT", difficulty: "Hard" },
-      { name: "Mount Kinabalu", img: mountKinabalu, locked: false, height: "4,095m", location: "Borneo, MY", difficulty: "Moderate" },
-    ],
-    []
-  );
 
   const staticVitals = useMemo(
     () => [
@@ -206,7 +180,7 @@ export default function Workouts() {
   }, []);
 
   const anyModalOpen =
-    showSelectWorkout || showManageWorkouts || showImportWorkout || showMountains || showBiomarkers;
+    showSelectWorkout || showManageWorkouts || showImportWorkout || showBiomarkers;
 
   useEffect(() => {
     if (!anyModalOpen) return;
@@ -679,15 +653,6 @@ export default function Workouts() {
               >
                 Biomarker
               </button>
-
-              <button 
-                className="wk-dataBtn" 
-                type="button" 
-                style={{ backgroundColor: "#5b7a6b", border: "2px solid rgba(255,255,255,0.1)" }}
-                onClick={() => setShowMountains(true)}
-              >
-                Mountain
-              </button>
             </div>
           </section>
         </main>
@@ -977,80 +942,6 @@ export default function Workouts() {
         </Modal>
       )}
 
-      {showMountains && (
-        <Modal
-          onClose={() => {
-            setShowMountains(false);
-            setSelectedMountain(null);
-          }}
-        >
-          <div className="wk-modalHeader">
-            <h2 className="wk-modalTitle">Mountains</h2>
-            <button
-              className="wk-close"
-              type="button"
-              onClick={() => {
-                setShowMountains(false);
-                setSelectedMountain(null);
-              }}
-            >
-              X
-            </button>
-          </div>
-
-          {!selectedMountain ? (
-            <div className="wk-mountainsGrid">
-              {mountains.map((m) => (
-                <button
-                  key={m.name}
-                  type="button"
-                  className={`wk-mountainCard ${m.locked ? "isLocked" : ""}`}
-                  onClick={() => {
-                    if (!m.locked) {
-                      setSelectedMountain(m);
-                    }
-                  }}
-                >
-                  <div className="wk-mountainImgWrap">
-                    {m.img ? <img className="wk-mountainImg" src={m.img} alt={m.name} /> : null}
-                    {m.locked && (
-                      <div className="wk-lockOverlay" aria-hidden="true">
-                        🔒
-                      </div>
-                    )}
-                  </div>
-                  <div className="wk-mountainName">{m.name}</div>
-                </button>
-              ))}
-            </div>
-          ) : (
-            <div className="wk-mountainSingleView">
-              <div className="wk-mountainImgLargeWrap">
-                {selectedMountain.img && (
-                  <img
-                    className="wk-mountainImg"
-                    src={selectedMountain.img}
-                    alt={selectedMountain.name}
-                  />
-                )}
-              </div>
-              <div className="wk-mountainNameLarge">{selectedMountain.name}</div>
-
-              <button
-                className="wk-enterBtn"
-                type="button"
-                onClick={() => {
-                  setShowMountains(false);
-                  setSelectedMountain(null);
-                }}
-              >
-                Confirm
-              </button>
-            </div>
-          )}
-        </Modal>
-      )}
-
       {toast.show && (
         <div className="wk-toast" role="status" aria-live="polite">
           <div className="wk-toastIcon">✓</div>
@@ -1060,8 +951,6 @@ export default function Workouts() {
           </div>
         </div>
       )}
-
-     
     </>
   );
 }
