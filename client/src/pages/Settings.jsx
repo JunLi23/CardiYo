@@ -8,10 +8,8 @@ import heart from "../assets/heart.png";
 import o2 from "../assets/o2.png";
 import sneaker from "../assets/sneaker.png";
 import walking from "../assets/walking.png";
-import imgEverest from "../assets/Everest_cropped.svg";
-import imgBenNevis from "../assets/ben-nevis.png"; // temporary image
-import imgFuji from "../assets/fuji.png";
 import lockIcon from "../assets/lock-closed.svg";
+import { mountains } from "../data/mountains";
 
 const Settings = () => {
 
@@ -322,23 +320,18 @@ const DeleteAccountForm = ({ setActiveForm }) => {
   );
 };
 
-{/* Change Mountain Form */}
-const mountains = [
-  { name: "Everest",    img: imgEverest  },
-  { name: "Ben Nevis",  img: imgBenNevis }, // temporary image, no svg yet
-  { name: "Mount Fuji", img: imgFuji,    locked: true },
-  { name: "Coming Soon", locked: true },
-  { name: "Coming Soon", locked: true },
-  { name: "Coming Soon", locked: true },
-  { name: "Coming Soon", locked: true },
-  { name: "Coming Soon", locked: true },
-];
 
 const ChangeMountainForm = ({ setActiveForm }) => {
   const [selected, setSelected] = useState("Everest");
 
+  const handleConfirm = () => {
+    const mountain = mountains.find(m => m.name === selected);
+    if (mountain) localStorage.setItem("activeMountainId", mountain.id);
+    setActiveForm(null);
+  };
+
   return (
-    <form onSubmit={() => setActiveForm(null)} className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
+     <form onSubmit={(e) => { e.preventDefault(); handleConfirm(); }} className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
       <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold rounded-2xl"> ✕ </button>
       <h2 className="md:text-2xl md:text-center text-xl mb-6">Change Mountain</h2>
       <div className="grid grid-cols-4 gap-4 mb-6">
@@ -359,7 +352,7 @@ const ChangeMountainForm = ({ setActiveForm }) => {
           );
         })}
       </div>
-      <button className="bg-[#3C5246] px-4 py-2 ml-auto block rounded-2xl"> Confirm </button>
+      <button type="submit" className="bg-[#3C5246] px-4 py-2 ml-auto block rounded-2xl"> Confirm </button>
     </form>
   );
 };

@@ -21,7 +21,6 @@
 
 .progressBarFill{
     background-color: rgb(88, 22, 22);
-    width: 42%; /* Hard coded for now */
     border-radius: 20px;
     height: 100%;
 }
