@@ -322,7 +322,8 @@ const DeleteAccountForm = ({ setActiveForm }) => {
 
 
 const ChangeMountainForm = ({ setActiveForm }) => {
-  const [selected, setSelected] = useState("Everest");
+  const stored = mountains.find(m => m.id === Number(localStorage.getItem("activeMountainId")));
+  const [selected, setSelected] = useState(stored ? stored.name : mountains[0].name);
 
   const handleConfirm = () => {
     const mountain = mountains.find(m => m.name === selected);
