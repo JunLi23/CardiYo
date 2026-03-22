@@ -20,13 +20,13 @@ const MountainIcon = ({name, image}) => {
 
 const MountainBox = () => {
   const mountains = [
-    { id: 1, name: "Aoraki", image: aoraki, completed: true},
+    { id: 1, name: "Aoraki", image: aoraki, completed: false},
     { id: 2, name: "Ben Nevis", image: benNevis, completed: true},
-    { id: 3, name: "Chimborazo", image: chimborazo, completed: true},
+    { id: 3, name: "Chimborazo", image: chimborazo, completed: false},
     { id: 4, name: "Eiger", image: eiger, completed: false},
     { id: 5, name: "Fuji", image: fuji, completed: false},
-    { id: 6, name: "Matterhorn", image: matterhorn, completed: true},
-    { id: 7, name: "Annapurna", image: mountAnnapurna, completed: true},
+    { id: 6, name: "Matterhorn", image: matterhorn, completed: false},
+    { id: 7, name: "Annapurna", image: mountAnnapurna, completed: false},
     { id: 8, name: "Kinabalu", image: mountKinabalu, completed: false},
     { id: 9, name: "Everest", image: everest, completed: true},
   ];
