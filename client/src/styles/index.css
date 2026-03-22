@@ -54,11 +54,11 @@ button:focus-visible {
 
 /* Large text */
 html.large-text-1 {
-  font-size: 115%;
+  font-size: 110%;
 }
 
 html.large-text-2 {
-  font-size: 130%;
+  font-size: 120%;
 }
 
 /* Login page - keep inputs light in dark mode */
