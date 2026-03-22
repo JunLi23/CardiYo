@@ -14,9 +14,7 @@ const PostBoard = ({ onAddGoal }) => {
             (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
           );
           setMessages(sorted);
-          sorted.forEach((msg) => {
-            if (msg.isGoal) onAddGoal(msg);
-          });
+          // Remove the forEach block that was here
         })
         .catch((err) => console.log(err));
     };
