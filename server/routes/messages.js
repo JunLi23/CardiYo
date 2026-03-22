@@ -1,5 +1,5 @@
 import express from "express";
-import Message from "../models/Message.js"; // import the model
+import Message from "../models/Message.js";
 
 const router = express.Router();
 
@@ -20,6 +20,16 @@ router.post("/", async (req, res) => {
     const newMessage = new Message({ text, isGoal });
     await newMessage.save();
     res.status(201).json(newMessage);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE a message by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    await Message.findByIdAndDelete(req.params.id);
+    res.json({ message: "Message deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
