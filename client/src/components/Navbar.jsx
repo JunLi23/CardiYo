@@ -1,15 +1,15 @@
 // don't change imports, unless adding new ones, thank you!
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/Logo.png";
-import { Navbar, MobileNav, IconButton } from "@material-tailwind/react";
+import { Navbar, MobileNav } from "@material-tailwind/react";
 import PopUp from "../components/HealthHub/PopUp";
 
 const NavbarComponent = () => {
-  const [openNav, setOpenNav] = React.useState(false);
+  const [openNav, setOpenNav] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
+
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 960) setOpenNav(false);
@@ -18,36 +18,34 @@ const NavbarComponent = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleHealthHubClick = () => {
-  const hasAccess = localStorage.getItem("healthhubAccess");
-
-  if (hasAccess === "true") {
-    navigate("/HealthHub");
-  } else {
-    setShowPopup(true);
-  }
-};
-
   const navList = (
     <ul className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-6">
       <li>
-        <Link to="/Dashboard" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        <Link
+          to="/Dashboard"
+          className="p-1 font-normal hover:text-gray-200"
+          style={{ color: "white", textDecoration: "none" }}
+        >
           Dashboard
         </Link>
       </li>
       <li>
-        <Link to="/Workouts" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        <Link
+          to="/Workouts"
+          className="p-1 font-normal hover:text-gray-200"
+          style={{ color: "white", textDecoration: "none" }}
+        >
           Workouts
         </Link>
       </li>
       <li>
-        <Link to="/HealthHub"
+        <Link
+          to="/HealthHub"
           onClick={(e) => {
             const hasAccess = localStorage.getItem("healthhubAccess") === "true";
-
             if (!hasAccess) {
-              e.preventDefault();   // stop navigation
-              setShowPopup(true);   // open popup instead
+              e.preventDefault(); // prevent navigation
+              setShowPopup(true);  // show popup
             }
           }}
           className="p-1 font-normal hover:text-gray-200"
@@ -57,12 +55,20 @@ const NavbarComponent = () => {
         </Link>
       </li>
       <li>
-        <Link to="/Profile" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        <Link
+          to="/Profile"
+          className="p-1 font-normal hover:text-gray-200"
+          style={{ color: "white", textDecoration: "none" }}
+        >
           Profile
         </Link>
       </li>
       <li>
-        <Link to="/Settings" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        <Link
+          to="/Settings"
+          className="p-1 font-normal hover:text-gray-200"
+          style={{ color: "white", textDecoration: "none" }}
+        >
           Settings
         </Link>
       </li>
@@ -74,7 +80,6 @@ const NavbarComponent = () => {
       className="sticky top-0 z-10 h-max max-w-full rounded-none shadow-none border-0 px-4 py-2 lg:px-8 lg:py-4"
       style={{ backgroundColor: "#AEB9A1" }}
     >
-      
       <div className="flex items-center justify-between w-full text-white">
         <Link to="/Dashboard" className="flex items-center">
           <img
@@ -86,14 +91,18 @@ const NavbarComponent = () => {
 
         <div className="hidden lg:flex items-center gap-6">
           {navList}
-          <Link to="/LoginSignUp" className="p-1 font-normal transition-colors duration-150" style={{ color: "white", textDecoration: "none" }}
-            onMouseEnter={e => e.target.style.color = "#ff4444"}
-            onMouseLeave={e => e.target.style.color = "white"}>
+          <Link
+            to="/LoginSignUp"
+            className="p-1 font-normal transition-colors duration-150"
+            style={{ color: "white", textDecoration: "none" }}
+            onMouseEnter={(e) => (e.target.style.color = "#ff4444")}
+            onMouseLeave={(e) => (e.target.style.color = "white")}
+          >
             Logout
           </Link>
         </div>
 
-       <div className="lg:hidden">
+        <div className="lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
