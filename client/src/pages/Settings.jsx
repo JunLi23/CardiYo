@@ -335,12 +335,12 @@ const ChangeMountainForm = ({ setActiveForm }) => {
      <form onSubmit={(e) => { e.preventDefault(); handleConfirm(); }} className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
       <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold rounded-2xl"> ✕ </button>
       <h2 className="md:text-2xl md:text-center text-xl mb-6">Change Mountain</h2>
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {mountains.map((m, i) => {
           const selectable = !m.locked;
           return (
             <button key={i} type="button" onClick={() => selectable && setSelected(m.name)}
-              className={`flex flex-col items-center gap-2 bg-transparent border-0 ${selectable ? "cursor-pointer" : "cursor-not-allowed"}`}>
+              className={`flex flex-col items-center gap-2 bg-transparent border-0 ${selectable ? "cursor-pointer" : "cursor-not-allowed"} ${i >= 4 ? "hidden lg:flex" : ""}`}>
               <div className={`relative w-full aspect-square rounded-full overflow-hidden ${selectable && selected === m.name ? "ring-4 ring-white" : "opacity-70"}`}>
                 {m.name === "Coming Soon"
                   ? <div className="w-full h-full bg-[#3a3a3a] flex items-center justify-center"><img src={lockIcon} className="w-8 h-8 opacity-50" /></div>
