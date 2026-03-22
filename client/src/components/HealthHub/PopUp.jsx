@@ -8,7 +8,7 @@ const HealthProv_PopUp = ({ onClose, onSuccess }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (inputValue === "WL1ZZ@Cardi") {
+    if (inputValue === "WIL1ZZ@Cardi") {
       onSuccess();   // allow access
     } else {
       setError("Incorrect value");
@@ -39,7 +39,7 @@ const HealthProv_PopUp = ({ onClose, onSuccess }) => {
         </h2>
 
         <p className="text-white text-center">
-          Enter the correct value to continue
+          Enter the code provided by your healthcare provider
         </p>
 
         <input
@@ -47,7 +47,7 @@ const HealthProv_PopUp = ({ onClose, onSuccess }) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           className="p-2 rounded border border-white text-black"
-          placeholder="Enter value"
+          placeholder="Enter code..."
         />
 
         {error && <p className="text-red-300 text-center">{error}</p>}
