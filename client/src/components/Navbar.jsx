@@ -41,13 +41,20 @@ const NavbarComponent = () => {
         </Link>
       </li>
       <li>
-        <button
-          onClick={handleHealthHubClick}
+        <Link to="/HealthHub"
+          onClick={(e) => {
+            const hasAccess = localStorage.getItem("healthhubAccess") === "true";
+
+            if (!hasAccess) {
+              e.preventDefault();   // stop navigation
+              setShowPopup(true);   // open popup instead
+            }
+          }}
           className="p-1 font-normal hover:text-gray-200"
-          style={{ color: "white", background: "none", border: "none", cursor: "pointer" }}
+          style={{ color: "white", textDecoration: "none" }}
         >
           Health Hub
-        </button>
+        </Link>
       </li>
       <li>
         <Link to="/Profile" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
