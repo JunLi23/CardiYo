@@ -8,10 +8,13 @@ const ReportPopup = ({ onClose }) => {
   const [submitted, setSubmitted] = useState(false);
 
   const options = [
-    "Inappropriate content",
     "Spam",
-    "Harassment",
-    "Privacy violation"
+    "Abuse & Harassment",
+    "Privacy violation",
+    "Illegal & Unregulated Behaviours",
+    "Suicide or Self-injury",
+    "Nudity or Sexual Misconduct",
+    "Scam or Fraud"
   ];
 
   const handleCheckboxChange = (option) => {
@@ -24,7 +27,6 @@ const ReportPopup = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you could send data to backend if needed
     setSubmitted(true);
   };
 
@@ -32,15 +34,21 @@ const ReportPopup = ({ onClose }) => {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
         <div className="bg-white rounded-xl p-6 max-w-md w-full text-center shadow-lg">
-          <h2 className="text-xl font-bold mb-4">Thank you for submitting a report</h2>
+          <h2 className="text-xl font-bold mb-4">
+            Thank you for submitting a report
+          </h2>
+
           <p className="mb-2">
             We will proceed with actions after further review.
           </p>
+
           <p>
-            If any actions are taken, a notification will be sent to you and you will receive an email with details.
+            If any actions are taken, a notification will be sent to you and
+            you will receive an email with details.
           </p>
+
           <button
-            onClick={() => setSubmitted(false)}
+            onClick={onClose}
             className="mt-6 bg-[#3C5246] text-white px-6 py-2 rounded-lg hover:opacity-90 transition"
           >
             Close
@@ -52,11 +60,23 @@ const ReportPopup = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-xl p-6 max-w-md w-full shadow-lg flex flex-col gap-4"
       >
-        <h2 className="text-xl font-bold mb-2 text-center">Report Issue</h2>
+
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-gray-500 hover:text-black text-xl"
+          >
+            ✕
+          </button>
+        </div>
+
+        <h2 className="text-xl font-bold text-center">Report Issue</h2>
 
         {options.map((option) => (
           <label key={option} className="flex items-center gap-2">
