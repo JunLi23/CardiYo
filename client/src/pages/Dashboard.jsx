@@ -7,7 +7,7 @@ import MountainImg from "../assets/Everest_cropped.svg";
 import ClimbOverlay from '../components/dashboardComponents/ClimbingOverlay';
 import Footer from "../components/Footer";
 import BioClouds from "../components/BioClouds";
-import { mountains } from "../data/mountains";
+import { mountains } from "../Data/Mountains";
 import { useState, useEffect } from "react";
 
 const defaultMountain = mountains[0]; // Everest as fallback

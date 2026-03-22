@@ -9,7 +9,7 @@ import o2 from "../assets/o2.png";
 import sneaker from "../assets/sneaker.png";
 import walking from "../assets/walking.png";
 import lockIcon from "../assets/lock-closed.svg";
-import { mountains } from "../data/mountains";
+import { mountains } from "../Data/Mountains";
 
 const Settings = () => {
 
