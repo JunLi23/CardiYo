@@ -18,8 +18,10 @@ const LoginSignUp = () => {
         const newError = {};
 
         {/* Checks if a name has been entered and its atleast 2 characters */}
-        if (!form.name.trim()) newError.name = "Please, enter your name";
-        else if (form.name.length < 2) newError.name = "Your name needs at least 2 characters"; 
+        if (action !== "Login") {
+            if (!form.name.trim()) newError.name = "Please, enter your name";
+            else if (form.name.length < 2) newError.name = "Your name needs at least 2 characters";
+        }
 
         {/* Checks if an email has been entered and its in the right format */}
         if (!form.email.trim()) newError.email = "Please, enter your email";
