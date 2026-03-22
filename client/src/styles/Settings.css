@@ -21,7 +21,6 @@
 
 .settingForms form {
     width: 75%;
-    height: clamp(500px, 20vh, 500px);
     padding: 5%;
 
     background-color: #5E806D;
