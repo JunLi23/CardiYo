@@ -1,12 +1,15 @@
 // don't change imports, unless adding new ones, thank you!
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Logo from "../assets/Logo.png";
 import { Navbar, MobileNav, IconButton } from "@material-tailwind/react";
+import PopUp from "../components/HealthHub/PopUp";
 
 const NavbarComponent = () => {
   const [openNav, setOpenNav] = React.useState(false);
-
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
   React.useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 960) setOpenNav(false);
@@ -14,6 +17,16 @@ const NavbarComponent = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const handleHealthHubClick = () => {
+  const hasAccess = localStorage.getItem("healthhubAccess");
+
+  if (hasAccess === "true") {
+    navigate("/HealthHub");
+  } else {
+    setShowPopup(true);
+  }
+};
 
   const navList = (
     <ul className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-6">
@@ -28,9 +41,13 @@ const NavbarComponent = () => {
         </Link>
       </li>
       <li>
-        <Link to="/HealthHub" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
+        <button
+          onClick={handleHealthHubClick}
+          className="p-1 font-normal hover:text-gray-200"
+          style={{ color: "white", background: "none", border: "none", cursor: "pointer" }}
+        >
           Health Hub
-        </Link>
+        </button>
       </li>
       <li>
         <Link to="/Profile" className="p-1 font-normal hover:text-gray-200" style={{ color: "white", textDecoration: "none" }}>
@@ -50,6 +67,7 @@ const NavbarComponent = () => {
       className="sticky top-0 z-10 h-max max-w-full rounded-none shadow-none border-0 px-4 py-2 lg:px-8 lg:py-4"
       style={{ backgroundColor: "#AEB9A1" }}
     >
+      
       <div className="flex items-center justify-between w-full text-white">
         <Link to="/Dashboard" className="flex items-center">
           <img
@@ -85,6 +103,17 @@ const NavbarComponent = () => {
       <div className="lg:hidden">
         <MobileNav open={openNav}>{navList}</MobileNav>
       </div>
+
+      {showPopup && (
+        <PopUp
+          onClose={() => setShowPopup(false)}
+          onSuccess={() => {
+            localStorage.setItem("healthhubAccess", "true");
+            setShowPopup(false);
+            navigate("/HealthHub");
+          }}
+        />
+      )}
     </Navbar>
   );
 };

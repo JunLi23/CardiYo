@@ -30,19 +30,22 @@ const ReportPopup = ({ onClose }) => {
     setSubmitted(true);
   };
 
+
   if (submitted) {
     return (
+        
       <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-        <div className="bg-white rounded-xl p-6 max-w-md w-full text-center shadow-lg">
-          <h2 className="text-xl font-bold mb-4">
-            Thank you for submitting a report
-          </h2>
+        <div
+          className="rounded-xl p-6 max-w-md w-full text-center shadow-lg border-[10px]"
+          style={{ backgroundColor: "#5E806D", borderColor: "#3C5246" }}
+        >
+          <h2 className="text-2xl font-bold mb-4 text-white">Thank you for submitting a report</h2>
 
-          <p className="mb-2">
-            We will proceed with actions after further review.
+          <p className="mb-2 text-white">
+            We will proceed with further actions after reviewing.
           </p>
 
-          <p>
+          <p className="text-white">
             If any actions are taken, a notification will be sent to you and
             you will receive an email with details.
           </p>
@@ -63,55 +66,35 @@ const ReportPopup = ({ onClose }) => {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-xl p-6 max-w-md w-full shadow-lg flex flex-col gap-4"
+        className="rounded-xl p-6 max-w-md w-full shadow-lg flex flex-col gap-4 border-[10px]"
+        style={{ backgroundColor: "#5E806D", borderColor: "#3C5246" }}
       >
 
         <div className="flex justify-end">
           <button
             type="button"
             onClick={onClose}
-            className="text-gray-500 hover:text-black text-xl"
+            className="text-white hover:opacity-70 text-xl"
           >
             ✕
           </button>
         </div>
 
-        <h2 className="text-xl font-bold text-center">Report Issue</h2>
+        <h2 className="text-2xl font-bold text-white text-center">Report</h2>
+        <p className="text-white text-center mb-2">What do you want to report?</p>
 
         {options.map((option) => (
-          <label key={option} className="flex items-center gap-2">
+          <label key={option} className="flex items-center gap-2 text-white">
             <input
               type="checkbox"
               checked={selectedOptions.includes(option)}
               onChange={() => handleCheckboxChange(option)}
               className="accent-green-400"
             />
-            <span className="text-gray-800">{option}</span>
+            <span>{option}</span>
           </label>
         ))}
 
-        {/* Other input */}
         <div className="flex items-center gap-2">
-          <span className="text-gray-800">Other:</span>
-          <input
-            type="text"
-            value={otherText}
-            onChange={(e) => setOtherText(e.target.value)}
-            className="flex-1 border rounded p-2 border-gray-300"
-            placeholder="Specify other reason"
-          />
-        </div>
-
-        {/* Submit button */}
-        <button
-          type="submit"
-          className="mt-4 bg-[#3C5246] text-white px-6 py-2 rounded-lg hover:opacity-90 transition self-center"
-        >
-          Submit Report
-        </button>
-      </form>
-    </div>
-  );
-};
-
-export default ReportPopup;
+          <span className="text-white">Other:</span>
+      

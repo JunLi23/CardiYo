@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-import "../styles/workouts.css";
+import "../styles/Workouts.css";
 
 /* ---------- date helpers ---------- */
 const weekdayLabels = ["M", "T", "W", "T", "F", "S", "S"];
