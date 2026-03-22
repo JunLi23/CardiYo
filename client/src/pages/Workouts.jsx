@@ -361,13 +361,15 @@ export default function Workouts() {
 
   async function handleImportWorkout() {
     const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-    const dayOffset = Math.floor(Math.random() * 3) - 1;
-    const randomDateObj = new Date();
-    randomDateObj.setDate(randomDateObj.getDate() + dayOffset);
-    const syncDateKey = toInputDate(randomDateObj);
+    
+    const syncDateObj = new Date(selectedDay);
+    const syncDateKey = toInputDate(syncDateObj);
 
-    if (syncedDates.has(syncDateKey)) {
-      showToast("Already Up to Date", `Health data for ${syncDateKey} is already synced.`);
+    // Track both the date AND the device so you can sync multiple devices on one day
+    const syncIdentifier = `${syncDateKey}-${selectedDevice}`;
+
+    if (syncedDates.has(syncIdentifier)) {
+      showToast("Already Up to Date", `${selectedDevice} is already synced for this date.`);
       setShowImportWorkout(false);
       return;
     }
@@ -378,9 +380,11 @@ export default function Workouts() {
       const generatedCalories = Math.floor(Math.random() * 300) + 1500;
 
       const type = getRandomItem(["Run", "Cycling", "Swimming", "Walk"]);
+      
+      // FIXED TYPO: "iPhone" instead of "Iphone"
       const deviceShortName = selectedDevice.includes("Watch")
         ? "Watch"
-        : selectedDevice.includes("Iphone")
+        : selectedDevice.includes("iPhone")
         ? "Phone"
         : "Laptop";
 
@@ -415,16 +419,14 @@ export default function Workouts() {
         }),
       });
 
-      setSyncedDates((prev) => new Set(prev).add(syncDateKey));
+      // Save the specific device and date combination
+      setSyncedDates((prev) => new Set(prev).add(syncIdentifier));
+      
       await fetchAllData();
-      setSelectedDay(randomDateObj);
       setShowImportWorkout(false);
 
-      let relativeDay = "Today";
-      if (dayOffset === -1) relativeDay = "Yesterday";
-      if (dayOffset === 1) relativeDay = "Tomorrow";
-
-      showToast("Data Sync Complete", `Biomarkers & Schedule updated for ${relativeDay}`);
+      const formattedDate = syncDateObj.toLocaleDateString("en-GB", { weekday: 'short', month: 'short', day: 'numeric' });
+      showToast("Data Sync Complete", `${deviceShortName} synced for ${formattedDate}`);
     } catch (error) {
       console.error("Sync error:", error);
       alert("Device connection failed.");
@@ -552,6 +554,9 @@ export default function Workouts() {
                   const hasWorkout = dayWorkouts.length > 0;
                   const isSelected = dateKey(d) === selectedDayKey;
                   const isToday = dateKey(d) === dateKey(today);
+                  
+                  // Check if ANY device was synced on this specific day
+                  const hasSync = Array.from(syncedDates).some(entry => entry.startsWith(k));
 
                   return (
                     <button
@@ -566,7 +571,7 @@ export default function Workouts() {
                     >
                       <div className="wk-cellHeader">
                         <span className="wk-num">{d.getDate()}</span>
-                        {syncedDates.has(k) && (
+                        {hasSync && (
                           <span style={{ fontSize: "12px", color: "green", marginLeft: "4px" }}>✓</span>
                         )}
                         {hasWorkout && <span className="wk-cellBadge">{dayWorkouts.length}</span>}
