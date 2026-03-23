@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-
 import "../styles/Workouts.css";
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5050";
 
 /* ---------- date helpers ---------- */
 const weekdayLabels = ["M", "T", "W", "T", "F", "S", "S"];
@@ -145,7 +146,7 @@ export default function Workouts() {
 
   async function fetchAllData() {
     try {
-      const woRes = await fetch(`http://localhost:5050/workouts/${USER_ID}`);
+      const woRes = await fetch(`${API_BASE}/workouts/${USER_ID}`);
       if (woRes.ok) {
         const text = await woRes.text();
         const data = text ? JSON.parse(text) : [];
@@ -164,7 +165,7 @@ export default function Workouts() {
         );
       }
 
-      const bioRes = await fetch(`http://localhost:5050/biomarker/${USER_ID}`);
+      const bioRes = await fetch(`${API_BASE}/biomarker/${USER_ID}`);
       if (bioRes.ok) {
         const text = await bioRes.text();
         const data = text ? JSON.parse(text) : [];
@@ -322,7 +323,7 @@ export default function Workouts() {
     };
 
     try {
-      const res = await fetch("http://localhost:5050/workouts/record-workout", {
+      const res = await fetch(`${API_BASE}/workouts/record-workout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newWorkout),
@@ -331,7 +332,7 @@ export default function Workouts() {
       if (!res.ok) throw new Error("Failed to save workout");
 
       if (finalDistance > 0 || newWorkout.stepsAdded > 0) {
-        await fetch("http://localhost:5050/biomarker", {
+        await fetch(`${API_BASE}/biomarker`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -361,11 +362,10 @@ export default function Workouts() {
 
   async function handleImportWorkout() {
     const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-    
+
     const syncDateObj = new Date(selectedDay);
     const syncDateKey = toInputDate(syncDateObj);
 
-    // Track both the date AND the device so you can sync multiple devices on one day
     const syncIdentifier = `${syncDateKey}-${selectedDevice}`;
 
     if (syncedDates.has(syncIdentifier)) {
@@ -380,8 +380,7 @@ export default function Workouts() {
       const generatedCalories = Math.floor(Math.random() * 300) + 1500;
 
       const type = getRandomItem(["Run", "Cycling", "Swimming", "Walk"]);
-      
-      // FIXED TYPO: "iPhone" instead of "Iphone"
+
       const deviceShortName = selectedDevice.includes("Watch")
         ? "Watch"
         : selectedDevice.includes("iPhone")
@@ -400,13 +399,13 @@ export default function Workouts() {
         sourceDevice: selectedDevice,
       };
 
-      await fetch("http://localhost:5050/workouts/record-workout", {
+      await fetch(`${API_BASE}/workouts/record-workout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(importedWorkout),
       });
 
-      await fetch("http://localhost:5050/biomarker", {
+      await fetch(`${API_BASE}/biomarker`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -419,13 +418,16 @@ export default function Workouts() {
         }),
       });
 
-      // Save the specific device and date combination
       setSyncedDates((prev) => new Set(prev).add(syncIdentifier));
-      
+
       await fetchAllData();
       setShowImportWorkout(false);
 
-      const formattedDate = syncDateObj.toLocaleDateString("en-GB", { weekday: 'short', month: 'short', day: 'numeric' });
+      const formattedDate = syncDateObj.toLocaleDateString("en-GB", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+      });
       showToast("Data Sync Complete", `${deviceShortName} synced for ${formattedDate}`);
     } catch (error) {
       console.error("Sync error:", error);
@@ -435,7 +437,7 @@ export default function Workouts() {
 
   async function deleteWorkoutById(id) {
     try {
-      const res = await fetch(`http://localhost:5050/workouts/${id}`, {
+      const res = await fetch(`${API_BASE}/workouts/${id}`, {
         method: "DELETE",
       });
 
@@ -554,9 +556,8 @@ export default function Workouts() {
                   const hasWorkout = dayWorkouts.length > 0;
                   const isSelected = dateKey(d) === selectedDayKey;
                   const isToday = dateKey(d) === dateKey(today);
-                  
-                  // Check if ANY device was synced on this specific day
-                  const hasSync = Array.from(syncedDates).some(entry => entry.startsWith(k));
+
+                  const hasSync = Array.from(syncedDates).some((entry) => entry.startsWith(k));
 
                   return (
                     <button
@@ -629,30 +630,30 @@ export default function Workouts() {
             </button>
           </div>
 
-          <section 
+          <section
             className="wk-dataSection"
             style={{
               backgroundColor: "#3C5246",
               borderRadius: "24px",
               padding: "24px 0 32px 0",
               marginTop: "40px",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.15)"
+              boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
             }}
           >
-            <h2 
-              className="wk-dataTitle" 
-              style={{ 
-                color: "white", 
-                margin: "0 0 20px 0" 
+            <h2
+              className="wk-dataTitle"
+              style={{
+                color: "white",
+                margin: "0 0 20px 0",
               }}
             >
               Workout Data
             </h2>
 
             <div className="wk-dataBtns" style={{ padding: 0 }}>
-              <button 
-                className="wk-dataBtn" 
-                type="button" 
+              <button
+                className="wk-dataBtn"
+                type="button"
                 style={{ backgroundColor: "#5b7a6b", border: "2px solid rgba(255,255,255,0.1)" }}
                 onClick={() => setShowBiomarkers(true)}
               >
