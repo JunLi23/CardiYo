@@ -30,7 +30,7 @@ const ProfileBanner = ({ profile, editable, onPhotoChange }) => {
             <>
               <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} className="hidden" />
               <div onClick={() => fileInputRef.current.click()} className="absolute inset-0 rounded-full flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                <img src={cameraIcon} alt="change photo" className="w-32 h-32 opacity-30" style={{ filter: "brightness(0)" }} />
+                <img src={cameraIcon} alt="change photo" className="w-26 h-26 opacity-30" style={{ filter: "brightness(0)" }} />
               </div>
             </>
           )}
