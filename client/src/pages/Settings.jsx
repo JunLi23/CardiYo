@@ -149,13 +149,22 @@ const AccountForm = ({setActiveForm, profile}) => (
 
 {/* Biomarker Form */}
 const BiomarkerForm = ({ setActiveForm }) => {
-  const [checkedItems, setCheckedItems] = useState(Object.fromEntries(biomarkerOptions.map((item) => [item.id, false])));
-  
+  const [checkedItems, setCheckedItems] = useState(() => {
+    const saved = localStorage.getItem("biomarkers");
+    const savedIds = saved ? JSON.parse(saved).map(b => b.id) : [];
+    return Object.fromEntries(biomarkerOptions.map(item => [item.id, savedIds.includes(item.id)]));
+  });
+  const [limitHit, setLimitHit] = useState(false);
+
   const handleChange = (id) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setCheckedItems((prev) => {
+      if (!prev[id] && Object.values(prev).filter(Boolean).length >= 3) {
+        setLimitHit(true);
+        return prev;
+      }
+      setLimitHit(false);
+      return { ...prev, [id]: !prev[id] };
+    });
   };
   
   const handleSubmit = (e) => {
@@ -185,7 +194,10 @@ const BiomarkerForm = ({ setActiveForm }) => {
         ))}
       </div>
 
-      <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6"> Submit </button>
+      <div className="flex items-center justify-end gap-4 mt-6">
+        {limitHit && <p className="text-[#ff6b6b] text-xs mt-1">Maximum of 3 biomarkers</p>}
+        <button className="bg-[#3C5246] px-4 py-2">Submit</button>
+      </div>
     </form>
   );
 };
