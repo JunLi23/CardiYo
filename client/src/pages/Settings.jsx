@@ -281,6 +281,7 @@ const AccessibilityForm = ({ setActiveForm }) => {
 
 {/* Delete Account Form */}
 const DeleteAccountForm = ({ setActiveForm }) => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -329,6 +330,7 @@ const DeleteAccountForm = ({ setActiveForm }) => {
           </label>
           <button
             disabled={!checked3}
+            onClick={() => { sessionStorage.clear(); navigate("/LoginSignUp"); }}
             className="w-full py-2 font-bold rounded-xl"
             style={{ backgroundColor: checked3 ? "#cc0000" : "#9e9e9e", color: "white", cursor: checked3 ? "pointer" : "not-allowed" }}
           >
