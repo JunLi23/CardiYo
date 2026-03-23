@@ -35,9 +35,12 @@ const Dashboard = () => {
         const text = await res.text();
         const data = text ? JSON.parse(text) : [];
 
+        // In your loadWorkouts useEffect, change this line:
         const total = data
           .filter((w) => DISTANCE_BASED_TYPES.includes(w.type))
           .reduce((sum, w) => sum + (parseFloat(w.distance) || 0), 0);
+
+        setTotalDistance(Math.round(total));
 
         setTotalDistance(Math.round(total));
       } catch (err) {

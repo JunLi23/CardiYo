@@ -208,7 +208,7 @@ export default function Workouts() {
         title: `${selectedDevice.split(' ').pop()} Sync: ${type}`,
         type,
         duration: "45min",
-        distance: parseFloat((Math.random() * 4 + 2).toFixed(1)),
+        distance: Math.floor(Math.random() * 4000 + 2000),
         stepsAdded: Math.floor(Math.random() * 5000) + 3000,
         caloriesBurned: Math.floor(Math.random() * 300) + 1500,
         sourceDevice: selectedDevice,
