@@ -97,7 +97,7 @@ const ReportPopup = ({ onClose }) => {
 
         <div className="flex items-center gap-2">
           <span className="text-white">Other:</span>
-          <input
+                  <input
             type="text"
             value={otherText}
             onChange={(e) => setOtherText(e.target.value)}
