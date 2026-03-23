@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'; 
+import MiniMe from "../../assets/Mini-Me.png"
 
 const mountainPaths = {
   1: "M 10 333 L 213 222 L 232 230 L 300 205 L 454 57",  // Everest
@@ -57,6 +58,14 @@ export default function ClimbingOverLay( { progress, id } ){
         />
     
          <g transform={`translate(${iconPos.x}, ${iconPos.y})`}>
+            <image
+                href={MiniMe}
+                x={-20}
+                y={-20}
+                width={40}
+                height={40}
+            />
+            </g>
         <circle
             cx={0}
             cy={0}

@@ -28,28 +28,29 @@ const Dashboard = () => {
 
   // Fetch workouts and sum distance-based ones
   useEffect(() => {
-    async function loadWorkouts() {
-      try {
-        const res = await fetch(`${API_BASE}/workouts/${USER_ID}`);
-        if (!res.ok) return;
-        const text = await res.text();
-        const data = text ? JSON.parse(text) : [];
+  async function loadWorkouts() {
+    try {
+      const res = await fetch(`${API_BASE}/workouts/${USER_ID}`);
+      if (!res.ok) return;
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : [];
 
-        // In your loadWorkouts useEffect, change this line:
-        const total = data
-          .filter((w) => DISTANCE_BASED_TYPES.includes(w.type))
-          .reduce((sum, w) => sum + (parseFloat(w.distance) || 0), 0);
+      console.log("raw workouts:", data); // ADD THIS
+      
+      const total = data
+        .filter((w) => DISTANCE_BASED_TYPES.includes(w.type))
+        .reduce((sum, w) => sum + (parseFloat(w.distance) || 0), 0);
 
-        setTotalDistance(Math.round(total));
+      console.log("totalDistance:", Math.round(total)); // ADD THIS
 
-        setTotalDistance(Math.round(total));
-      } catch (err) {
-        console.error("Failed to fetch workouts for dashboard:", err);
-      }
+      setTotalDistance(Math.round(total));
+    } catch (err) {
+      console.error("Failed to fetch workouts for dashboard:", err);
     }
+  }
 
-    loadWorkouts();
-  }, []);
+  loadWorkouts();
+}, []);
 
   // Compute live progress from real workout data
   const liveProgress = activeMountain.distance > 0
