@@ -38,8 +38,8 @@ const Dashboard = () => {
       console.log("raw workouts:", data); // ADD THIS
       
       const total = data
-        .filter((w) => DISTANCE_BASED_TYPES.includes(w.type))
-        .reduce((sum, w) => sum + (parseFloat(w.distance) || 0), 0);
+      .filter((w) => DISTANCE_BASED_TYPES.map(t => t.toLowerCase()).includes(w.type?.toLowerCase()))
+      .reduce((sum, w) => sum + (parseFloat(w.distance) || 0), 0);
 
       console.log("totalDistance:", Math.round(total)); // ADD THIS
 
