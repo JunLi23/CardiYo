@@ -57,14 +57,6 @@ export default function ClimbingOverLay( { progress, id } ){
         />
     
         <g transform={`translate(${iconPos.x}, ${iconPos.y})`}>
-            <circle
-                cx={0}
-                cy={0}
-                r={16}
-                fill="white"
-                stroke="#2d6a4f"
-                strokeWidth="4"
-            />
             <image
                 href={MiniMe}
                 x={-20}

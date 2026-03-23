@@ -49,6 +49,8 @@ const Dashboard = () => {
     }
   }
 
+  console.log("Dashboard rendering, totalDistance:", totalDistance);
+
   loadWorkouts();
 }, []);
 
