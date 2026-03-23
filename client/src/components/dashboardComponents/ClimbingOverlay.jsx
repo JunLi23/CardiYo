@@ -34,8 +34,7 @@ export default function ClimbingOverLay( { progress, id } ){
             width: '100%',
             height: '100%',
             pointerEvents: 'none'
-        }
-        }
+        }}
         >
         <path
             d={currentPath}
@@ -57,7 +56,15 @@ export default function ClimbingOverLay( { progress, id } ){
             style={{ transition: 'stroke-dashoffset 1s ease' }}
         />
     
-         <g transform={`translate(${iconPos.x}, ${iconPos.y})`}>
+        <g transform={`translate(${iconPos.x}, ${iconPos.y})`}>
+            <circle
+                cx={0}
+                cy={0}
+                r={16}
+                fill="white"
+                stroke="#2d6a4f"
+                strokeWidth="4"
+            />
             <image
                 href={MiniMe}
                 x={-20}
@@ -65,18 +72,8 @@ export default function ClimbingOverLay( { progress, id } ){
                 width={40}
                 height={40}
             />
-            </g>
-        <circle
-            cx={0}
-            cy={0}
-            r={16}
-            fill="white"
-            stroke="#2d6a4f"
-            strokeWidth="4"
-        />
         </g>
 
         </svg>
-        )
-        
+    )
 };
