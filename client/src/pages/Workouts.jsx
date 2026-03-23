@@ -304,7 +304,7 @@ export default function Workouts() {
     const parsedDistance = parseFloat(form.distance);
 
     if (requiresDistance && (isNaN(parsedDistance) || parsedDistance <= 0)) {
-      alert(`Please enter a valid distance (km) for your ${form.type} session.`);
+      alert(`Please enter a valid distance (m) for your ${form.type} session.`);
       return;
     }
 

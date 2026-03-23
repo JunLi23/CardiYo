@@ -57,7 +57,7 @@ const NewMessage = () => {
     }
   };
 
-  return (
+    return (
     <div className="p-6 max-w-md mx-auto text-black">
       <h2 className="text-xl font-bold mb-4">Add New Message</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">

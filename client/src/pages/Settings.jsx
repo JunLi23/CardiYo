@@ -33,7 +33,12 @@ const Settings = () => {
 
   return (
     <>
-      <ProfileBanner profile={profile} />
+      <ProfileBanner profile={profile} editable onPhotoChange={(photo) => {
+        const updated = { ...profile, photo };
+        setProfile(updated);
+        sessionStorage.setItem("profileData", JSON.stringify(updated));
+        window.dispatchEvent(new Event("profileUpdated"));
+      }} />
 
       {/* Setting Buttons */}
       <div className="w-[90%] max-w-[1100px] grid grid-cols-1 md:grid-cols-2 mt-10 mx-auto mb-10">
@@ -144,13 +149,22 @@ const AccountForm = ({setActiveForm, profile}) => (
 
 {/* Biomarker Form */}
 const BiomarkerForm = ({ setActiveForm }) => {
-  const [checkedItems, setCheckedItems] = useState(Object.fromEntries(biomarkerOptions.map((item) => [item.id, false])));
-  
+  const [checkedItems, setCheckedItems] = useState(() => {
+    const saved = localStorage.getItem("biomarkers");
+    const savedIds = saved ? JSON.parse(saved).map(b => b.id) : [];
+    return Object.fromEntries(biomarkerOptions.map(item => [item.id, savedIds.includes(item.id)]));
+  });
+  const [limitHit, setLimitHit] = useState(false);
+
   const handleChange = (id) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+    setCheckedItems((prev) => {
+      if (!prev[id] && Object.values(prev).filter(Boolean).length >= 3) {
+        setLimitHit(true);
+        return prev;
+      }
+      setLimitHit(false);
+      return { ...prev, [id]: !prev[id] };
+    });
   };
   
   const handleSubmit = (e) => {
@@ -180,7 +194,10 @@ const BiomarkerForm = ({ setActiveForm }) => {
         ))}
       </div>
 
-      <button className="bg-[#3C5246] px-4 py-2 ml-auto block mt-6"> Submit </button>
+      <div className="flex items-center justify-end gap-4 mt-6">
+        {limitHit && <p className="text-[#ff6b6b] text-xs mt-1">Maximum of 3 biomarkers</p>}
+        <button className="bg-[#3C5246] px-4 py-2">Submit</button>
+      </div>
     </form>
   );
 };
@@ -264,6 +281,7 @@ const AccessibilityForm = ({ setActiveForm }) => {
 
 {/* Delete Account Form */}
 const DeleteAccountForm = ({ setActiveForm }) => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -312,6 +330,7 @@ const DeleteAccountForm = ({ setActiveForm }) => {
           </label>
           <button
             disabled={!checked3}
+            onClick={() => { sessionStorage.clear(); navigate("/LoginSignUp"); }}
             className="w-full py-2 font-bold rounded-xl"
             style={{ backgroundColor: checked3 ? "#cc0000" : "#9e9e9e", color: "white", cursor: checked3 ? "pointer" : "not-allowed" }}
           >
