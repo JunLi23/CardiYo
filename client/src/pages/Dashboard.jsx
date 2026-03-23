@@ -17,10 +17,10 @@ const Dashboard = ()=> {
     const [activeMountain, setActiveMountain] = useState(defaultMountain);
 
     useEffect(() => {
-    const stored = localStorage.getItem("activeMountainId");
+    const stored = sessionStorage.getItem("activeMountainId"); // ← sessionStorage
     const found = mountains.find(m => m.id === Number(stored));
     if (found) setActiveMountain(found);
-  }, []);
+    }, []);
     
     return (
         <div className={styles.dashboard}>

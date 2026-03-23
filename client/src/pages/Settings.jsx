@@ -322,12 +322,12 @@ const DeleteAccountForm = ({ setActiveForm }) => {
 
 
 const ChangeMountainForm = ({ setActiveForm }) => {
-  const stored = mountains.find(m => m.id === Number(localStorage.getItem("activeMountainId")));
+  const stored = mountains.find(m => m.id === Number(sessionStorage.getItem("activeMountainId")));
   const [selected, setSelected] = useState(stored ? stored.name : mountains[0].name);
 
   const handleConfirm = () => {
     const mountain = mountains.find(m => m.name === selected);
-    if (mountain) localStorage.setItem("activeMountainId", mountain.id);
+    if (mountain) sessionStorage.setItem("activeMountainId", mountain.id); // ← sessionStorage
     setActiveForm(null);
   };
 
