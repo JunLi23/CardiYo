@@ -1,5 +1,5 @@
 import imgEverest from "../assets/Everest_cropped.svg";
-import imgBenNevis from "../assets/benNevis.png"; // temporary image
+import imgBenNevis from "../assets/BenNevis.png"; // temporary image
 import imgFuji from "../assets/fuji.png";
 
 export const mountains = [

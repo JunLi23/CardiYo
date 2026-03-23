@@ -9,7 +9,7 @@ import o2 from "../assets/o2.png";
 import sneaker from "../assets/sneaker.png";
 import walking from "../assets/walking.png";
 import lockIcon from "../assets/lock-closed.svg";
-import { mountains } from "../data/mountains";
+import { mountains } from "../Data/Mountains";
 
 const Settings = () => {
 
@@ -23,11 +23,13 @@ const Settings = () => {
   const navigate = useNavigate();
   const settingsButton = "md:w-75 w-50 mx-auto m-2 bg-[#3C5246] text-white py-2";
 
+  
   useEffect(() => {
-    const savedData = localStorage.getItem("profileData");
+    const savedData = sessionStorage.getItem("profileData");
     if (savedData) {
       setProfile(JSON.parse(savedData));
-    }}, []);
+    }
+  }, []);
 
   return (
     <>
@@ -74,10 +76,11 @@ const EditProfileForm = ({setProfile, setActiveForm}) => {
   const [bio, setBio] = useState("");
   const [photo, setPhoto] = useState(null);
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    const profileData = {name, username, bio, photo};
-    localStorage.setItem("profileData", JSON.stringify(profileData));
+    const profileData = { name, username, bio, photo };
+    sessionStorage.setItem("profileData", JSON.stringify(profileData)); // ← sessionStorage
     setProfile(profileData);
     window.dispatchEvent(new Event("profileUpdated"));
     setActiveForm(null);
@@ -247,12 +250,12 @@ const AccessibilityForm = ({ setActiveForm }) => {
           <button type="button" onClick={() => toggleDark(false)} className={`px-4 py-1 mt-2 ${!darkMode ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>No</button>
         </div>
       </div>
-      <div className="flex justify-between items-center mt-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4 gap-2">
         <span>Large Text</span>
-        <div className="flex gap-2">
-          <button type="button" onClick={() => setScale("off")} style={{ fontSize: "1rem" }} className={`px-3 h-9 mt-2 flex items-center justify-center ${textScale === "off" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Off</button>
-          <button type="button" onClick={() => setScale("1")} style={{ fontSize: "1.15rem" }} className={`px-4 h-11 mt-2 flex items-center justify-center ${textScale === "1" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Large</button>
-          <button type="button" onClick={() => setScale("2")} style={{ fontSize: "1.3rem" }} className={`px-5 h-13 mt-2 flex items-center justify-center ${textScale === "2" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Larger</button>
+        <div className="flex flex-wrap gap-2">
+          <button type="button" onClick={() => setScale("off")} className={`flex-1 sm:flex-none px-4 h-11 flex items-center justify-center ${textScale === "off" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Off</button>
+          <button type="button" onClick={() => setScale("1")} className={`flex-1 sm:flex-none px-4 h-11 flex items-center justify-center ${textScale === "1" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Large</button>
+          <button type="button" onClick={() => setScale("2")} className={`flex-1 sm:flex-none px-4 h-11 flex items-center justify-center ${textScale === "2" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Larger</button>
         </div>
       </div>
     </form>
@@ -322,12 +325,12 @@ const DeleteAccountForm = ({ setActiveForm }) => {
 
 
 const ChangeMountainForm = ({ setActiveForm }) => {
-  const stored = mountains.find(m => m.id === Number(localStorage.getItem("activeMountainId")));
+  const stored = mountains.find(m => m.id === Number(sessionStorage.getItem("activeMountainId")));
   const [selected, setSelected] = useState(stored ? stored.name : mountains[0].name);
 
   const handleConfirm = () => {
     const mountain = mountains.find(m => m.name === selected);
-    if (mountain) localStorage.setItem("activeMountainId", mountain.id);
+    if (mountain) sessionStorage.setItem("activeMountainId", mountain.id); // ← sessionStorage
     setActiveForm(null);
   };
 
@@ -335,12 +338,12 @@ const ChangeMountainForm = ({ setActiveForm }) => {
      <form onSubmit={(e) => { e.preventDefault(); handleConfirm(); }} className="relative bg-[#5E806D] text-white border-8 border-[#3C5246] p-6 w-full rounded-2xl">
       <button type="button" onClick={() => setActiveForm(null)} className="absolute top-4 right-4 text-xl font-bold rounded-2xl"> ✕ </button>
       <h2 className="md:text-2xl md:text-center text-xl mb-6">Change Mountain</h2>
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {mountains.map((m, i) => {
           const selectable = !m.locked;
           return (
             <button key={i} type="button" onClick={() => selectable && setSelected(m.name)}
-              className={`flex flex-col items-center gap-2 bg-transparent border-0 ${selectable ? "cursor-pointer" : "cursor-not-allowed"}`}>
+              className={`flex flex-col items-center gap-2 bg-transparent border-0 ${selectable ? "cursor-pointer" : "cursor-not-allowed"} ${i >= 4 ? "hidden lg:flex" : ""}`}>
               <div className={`relative w-full aspect-square rounded-full overflow-hidden ${selectable && selected === m.name ? "ring-4 ring-white" : "opacity-70"}`}>
                 {m.name === "Coming Soon"
                   ? <div className="w-full h-full bg-[#3a3a3a] flex items-center justify-center"><img src={lockIcon} className="w-8 h-8 opacity-50" /></div>

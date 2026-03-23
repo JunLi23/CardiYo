@@ -7,7 +7,7 @@ import MountainImg from "../assets/Everest_cropped.svg";
 import ClimbOverlay from '../components/dashboardComponents/ClimbingOverlay';
 import Footer from "../components/Footer";
 import BioClouds from "../components/BioClouds";
-import { mountains } from "../data/mountains";
+import { mountains } from "../Data/Mountains";
 import { useState, useEffect } from "react";
 
 const defaultMountain = mountains[0]; // Everest as fallback
@@ -17,10 +17,10 @@ const Dashboard = ()=> {
     const [activeMountain, setActiveMountain] = useState(defaultMountain);
 
     useEffect(() => {
-    const stored = localStorage.getItem("activeMountainId");
+    const stored = sessionStorage.getItem("activeMountainId"); // ← sessionStorage
     const found = mountains.find(m => m.id === Number(stored));
     if (found) setActiveMountain(found);
-  }, []);
+    }, []);
     
     return (
         <div className={styles.dashboard}>
