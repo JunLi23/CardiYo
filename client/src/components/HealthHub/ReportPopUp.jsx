@@ -97,24 +97,4 @@ const ReportPopup = ({ onClose }) => {
 
         <div className="flex items-center gap-2">
           <span className="text-white">Other:</span>
-          <input
-            type="text"
-            value={otherText}
-            onChange={(e) => setOtherText(e.target.value)}
-            className="flex-1 border rounded p-2 border-white text-black"
-            placeholder="Specify other reason"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="mt-4 bg-[#3C5246] text-white px-6 py-2 rounded-lg hover:opacity-90 transition self-center"
-        >
-          Submit Report
-        </button>
-      </form>
-    </div>
-  );
-};
-
-export default ReportPopup;
+      

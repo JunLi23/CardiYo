@@ -53,7 +53,7 @@ const NavbarComponent = () => {
         <Link
           to="/HealthHub"
           onClick={(e) => {
-            const hasAccess = localStorage.getItem("healthhubAccess") === "true";
+            const hasAccess = sessionStorage.getItem("healthhubAccess") === "true"; // ← sessionStorage
             if (!hasAccess) {
               e.preventDefault();
               setShowPopup(true);
@@ -106,15 +106,17 @@ const NavbarComponent = () => {
 
           <div className="hidden lg:flex items-center gap-6">
             {navList}
-            <Link
-              to="/LoginSignUp"
+           <Link to="/LoginSignUp"
               className="p-1 font-normal transition-colors duration-150 flex items-center gap-2"
               style={{ color: "white", textDecoration: "none" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "#ff4444")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "white")}
-              onClick={() => localStorage.removeItem("healthhubAccess")}
+              onClick={() => {
+                sessionStorage.removeItem("healthhubAccess");
+                sessionStorage.removeItem("activeMountainId");
+              }}
             >
-              <img src={LogoutIcon} alt="Logout" className="h-4 w-4 object-contain" />
+              <img src={LogoutIcon} alt="Logout" className="h-5 w-5 object-contain" />
               Logout
             </Link>
           </div>
@@ -142,7 +144,7 @@ const NavbarComponent = () => {
         <PopUp
           onClose={() => setShowPopup(false)}
           onSuccess={() => {
-            localStorage.setItem("healthhubAccess", "true");
+            sessionStorage.setItem("healthhubAccess", "true");
             setShowPopup(false);
             navigate("/HealthHub");
           }}

@@ -8,8 +8,8 @@ const HealthProv_PopUp = ({ onClose, onSuccess }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (inputValue === "WIL1ZZ@Cardi") {
-      onSuccess();   // allow access
+    if (inputValue === "WL1ZZ@Cardi") {
+      onSuccess();
     } else {
       setError("Incorrect value");
     }

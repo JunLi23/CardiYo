@@ -26,13 +26,4 @@ router.post("/", async (req, res) => {
 });
 
 // DELETE a message by ID
-router.delete("/:id", async (req, res) => {
-  try {
-    await Message.findByIdAndDelete(req.params.id);
-    res.json({ message: "Message deleted" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-export default router;
+router.delete("/
