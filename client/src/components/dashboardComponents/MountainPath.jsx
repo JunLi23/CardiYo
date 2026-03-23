@@ -1,6 +1,6 @@
 // don't change imports, unless adding new ones, thank you!
 import { useRef, useState, useEffect } from "react";
-import UserIcon from "../../assets/blank-pf.png";
+import MiniMe from "../../assets/Mini-Me.png";
 
 export default function MountainPath({ progress }) {
   const pathRef = useRef(null);
