@@ -17,7 +17,7 @@ const Dashboard = ()=> {
     const [activeMountain, setActiveMountain] = useState(defaultMountain);
 
     useEffect(() => {
-    const stored = sessionStorage.getItem("activeMountainId"); // ← sessionStorage
+    const stored = sessionStorage.getItem("activeMountainId"); 
     const found = mountains.find(m => m.id === Number(stored));
     if (found) setActiveMountain(found);
     }, []);
@@ -27,7 +27,7 @@ const Dashboard = ()=> {
             <div className={styles.mountainSection}>
                 <img src={activeMountain.img} alt="Mountain" className={styles.mountainImg} />
                 <BioClouds />
-                <ClimbOverlay progress = {activeMountain.progress} className={styles.svgOverlay}/>
+                <ClimbOverlay key={activeMountain.id} progress = {activeMountain.progress} id = {activeMountain.id} className={styles.svgOverlay}/>
             </div>
             <div className={styles.middleSection}>
                 <ProgressDisplay

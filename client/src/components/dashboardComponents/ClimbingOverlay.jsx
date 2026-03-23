@@ -1,9 +1,18 @@
 import { useRef, useState, useEffect } from 'react'; 
 
-export default function ClimbingOverLay( { progress } ){
+const mountainPaths = {
+  1: "M 10 333 L 213 222 L 232 230 L 300 205 L 454 57",  // Everest
+  2: "M 80 310 L 140 260 L 157 230 L 165 228 L 180 197 L 191 190 L 200 160 L 214 154 L 223 130 L 290 106 L 357 108 L 370 100 L 380 94 L 410 98 L 420 94 L 480 100 L 513 90 L 522 79",  // Ben Nevis
+};
+
+export default function ClimbingOverLay( { progress, id } ){
+    console.log("ClimbOverlay rendered with id:", id, "progress:", progress);
     const pathProgress = useRef(null);
     const [pathLength, setPathLength] = useState(0);
     const [iconPos, setIconPos] = useState({ x: 0, y: 0 });
+
+    const currentPath = mountainPaths[id] ?? mountainPaths[1];
+    console.log("currentPath:", currentPath); 
 
     useEffect(() => {
         if (pathProgress.current) {
@@ -12,7 +21,7 @@ export default function ClimbingOverLay( { progress } ){
         setIconPos({ x: point.x, y: point.y });
         setPathLength(length);
         }
-    }, [progress]);
+    }, [progress, id]);
 
     return(
         <svg
@@ -24,10 +33,11 @@ export default function ClimbingOverLay( { progress } ){
             width: '100%',
             height: '100%',
             pointerEvents: 'none'
-        }}
+        }
+        }
         >
         <path
-            d="M 10 333 L 213 222 L 232 230 L 300 205 L 454 57" 
+            d={currentPath}
             fill="none"
             stroke="rgba(255,255,255,0.3)"
             strokeDasharray="8 6"
@@ -36,7 +46,7 @@ export default function ClimbingOverLay( { progress } ){
 
         <path
             ref={pathProgress}
-            d="M 10 333 L 213 222 L 232 230 L 300 205 L 454 57" 
+            d={currentPath} 
             fill="none"
             stroke="lime"
             strokeWidth="6" 
@@ -45,8 +55,8 @@ export default function ClimbingOverLay( { progress } ){
             strokeDashoffset={pathLength - (progress / 100) * pathLength}
             style={{ transition: 'stroke-dashoffset 1s ease' }}
         />
-
-        <g transform={`translate(${iconPos.x}, ${iconPos.y})`}>
+    
+         <g transform={`translate(${iconPos.x}, ${iconPos.y})`}>
         <circle
             cx={0}
             cy={0}
@@ -57,21 +67,7 @@ export default function ClimbingOverLay( { progress } ){
         />
         </g>
 
-        {progress >= 100 && (
-        <g>
-            <line
-            x1={454} y1={57}
-            x2={454} y2={20}
-            stroke="white"
-            strokeWidth="3"
-            />
-            <polygon
-            points="454,20 480,30 454,40"
-            fill="red"
-            />
-        </g>
-        )}
-
         </svg>
         )
+        
 };

@@ -41,6 +41,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: clamp(14px, 1.2vw, 18px);
+  font-size: clamp(10px, 1.2vw, 18px);
   margin: 0;
 }
