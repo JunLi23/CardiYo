@@ -1,7 +1,20 @@
 // don't change imports, unless adding new ones, thank you!
+import { useRef } from "react";
 import splashBg from "../assets/Splash.jpg";
 import blankPf from "../assets/blank-pf.png";
-const ProfileBanner = ({ profile }) => {
+import cameraIcon from "../assets/camera.svg";
+
+const ProfileBanner = ({ profile, editable, onPhotoChange }) => {
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => onPhotoChange && onPhotoChange(reader.result);
+    reader.readAsDataURL(file);
+  };
+
   return (
     <>
       {/* Splash Background */}
@@ -11,7 +24,17 @@ const ProfileBanner = ({ profile }) => {
 
       {/* Displays Profile Photo (blankPf By Default) */}
       <div className="absolute -translate-y-1/2 -translate-x-1/2 left-1/2">
-        <img src={profile.photo || blankPf} alt="" className="w-35 h-35 md:w-45 md:h-45 object-cover border-8 border-[#3C5246] rounded-full" />
+        <div className="relative group w-35 h-35 md:w-45 md:h-45">
+          <img src={profile.photo || blankPf} alt="" className="w-full h-full object-cover border-8 border-[#3C5246] rounded-full" />
+          {editable && (
+            <>
+              <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} className="hidden" />
+              <div onClick={() => fileInputRef.current.click()} className="absolute inset-0 rounded-full flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                <img src={cameraIcon} alt="change photo" className="w-32 h-32 opacity-30" style={{ filter: "brightness(0)" }} />
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Profile Description (Displays Name, Username, Bio) */}

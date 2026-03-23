@@ -33,7 +33,12 @@ const Settings = () => {
 
   return (
     <>
-      <ProfileBanner profile={profile} />
+      <ProfileBanner profile={profile} editable onPhotoChange={(photo) => {
+        const updated = { ...profile, photo };
+        setProfile(updated);
+        sessionStorage.setItem("profileData", JSON.stringify(updated));
+        window.dispatchEvent(new Event("profileUpdated"));
+      }} />
 
       {/* Setting Buttons */}
       <div className="w-[90%] max-w-[1100px] grid grid-cols-1 md:grid-cols-2 mt-10 mx-auto mb-10">
