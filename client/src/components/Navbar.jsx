@@ -114,6 +114,7 @@ const NavbarComponent = () => {
               onClick={() => {
                 sessionStorage.removeItem("healthhubAccess");
                 sessionStorage.removeItem("activeMountainId");
+                sessionStorage.removeItem("profileData");
               }}
             >
               <img src={LogoutIcon} alt="Logout" className="h-5 w-5 object-contain" />

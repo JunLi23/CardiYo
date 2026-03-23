@@ -14,7 +14,7 @@ const Profile = () => {
 
   useEffect(() => {
     const loadProfile = () => {
-      const savedData = localStorage.getItem("profileData");
+      const savedData = sessionStorage.getItem("profileData"); // ← sessionStorage
       if (savedData) { setProfile(JSON.parse(savedData)); }
     };
 
@@ -23,7 +23,8 @@ const Profile = () => {
     
     return () => {
       window.removeEventListener("profileUpdated", loadProfile);
-    }; }, []);
+    };
+  }, []);
     
   return (
     <>

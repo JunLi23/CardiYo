@@ -23,11 +23,13 @@ const Settings = () => {
   const navigate = useNavigate();
   const settingsButton = "md:w-75 w-50 mx-auto m-2 bg-[#3C5246] text-white py-2";
 
+  
   useEffect(() => {
-    const savedData = localStorage.getItem("profileData");
+    const savedData = sessionStorage.getItem("profileData");
     if (savedData) {
       setProfile(JSON.parse(savedData));
-    }}, []);
+    }
+  }, []);
 
   return (
     <>
@@ -74,10 +76,11 @@ const EditProfileForm = ({setProfile, setActiveForm}) => {
   const [bio, setBio] = useState("");
   const [photo, setPhoto] = useState(null);
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    const profileData = {name, username, bio, photo};
-    localStorage.setItem("profileData", JSON.stringify(profileData));
+    const profileData = { name, username, bio, photo };
+    sessionStorage.setItem("profileData", JSON.stringify(profileData)); // ← sessionStorage
     setProfile(profileData);
     window.dispatchEvent(new Event("profileUpdated"));
     setActiveForm(null);
