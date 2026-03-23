@@ -155,7 +155,7 @@ export default function Workouts() {
     const parsedDistance = parseFloat(form.distance);
 
     if (requiresDistance && (isNaN(parsedDistance) || parsedDistance <= 0)) {
-      alert(`Please enter a valid distance (km) for your ${form.type} session.`);
+      alert(`Please enter a valid distance (m) for your ${form.type} session.`);
       return;
     }
 
@@ -332,7 +332,7 @@ export default function Workouts() {
             <input className="wk-input" placeholder="e.g. 45min" value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} />
             {distanceBasedTypes.includes(form.type) && (
               <>
-                <label className="wk-label">Distance (km)</label>
+                <label className="wk-label">Distance (m)</label>
                 <input className="wk-input" type="number" step="0.1" value={form.distance} onChange={(e) => setForm({ ...form, distance: e.target.value })} />
               </>
             )}
