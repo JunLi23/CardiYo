@@ -17,6 +17,7 @@ import LogoutIcon from "../assets/logout.png";
 const NavbarComponent = () => {
   const [openNav, setOpenNav] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [logoutHover, setLogoutHover] = useState(false);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -108,16 +109,16 @@ const NavbarComponent = () => {
             {navList}
            <Link to="/LoginSignUp"
               className="p-1 font-normal transition-colors duration-150 flex items-center gap-2"
-              style={{ color: "white", textDecoration: "none" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#ff4444")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "white")}
+              style={{ color: logoutHover ? "#ff4444" : "white", textDecoration: "none" }}
+              onMouseEnter={() => setLogoutHover(true)}
+              onMouseLeave={() => setLogoutHover(false)}
               onClick={() => {
                 sessionStorage.removeItem("healthhubAccess");
                 sessionStorage.removeItem("activeMountainId");
                 sessionStorage.removeItem("profileData");
               }}
             >
-              <img src={LogoutIcon} alt="Logout" className="h-5 w-5 object-contain" />
+              <img src={LogoutIcon} alt="Logout" className="h-5 w-5 object-contain" style={{ filter: logoutHover ? "brightness(0) saturate(100%) invert(27%) sepia(91%) saturate(1352%) hue-rotate(316deg) brightness(110%)" : "none", transition: "filter 150ms" }} />
               Logout
             </Link>
           </div>
