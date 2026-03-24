@@ -235,23 +235,25 @@ export default function Workouts() {
   }
 
   async function deleteWorkoutById(id) {
-  try {
-    const workoutToDelete = workouts.find((w) => w.id === id);
-    const res = await fetch(`${API_BASE}/workouts/${id}`, { method: "DELETE" });
-    if (!res.ok) throw new Error("Failed to delete workout");
+    console.log("deleting id:", id);
+    console.log("workouts in state:", workouts.map(w => ({ id: w.id, type: w.type, distance: w.distance })));
+    try {
+      const workoutToDelete = workouts.find((w) => w.id === id);
+      const res = await fetch(`${API_BASE}/workouts/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete workout");
 
-    // Subtract deleted workout's distance from sessionStorage
-    if (workoutToDelete && distanceBasedTypes.includes(workoutToDelete.type)) {
-      const prev = Number(sessionStorage.getItem("totalWorkoutDistance") || 0);
-      const newTotal = Math.max(0, prev - workoutToDelete.distance);
-      sessionStorage.setItem("totalWorkoutDistance", newTotal);
+      // Subtract deleted workout's distance from sessionStorage
+      if (workoutToDelete && distanceBasedTypes.includes(workoutToDelete.type)) {
+        const prev = Number(sessionStorage.getItem("totalWorkoutDistance") || 0);
+        const newTotal = Math.max(0, prev - workoutToDelete.distance);
+        sessionStorage.setItem("totalWorkoutDistance", newTotal);
+      }
+
+      await fetchAllData();
+      showToast("Workout deleted", "The workout was removed successfully.");
+    } catch (error) {
+      alert("Could not delete workout.");
     }
-
-    await fetchAllData();
-    showToast("Workout deleted", "The workout was removed successfully.");
-  } catch (error) {
-    alert("Could not delete workout.");
-  }
 }
 
   return (
