@@ -180,18 +180,21 @@ export default function Workouts() {
 
     if (!res.ok) throw new Error("Failed to save workout");
 
-    const saved = await res.json(); // get the saved workout with its id
+    const saved = await res.json();
     const savedId = saved._id || saved.id;
 
     const prev = Number(sessionStorage.getItem("totalWorkoutDistance") || 0);
     sessionStorage.setItem("totalWorkoutDistance", prev + finalDistance);
-    sessionStorage.setItem(`workout_distance_${savedId}`, finalDistance); 
+    sessionStorage.setItem(`workout_distance_${savedId}`, finalDistance);
+
+    await fetchAllData();
+    setShowSelectWorkout(false);
+    showToast("Workout saved", `${newWorkout.title} • ${new Date(form.date).toLocaleDateString("en-GB")}`);
   } catch (error) {
     console.error("Failed to add workout:", error);
     alert("Something went wrong while saving workout.");
   }
 }
-
   async function handleImportWorkout() {
     const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
     const syncDateKey = toInputDate(selectedDay);
