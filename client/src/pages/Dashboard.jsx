@@ -28,9 +28,9 @@ const Dashboard = () => {
 
   // Fetch workouts and sum distance-based ones
   useEffect(() => {
-  const stored = localStorage.getItem("totalWorkoutDistance");
+  const stored = sessionStorage.getItem("totalWorkoutDistance");
   setTotalDistance(stored ? Number(stored) : 0);
-}, []);
+  }, []);
 
   // Compute live progress from real workout data
   const liveProgress = activeMountain.distance > 0
