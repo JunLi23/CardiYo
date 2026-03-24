@@ -30,7 +30,7 @@ const Dashboard = () => {
   useEffect(() => {
   const stored = localStorage.getItem("totalWorkoutDistance");
   setTotalDistance(stored ? Number(stored) : 0);
-  }, []);
+}, []);
 
   // Compute live progress from real workout data
   const liveProgress = activeMountain.distance > 0

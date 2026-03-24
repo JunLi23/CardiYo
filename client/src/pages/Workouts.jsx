@@ -181,8 +181,8 @@ export default function Workouts() {
     if (!res.ok) throw new Error("Failed to save workout");
 
     // Update localStorage total directly from form input — no API refetch needed
-    const prev = Number(localStorage.getItem("totalWorkoutDistance") || 0);
-    localStorage.setItem("totalWorkoutDistance", prev + finalDistance);
+    const prev = Number(sessionStorage.getItem("totalWorkoutDistance") || 0);
+    sessionStorage.setItem("totalWorkoutDistance", prev + finalDistance);
 
     await fetchAllData();
     setShowSelectWorkout(false);
