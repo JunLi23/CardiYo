@@ -7,6 +7,7 @@ import messages from "./routes/messages.js";
 import records from "./routes/record.js";
 import dashboard from "./routes/dashboard.js";
 import workouts from "./routes/workouts.js";
+import auth from "./routes/auth.js";
 
 const PORT = process.env.PORT || 5050;
 const app = express();
@@ -22,6 +23,7 @@ app.use("/record", records);
 app.use("/dashboard", dashboard);
 app.use("/api/messages", messages);
 app.use("/workouts", workouts);
+app.use("/api/auth", auth);
 
 // start the Express server
 app.listen(PORT, () => {
