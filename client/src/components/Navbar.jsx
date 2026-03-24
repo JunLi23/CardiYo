@@ -87,6 +87,21 @@ const NavbarComponent = () => {
           Settings
         </Link>
       </li>
+      <li>
+      <Link
+        to="/LoginSignUp"
+        className="p-1 font-normal hover:text-red-400 flex items-center gap-2"
+        style={{ color: "white", textDecoration: "none" }}
+        onClick={() => {
+          sessionStorage.removeItem("healthhubAccess");
+          sessionStorage.removeItem("activeMountainId");
+          sessionStorage.removeItem("profileData");
+        }}
+      >
+        <img src={LogoutIcon} alt="Logout" className="h-5 w-5 object-contain" />
+        Logout
+      </Link>
+    </li>
     </ul>
   );
 
