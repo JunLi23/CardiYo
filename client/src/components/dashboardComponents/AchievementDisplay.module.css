@@ -1,10 +1,10 @@
 
 .display{
-    background-color: #4a6741; 
+    background-color: #5E806D; 
     border-radius: 20px; 
     padding: 20px; 
     width: 100%; 
-    border: 15px solid #3a5432; 
+    border: 8px solid #3C5246; 
 
     display: flex;
     flex-direction: column;
