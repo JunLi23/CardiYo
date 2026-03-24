@@ -54,7 +54,7 @@ const NavbarComponent = () => {
         <Link
           to="/HealthHub"
           onClick={(e) => {
-            const hasAccess = sessionStorage.getItem("healthhubAccess") === "true"; // ← sessionStorage
+            const hasAccess = sessionStorage.getItem("healthhubAccess") === "true";
             if (!hasAccess) {
               e.preventDefault();
               setShowPopup(true);
@@ -87,21 +87,22 @@ const NavbarComponent = () => {
           Settings
         </Link>
       </li>
-      <li>
-      <Link
-        to="/LoginSignUp"
-        className="p-1 font-normal hover:text-red-400 flex items-center gap-2"
-        style={{ color: "white", textDecoration: "none" }}
-        onClick={() => {
-          sessionStorage.removeItem("healthhubAccess");
-          sessionStorage.removeItem("activeMountainId");
-          sessionStorage.removeItem("profileData");
-        }}
-      >
-        <img src={LogoutIcon} alt="Logout" className="h-5 w-5 object-contain" />
-        Logout
-      </Link>
-    </li>
+      {/* Mobile-only logout */}
+      <li className="lg:hidden">
+        <Link
+          to="/LoginSignUp"
+          className="p-1 font-normal hover:text-red-400 flex items-center gap-2"
+          style={{ color: "white", textDecoration: "none" }}
+          onClick={() => {
+            sessionStorage.removeItem("healthhubAccess");
+            sessionStorage.removeItem("activeMountainId");
+            sessionStorage.removeItem("profileData");
+          }}
+        >
+          <img src={LogoutIcon} alt="Logout" className="h-5 w-5 object-contain" />
+          Logout
+        </Link>
+      </li>
     </ul>
   );
 
@@ -120,9 +121,12 @@ const NavbarComponent = () => {
             />
           </Link>
 
+          {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-6">
             {navList}
-           <Link to="/LoginSignUp"
+            {/* Desktop-only logout with hover effect */}
+            <Link
+              to="/LoginSignUp"
               className="p-1 font-normal transition-colors duration-150 flex items-center gap-2"
               style={{ color: logoutHover ? "#ff4444" : "white", textDecoration: "none" }}
               onMouseEnter={() => setLogoutHover(true)}
@@ -133,11 +137,22 @@ const NavbarComponent = () => {
                 sessionStorage.removeItem("profileData");
               }}
             >
-              <img src={LogoutIcon} alt="Logout" className="h-5 w-5 object-contain" style={{ filter: logoutHover ? "brightness(0) saturate(100%) invert(27%) sepia(91%) saturate(1352%) hue-rotate(316deg) brightness(110%)" : "none", transition: "filter 150ms" }} />
+              <img
+                src={LogoutIcon}
+                alt="Logout"
+                className="h-5 w-5 object-contain"
+                style={{
+                  filter: logoutHover
+                    ? "brightness(0) saturate(100%) invert(27%) sepia(91%) saturate(1352%) hue-rotate(316deg) brightness(110%)"
+                    : "none",
+                  transition: "filter 150ms",
+                }}
+              />
               Logout
             </Link>
           </div>
 
+          {/* Mobile burger */}
           <div className="lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -157,17 +172,18 @@ const NavbarComponent = () => {
         </div>
       </Navbar>
 
-      {showPopup && ReactDOM.createPortal(
-        <PopUp
-          onClose={() => setShowPopup(false)}
-          onSuccess={() => {
-            sessionStorage.setItem("healthhubAccess", "true");
-            setShowPopup(false);
-            navigate("/HealthHub");
-          }}
-        />,
-        document.body
-      )}
+      {showPopup &&
+        ReactDOM.createPortal(
+          <PopUp
+            onClose={() => setShowPopup(false)}
+            onSuccess={() => {
+              sessionStorage.setItem("healthhubAccess", "true");
+              setShowPopup(false);
+              navigate("/HealthHub");
+            }}
+          />,
+          document.body
+        )}
     </>
   );
 };
