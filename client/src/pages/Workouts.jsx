@@ -4,7 +4,6 @@ import "../styles/Workouts.css";
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5050";
 
-/* ---------- date helpers ---------- */
 const weekdayLabels = ["M", "T", "W", "T", "F", "S", "S"];
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const pad2 = (n) => String(n).padStart(2, "0");
