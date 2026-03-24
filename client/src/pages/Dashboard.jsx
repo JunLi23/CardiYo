@@ -28,31 +28,9 @@ const Dashboard = () => {
 
   // Fetch workouts and sum distance-based ones
   useEffect(() => {
-  async function loadWorkouts() {
-    try {
-      const res = await fetch(`${API_BASE}/workouts/${USER_ID}`);
-      if (!res.ok) return;
-      const text = await res.text();
-      const data = text ? JSON.parse(text) : [];
-
-      console.log("raw workouts:", data); // ADD THIS
-      
-      const total = data
-      .filter((w) => DISTANCE_BASED_TYPES.map(t => t.toLowerCase()).includes(w.type?.toLowerCase()))
-      .reduce((sum, w) => sum + (parseFloat(w.distance) || 0), 0);
-
-      console.log("totalDistance:", Math.round(total)); // ADD THIS
-
-      setTotalDistance(Math.round(total));
-    } catch (err) {
-      console.error("Failed to fetch workouts for dashboard:", err);
-    }
-  }
-
-  console.log("Dashboard rendering, totalDistance:", totalDistance);
-
-  loadWorkouts();
-}, []);
+  const stored = localStorage.getItem("totalWorkoutDistance");
+  setTotalDistance(stored ? Number(stored) : 0);
+  }, []);
 
   // Compute live progress from real workout data
   const liveProgress = activeMountain.distance > 0

@@ -151,43 +151,47 @@ export default function Workouts() {
   }
 
   async function addWorkout() {
-    const requiresDistance = distanceBasedTypes.includes(form.type);
-    const parsedDistance = parseFloat(form.distance);
+  const requiresDistance = distanceBasedTypes.includes(form.type);
+  const parsedDistance = parseFloat(form.distance);
 
-    if (requiresDistance && (isNaN(parsedDistance) || parsedDistance <= 0)) {
-      alert(`Please enter a valid distance (m) for your ${form.type} session.`);
-      return;
-    }
-
-    const finalDistance = requiresDistance ? parsedDistance : 0;
-    const newWorkout = {
-      userId: USER_ID,
-      date: toInputDate(form.date),
-      title: form.title.trim() || "Manual Workout",
-      type: form.type,
-      duration: form.duration.trim() || "30min",
-      distance: finalDistance,
-      stepsAdded: finalDistance > 0 ? Math.floor(finalDistance * 1250) : 1500,
-      caloriesBurned: finalDistance > 0 ? Math.floor(finalDistance * 60) : 200,
-    };
-
-    try {
-      const res = await fetch(`${API_BASE}/workouts/record-workout`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newWorkout),
-      });
-
-      if (!res.ok) throw new Error("Failed to save workout");
-
-      await fetchAllData();
-      setShowSelectWorkout(false);
-      showToast("Workout saved", `${newWorkout.title} • ${new Date(form.date).toLocaleDateString("en-GB")}`);
-    } catch (error) {
-      console.error("Failed to add workout:", error);
-      alert("Something went wrong while saving workout.");
-    }
+  if (requiresDistance && (isNaN(parsedDistance) || parsedDistance <= 0)) {
+    alert(`Please enter a valid distance (m) for your ${form.type} session.`);
+    return;
   }
+
+  const finalDistance = requiresDistance ? parsedDistance : 0;
+  const newWorkout = {
+    userId: USER_ID,
+    date: toInputDate(form.date),
+    title: form.title.trim() || "Manual Workout",
+    type: form.type,
+    duration: form.duration.trim() || "30min",
+    distance: finalDistance,
+    stepsAdded: finalDistance > 0 ? Math.floor((finalDistance / 1000) * 1250) : 1500,
+    caloriesBurned: finalDistance > 0 ? Math.floor((finalDistance / 1000) * 60) : 200,
+  };
+
+  try {
+    const res = await fetch(`${API_BASE}/workouts/record-workout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newWorkout),
+    });
+
+    if (!res.ok) throw new Error("Failed to save workout");
+
+    // Update localStorage total directly from form input — no API refetch needed
+    const prev = Number(localStorage.getItem("totalWorkoutDistance") || 0);
+    localStorage.setItem("totalWorkoutDistance", prev + finalDistance);
+
+    await fetchAllData();
+    setShowSelectWorkout(false);
+    showToast("Workout saved", `${newWorkout.title} • ${new Date(form.date).toLocaleDateString("en-GB")}`);
+  } catch (error) {
+    console.error("Failed to add workout:", error);
+    alert("Something went wrong while saving workout.");
+  }
+}
 
   async function handleImportWorkout() {
     const getRandomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
