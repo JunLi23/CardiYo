@@ -180,13 +180,12 @@ export default function Workouts() {
 
     if (!res.ok) throw new Error("Failed to save workout");
 
-    // Update localStorage total directly from form input — no API refetch needed
+    const saved = await res.json(); // get the saved workout with its id
+    const savedId = saved._id || saved.id;
+
     const prev = Number(sessionStorage.getItem("totalWorkoutDistance") || 0);
     sessionStorage.setItem("totalWorkoutDistance", prev + finalDistance);
-
-    await fetchAllData();
-    setShowSelectWorkout(false);
-    showToast("Workout saved", `${newWorkout.title} • ${new Date(form.date).toLocaleDateString("en-GB")}`);
+    sessionStorage.setItem(`workout_distance_${savedId}`, finalDistance); 
   } catch (error) {
     console.error("Failed to add workout:", error);
     alert("Something went wrong while saving workout.");
@@ -235,26 +234,24 @@ export default function Workouts() {
   }
 
   async function deleteWorkoutById(id) {
-    console.log("deleting id:", id);
-    console.log("workouts in state:", workouts.map(w => ({ id: w.id, type: w.type, distance: w.distance })));
     try {
-      const workoutToDelete = workouts.find((w) => w.id === id);
+      // Read distance from sessionStorage instead of workouts state
+      const storedDistance = Number(sessionStorage.getItem(`workout_distance_${id}`) || 0);
+      
       const res = await fetch(`${API_BASE}/workouts/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete workout");
 
-      // Subtract deleted workout's distance from sessionStorage
-      if (workoutToDelete && distanceBasedTypes.includes(workoutToDelete.type)) {
-        const prev = Number(sessionStorage.getItem("totalWorkoutDistance") || 0);
-        const newTotal = Math.max(0, prev - workoutToDelete.distance);
-        sessionStorage.setItem("totalWorkoutDistance", newTotal);
-      }
+      // Subtract from total and clean up individual entry
+      const prev = Number(sessionStorage.getItem("totalWorkoutDistance") || 0);
+      sessionStorage.setItem("totalWorkoutDistance", Math.max(0, prev - storedDistance));
+      sessionStorage.removeItem(`workout_distance_${id}`);
 
       await fetchAllData();
       showToast("Workout deleted", "The workout was removed successfully.");
     } catch (error) {
       alert("Could not delete workout.");
     }
-}
+  }
 
   return (
     <>
@@ -321,7 +318,7 @@ export default function Workouts() {
           </section>
 
           <div className="wk-bottomBtns">
-            <button className="wk-pillBtn" onClick={() => openSelect(selectedDay)}>Select Workout</button>
+            <button className="wk-pillBtn" onClick={() => openSelect(selectedDay)}>Add Workout</button>
             <button className="wk-pillBtn wk-manageBtn" onClick={() => setShowManageWorkouts(true)} disabled={selectedDayWorkouts.length === 0}>Manage Workouts</button>
             <button className="wk-pillBtn wk-importBtn" onClick={() => setShowImportWorkout(true)}>Sync Device</button>
           </div>
