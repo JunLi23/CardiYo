@@ -8,7 +8,7 @@ import passwordIcon from "../assets/password.png";
 import logoIcon from "../assets/Logo.png";
 import splashBg from "../assets/Splash.jpg";
 
-const API_BASE = "https://main.dh9rir4igczzc.amplifyapp.com";
+const API_BASE = "https://cardiyo.onrender.com";
 
 const LoginSignUp = () => {
     const navigate = useNavigate();
