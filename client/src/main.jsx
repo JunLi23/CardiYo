@@ -4,8 +4,6 @@ import * as ReactDOM from "react-dom/client";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import App from "./pages/App";
-import Record from "./components/Record";
-import RecordList from "./components/RecordList";
 import Dashboard from "./pages/Dashboard";
 import Workouts from "./pages/Workouts";
 import HealthHub from "./pages/HealthHub";
@@ -16,10 +14,10 @@ import LoginSignUp from "./pages/LoginSignUp";
 import FAQ from "./pages/FAQ";
 import NewMessage from "./pages/2233";
 
-if (localStorage.getItem("darkMode") === "true") {
+if (sessionStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark");
 }
-const textScale = localStorage.getItem("textScale");
+const textScale = sessionStorage.getItem("textScale");
 if (textScale && textScale !== "off") {
   document.documentElement.classList.add(`large-text-${textScale}`);
 }
