@@ -281,9 +281,9 @@ const AccessibilityForm = ({ setActiveForm }) => {
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4 gap-2">
         <span>Large Text</span>
         <div className="flex flex-wrap gap-2">
-          <button type="button" onClick={() => setScale("off")} className={`flex-1 sm:flex-none px-4 h-11 flex items-center justify-center ${textScale === "off" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Off</button>
-          <button type="button" onClick={() => setScale("1")} className={`flex-1 sm:flex-none px-4 h-11 flex items-center justify-center ${textScale === "1" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Large</button>
           <button type="button" onClick={() => setScale("2")} className={`flex-1 sm:flex-none px-4 h-11 flex items-center justify-center ${textScale === "2" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Larger</button>
+          <button type="button" onClick={() => setScale("1")} className={`flex-1 sm:flex-none px-4 h-11 flex items-center justify-center ${textScale === "1" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Large</button>
+          <button type="button" onClick={() => setScale("off")} className={`flex-1 sm:flex-none px-4 h-11 flex items-center justify-center ${textScale === "off" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Off</button>
         </div>
       </div>
     </form>
