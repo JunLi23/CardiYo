@@ -239,13 +239,23 @@ const NotificationForm = ({ setActiveForm }) => (
 
 {/* Accessibility Form */}
 const AccessibilityForm = ({ setActiveForm }) => {
-  const [darkMode, setDarkMode] = useState(() => localStorage.getItem("darkMode") === "true");
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = sessionStorage.getItem("darkMode");
+    if (saved === "true") return "yes";
+    if (saved === "false") return "no";
+    return "device";
+  });
   const [textScale, setTextScale] = useState(() => localStorage.getItem("textScale") || "off");
 
-  const toggleDark = (enable) => {
-    setDarkMode(enable);
-    localStorage.setItem("darkMode", enable);
-    document.body.classList.toggle("dark", enable);
+  const toggleDark = (option) => {
+    setDarkMode(option);
+    if (option === "device") {
+      sessionStorage.removeItem("darkMode");
+      document.body.classList.toggle("dark", window.matchMedia("(prefers-color-scheme: dark)").matches);
+    } else {
+      sessionStorage.setItem("darkMode", option === "yes");
+      document.body.classList.toggle("dark", option === "yes");
+    }
   };
 
   const setScale = (scale) => {
@@ -262,9 +272,10 @@ const AccessibilityForm = ({ setActiveForm }) => {
       <h2 className="md:text-2xl md:text-center text-xl mb-6">Accessibility</h2>
       <div className="flex justify-between items-center">
         <span>Dark Mode</span>
-        <div className="flex gap-2">
-          <button type="button" onClick={() => toggleDark(true)} className={`px-4 py-1 mt-2 ${darkMode ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Yes</button>
-          <button type="button" onClick={() => toggleDark(false)} className={`px-4 py-1 mt-2 ${!darkMode ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>No</button>
+        <div className="flex flex-wrap gap-2">
+          <button type="button" onClick={() => toggleDark("yes")} className={`px-4 py-1 mt-2 ${darkMode === "yes" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>Yes</button>
+          <button type="button" onClick={() => toggleDark("device")} className={`px-4 py-1 mt-2 ${darkMode === "device" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}><span className="text-xs">Use Device Setting</span></button>
+          <button type="button" onClick={() => toggleDark("no")} className={`px-4 py-1 mt-2 ${darkMode === "no" ? "bg-[#3C5246] ring-2 ring-white" : "bg-[#C7C8B5]"}`}>No</button>
         </div>
       </div>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4 gap-2">

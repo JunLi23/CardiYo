@@ -14,7 +14,9 @@ import LoginSignUp from "./pages/LoginSignUp";
 import FAQ from "./pages/FAQ";
 import NewMessage from "./pages/2233";
 
-if (sessionStorage.getItem("darkMode") === "true") {
+const savedDark = sessionStorage.getItem("darkMode");
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+if (savedDark === "true" || (savedDark === null && prefersDark)) {
   document.body.classList.add("dark");
 }
 const textScale = sessionStorage.getItem("textScale");
