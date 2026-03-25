@@ -243,7 +243,7 @@ const AccessibilityForm = ({ setActiveForm }) => {
     const saved = sessionStorage.getItem("darkMode");
     if (saved === "true") return "yes";
     if (saved === "false") return "no";
-    return "device";
+    return "no";
   });
   const [textScale, setTextScale] = useState(() => localStorage.getItem("textScale") || "off");
 
