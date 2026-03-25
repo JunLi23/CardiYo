@@ -22,8 +22,9 @@ const LoginSignUp = () => {
 
         {/* Checks if a name has been entered and its atleast 2 characters */}
         if (action !== "Login") {
-            if (!form.name.trim()) newError.name = "Please, enter your name";
-            else if (form.name.length < 2) newError.name = "Your name needs at least 2 characters";
+            if (!form.name.trim()) newError.name = "Please, enter your username";
+            else if (form.name.length < 2) newError.name = "Your username needs at least 2 characters";
+            else if (form.name.length > 20) newError.name = "Your username needs to be less than 20 characters";
         }
 
         {/* Checks if an email has been entered and its in the right format */}
@@ -33,7 +34,7 @@ const LoginSignUp = () => {
         {/* Checks if a password has been entered and it meets the requirements */}
         if (!form.password) newError.password = "Please, enter your password";
         else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(form.password))
-            newError.password = "Your password needs at least 8 characters, including a letter and a symbol";
+            newError.password = "Your password needs at least 8 characters, including a number and a symbol";
 
         setError(newError);
         return Object.keys(newError).length === 0;

@@ -8,8 +8,8 @@ import MountainBox from "../components/MountainBox";
 const Profile = () => {
   const [profile, setProfile] = useState({
     name: "Jane Joe",
-    username: "janedoe123",
-    bio: `"The impossible journey is the one you never begin" - Dan Millman`
+    username: "janejoe123",
+    bio: "The impossible journey is the one you never begin - Dan Millman"
   });
 
   useEffect(() => {
